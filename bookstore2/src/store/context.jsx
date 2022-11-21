@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Context = React.createContext({
     authToken: null,
@@ -11,25 +11,65 @@ export const ContextProvider = (props) => {
     const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
 
-
-
     const navigate = useNavigate();
+
+    const addItemToCart = async (data) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/bookstore/addItemToBasket', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                },
+                body: JSON.stringify({
+                    bookHeaderId: data
+                }),
+            });
+            const resp = await response.json();
+            if (response.ok) {
+
+            }
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
+    const updateItemCart = async (data) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/bookstore/updateItem', {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                },
+                body: JSON.stringify({
+                    bookHeader: data.bookHeader,
+                    quantity: data.quantity
+                }),
+            });
+            const resp = await response.json();
+            if (response.ok) {
+
+            }
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
 
     const login = async (data) => {
         const url = 'http://localhost:8080/api/auth/login';
         try {
-            const response = await fetch(`${url}`,{
+            const response = await fetch(`${url}`, {
                 method: "POST",
-                    headers: {
+                headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    password : data.password,
-                    username : data.username
+                    password: data.password,
+                    username: data.username
                 }),
             });
             const resp = await response.json();
-            resp.accessToken = undefined;
             if (response.ok) {
                 setIsLoggedIn(true)
                 setAuthToken(resp.accessToken);
@@ -45,22 +85,23 @@ export const ContextProvider = (props) => {
         setIsLoggedIn(false)
         setAuthToken(null);
         localStorage.removeItem('token');
+        localStorage.removeItem('cartTmp');
     }
 
     const register = async (data) => {
         const url = 'http://localhost:8080/api/auth/register';
         try {
-            const response = await fetch(`${url}`,{
+            const response = await fetch(`${url}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name : data.name,
-                    password : data.password,
-                    phone : data.phone,
-                    sname : data.sname,
-                    username : data.username,
+                    name: data.name,
+                    password: data.password,
+                    phone: data.phone,
+                    sname: data.sname,
+                    username: data.username,
                 }),
             });
             const resp = await response.json();
@@ -78,6 +119,8 @@ export const ContextProvider = (props) => {
             value={{
                 authToken,
                 isLoggedIn,
+                addItemToCart,
+                updateItemCart,
                 login,
                 logout,
                 register,

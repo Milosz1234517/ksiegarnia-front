@@ -4,6 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
+import BasketPage from "./pages/BasketPage";
 import {useEffect} from "react";
 import BookDetails from "./pages/BookDetails";
 
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/basket" element={<BasketPage/>}/>
                 <Route
                     path="product/:bookHeaderId"
                     element={<BookDetails/>}

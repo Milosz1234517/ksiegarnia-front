@@ -4,9 +4,10 @@ import HomePageMenu from "../components/HomePageMenu";
 import {Box, Stack} from "@mui/system";
 import {styled} from "@mui/material/styles";
 import PropTypes from "prop-types";
-import {useCallback, useEffect} from "react";
+import {useCallback, useContext, useEffect} from "react";
 import {useParams, useSearchParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import Context from "../store/context";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -58,6 +59,8 @@ export default function BookDetails() {
     const [marks, setMarks] = React.useState([]);
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(1);
+
+    const ctx = useContext(Context);
 
     const getBooksSearch = useCallback(() => {
         const xhttp = new XMLHttpRequest();
@@ -181,6 +184,10 @@ export default function BookDetails() {
                     bookCategories
                 } = book;
 
+                function handleAddToCart() {
+                    ctx.addItemToCart(bookHeaderId)
+                }
+
                 return (
                     <div>
                         <HomePageMenu/>
@@ -246,7 +253,7 @@ export default function BookDetails() {
                                         {price} zł
                                     </Typography>
                                 </Typography>
-                                <Button size="medium" variant="outlined">Add to Cart</Button>
+                                <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to Cart</Button>
                             </Typography>
                         </Box>
 

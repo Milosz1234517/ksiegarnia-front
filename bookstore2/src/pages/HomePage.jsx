@@ -12,10 +12,11 @@ import {
 } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import * as React from "react";
-import {useCallback, useEffect} from "react";
+import {useCallback, useContext, useEffect} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import {createSearchParams, useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {styled} from "@mui/material/styles";
+import Context from "../store/context";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -55,6 +56,7 @@ export default function HomePage() {
     const [priceDownChange, setPriceDownChange] = React.useState(searchParams.get('priceDown') || '');
 
     const navigate = useNavigate();
+    const ctx = useContext(Context);
 
     const handleChange = (event, value) => {
         setPage(value);
@@ -192,7 +194,6 @@ export default function HomePage() {
     }, [searchParams]);
 
     function handleSearchBooks() {
-
         const params = [
             ['bookTitle', input],
             ['available', availableOnly],
@@ -394,26 +395,6 @@ export default function HomePage() {
                             autoFocus/>
 
                     </Box>
-                    {/*<Box sx={{display: "flex"}} justifyContent={"center"}>*/}
-                    {/*    <Typography sx={{marginLeft: 10, marginTop: 4}}>Category</Typography>*/}
-                    {/*    <TextField*/}
-                    {/*        id="outlined-select-category"*/}
-                    {/*        select*/}
-                    {/*        label="Select"*/}
-                    {/*        fullWidth*/}
-                    {/*        variant="filled"*/}
-                    {/*        value={categoryChange}*/}
-                    {/*        sx={{marginLeft: 7, marginRight: 25, marginTop: 4}}*/}
-                    {/*        onChange={handleChangeCat}*/}
-                    {/*        helperText="Please select your category"*/}
-                    {/*    >*/}
-                    {/*        {categories.map((option) => (*/}
-                    {/*            <MenuItem key={option.description} value={option.description}>*/}
-                    {/*                {option.description}*/}
-                    {/*            </MenuItem>*/}
-                    {/*        ))}*/}
-                    {/*    </TextField>*/}
-                    {/*</Box>*/}
                 </Box>
             }
 
@@ -446,70 +427,13 @@ export default function HomePage() {
             }}>
                 {cards.map((cards) => {
                     const {authors, bookHeaderId, bookTitle, price, quantity} = cards;
-                    return (
-                        <Grid item >
-                            {/*<Card key={bookHeaderId}*/}
-                            {/*      sx={{*/}
-                            {/*          display: "grid",*/}
-                            {/*          gridTemplateRows: "1fr auto",*/}
-                            {/*          gridGap: "8px",*/}
-                            {/*          height: "100%",*/}
-                            {/*          width: "100%",*/}
-                            {/*          minHeight: 280,*/}
-                            {/*          maxWidth: 275,*/}
-                            {/*          backgroundSize: "cover"*/}
-                            {/*      }}>*/}
-                            {/*    <ButtonBase sx={{width: 128, height: 128}}>*/}
-                            {/*        <Img alt="complex"*/}
-                            {/*             src="https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"*/}
-                            {/*        />*/}
-                            {/*    </ButtonBase>*/}
-                            {/*    <CardContent sx={{*/}
-                            {/*        alignSelf: "end",*/}
-                            {/*        textAlign: "center",*/}
-                            {/*    }}>*/}
-                            {/*        <Typography*/}
-                            {/*            gutterBottom*/}
-                            {/*            variant="h3"*/}
-                            {/*            noWrap*/}
-                            {/*            component="a"*/}
-                            {/*            href={`/product/${bookTitle}`}*/}
-                            {/*            sx={{*/}
-                            {/*                color: 'inherit',*/}
-                            {/*                textDecoration: 'none',*/}
-                            {/*            }}>*/}
-                            {/*            {bookTitle}*/}
-                            {/*        </Typography>*/}
-                            {/*        <Typography Typography variant="body2" color="text.secondary">*/}
-                            {/*            {authors.map((author) => {*/}
-                            {/*                return (*/}
-                            {/*                    <Typography Typography variant="body2" color="text.secondary"*/}
-                            {/*                                align={"left"}>*/}
-                            {/*                        {author.name} {author.surname}*/}
-                            {/*                    </Typography>*/}
-                            {/*                )*/}
-                            {/*            })}*/}
-                            {/*        </Typography>*/}
-                            {/*        <Typography Typography variant="body2" color="text.secondary" align={"right"}>*/}
-                            {/*            Price: {price}*/}
-                            {/*        </Typography>*/}
-                            {/*        <Typography Typography variant="body2" color="text.secondary" align={"right"}>*/}
-                            {/*            Quantity: {quantity}*/}
-                            {/*        </Typography>*/}
-                            {/*    </CardContent>*/}
-                            {/*    <CardActions sx={{*/}
-                            {/*        display: "flex",*/}
-                            {/*        justifyContent: "space-between"*/}
-                            {/*    }}>*/}
-                            {/*        <Box*/}
-                            {/*            sx={{*/}
-                            {/*                marginRight: "auto"*/}
-                            {/*            }}>*/}
-                            {/*            <Button size="medium">Add to Cart</Button>*/}
-                            {/*        </Box>*/}
-                            {/*    </CardActions>*/}
-                            {/*</Card>*/}
 
+                    function handleAddToCart() {
+                        ctx.addItemToCart(bookHeaderId)
+                    }
+
+                    return (
+                        <Grid item>
                             <Paper
                                 key={bookHeaderId}
                                 sx={{
@@ -531,19 +455,20 @@ export default function HomePage() {
                                         </ButtonBase>
                                     </Grid>
                                     <Grid item xs={12} sm container>
-                                        <Grid item xs container direction="column" spacing={2} sx={{maxHeight: 10, height: "100%"}}>
+                                        <Grid item xs container direction="column" spacing={2}
+                                              sx={{maxHeight: 10, height: "100%"}}>
                                             <Grid item xs>
-                                                        <Typography
-                                                            gutterBottom
-                                                            variant="h6"
-                                                            component="a"
-                                                            href={`/product/${bookHeaderId}`}
-                                                            sx={{
-                                                                color: 'inherit',
-                                                                textDecoration: 'none',
-                                                            }}>
-                                                            {bookTitle}
-                                                        </Typography>
+                                                <Typography
+                                                    gutterBottom
+                                                    variant="h6"
+                                                    component="a"
+                                                    href={`/product/${bookHeaderId}`}
+                                                    sx={{
+                                                        color: 'inherit',
+                                                        textDecoration: 'none',
+                                                    }}>
+                                                    {bookTitle}
+                                                </Typography>
                                                 <Typography variant="body2" gutterBottom>
                                                     {authors.map((author) => {
                                                         return (
@@ -560,14 +485,16 @@ export default function HomePage() {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Typography align={"left"} sx={{marginLeft: 1 }} variant="subtitle1" component="div">
+                                    <Typography align={"left"} sx={{marginLeft: 1}} variant="subtitle1" component="div">
                                         Price: {price} zł
                                     </Typography>
 
-                                    <Typography align={"left"} variant="body2" sx={{marginLeft: 1, marginBottom:5}} color="text.secondary">
+                                    <Typography align={"left"} variant="body2" sx={{marginLeft: 1, marginBottom: 5}}
+                                                color="text.secondary">
                                         Available: {quantity}
                                     </Typography>
-                                    <Button size="medium" variant="outlined">Add to Cart</Button>
+                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to
+                                        Cart</Button>
                                 </Grid>
 
                             </Paper>
