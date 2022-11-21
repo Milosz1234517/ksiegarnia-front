@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useCallback, useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Context = React.createContext({
     authToken: null,
@@ -12,6 +12,68 @@ export const ContextProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
 
     const navigate = useNavigate();
+    let location = useLocation();
+
+    const removeItemFromCart = async (data) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/bookstore/deleteItemFromBasket?itemId=${data}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                },
+            });
+            const resp = await response.json();
+            if (response.ok) {
+
+            }
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    }
+
+    // const checkTokenExpiration = async () => {
+    //     try {
+    //         const response = await fetch(`http://localhost:8080/api/connection/user`, {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 'Authorization': 'Bearer ' + authToken
+    //             },
+    //         });
+    //         const resp = await response.json();
+    //         if (!response.ok) {
+    //             logout()
+    //         }
+    //     } catch (e) {
+    //         // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+    //     }
+    // }
+
+    const checkTokenExpiration = useCallback(() => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status !== 200) {
+                logout()
+            }
+        };
+
+        xhttp.open(
+            "GET",
+            `http://localhost:8080/api/connection/user`,
+            true,
+            null,
+            null
+        );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + authToken)
+        xhttp.send();
+
+    }, [authToken]);
+
+    useEffect(() => {
+        checkTokenExpiration()
+    }, [checkTokenExpiration, location]);
+
 
     const addItemToCart = async (data) => {
         try {
@@ -85,7 +147,6 @@ export const ContextProvider = (props) => {
         setIsLoggedIn(false)
         setAuthToken(null);
         localStorage.removeItem('token');
-        localStorage.removeItem('cartTmp');
     }
 
     const register = async (data) => {
@@ -120,6 +181,8 @@ export const ContextProvider = (props) => {
                 authToken,
                 isLoggedIn,
                 addItemToCart,
+                checkTokenExpiration,
+                removeItemFromCart,
                 updateItemCart,
                 login,
                 logout,
