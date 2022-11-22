@@ -32,24 +32,6 @@ export const ContextProvider = (props) => {
         }
     }
 
-    // const checkTokenExpiration = async () => {
-    //     try {
-    //         const response = await fetch(`http://localhost:8080/api/connection/user`, {
-    //             method: "GET",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'Authorization': 'Bearer ' + authToken
-    //             },
-    //         });
-    //         const resp = await response.json();
-    //         if (!response.ok) {
-    //             logout()
-    //         }
-    //     } catch (e) {
-    //         // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-    //     }
-    // }
-
     const checkTokenExpiration = useCallback(() => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {

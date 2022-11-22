@@ -8,6 +8,7 @@ import BasketPage from "./pages/BasketPage";
 import {useContext, useEffect} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
+import AccountPage from "./pages/AccountPage";
 
 export const theme = createTheme();
 
@@ -24,6 +25,12 @@ function App() {
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/profile" element={
+                    !ctx.isLoggedIn ? (
+                        <Navigate to="/login" replace />
+                    ) : (
+                        <AccountPage/>
+                    )}/>
                 <Route path="/basket"
                        element={
                            !ctx.isLoggedIn ? (
