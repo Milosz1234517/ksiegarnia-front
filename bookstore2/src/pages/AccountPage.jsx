@@ -4,18 +4,19 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import {Box} from "@mui/system";
 import {
-    Button,
+    Button, Collapse,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader,
     Tab,
     Tabs,
     TextField
 } from "@mui/material";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
+import {ExpandLess, ExpandMore} from "@mui/icons-material";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -65,6 +66,8 @@ export default function AccountPage() {
     let [oldPassC, setOldPassC] = React.useState('');
     let [newPassC, setNewPassC] = React.useState('');
 
+    const [orders, setOrders] = React.useState([]);
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -102,6 +105,34 @@ export default function AccountPage() {
     useEffect(() => {
         getUser()
     }, [getUser]);
+
+    const getOrders = useCallback(() => {
+        const xhttp = new XMLHttpRequest();
+        let json;
+        let obj;
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                json = xhttp.responseText;
+                obj = JSON.parse(json);
+                setOrders(obj)
+            }
+        };
+
+        xhttp.open(
+            "GET",
+            `http://localhost:8080/api/bookstore/getOrdersFilterUser?page=1`,
+            true,
+            null,
+            null
+        );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xhttp.send();
+
+    }, [ctx.authToken]);
+
+    useEffect(() => {
+        getOrders()
+    }, [getOrders]);
 
     const changeUserDetails = async (data) => {
         try {
@@ -219,6 +250,8 @@ export default function AccountPage() {
         setNewPassC('')
         setOldPassC('')
     }
+
+    const [map1, setMap1] = useState([])
 
     return (
         <div>
@@ -348,7 +381,68 @@ export default function AccountPage() {
 
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    Item Two
+                    <List
+                        sx={{width: '100%', alignItems: 'center', maxWidth: 800, bgcolor: 'background.paper'}}
+                        component="nav"
+                        aria-labelledby="nested-list-subheader"
+                        subheader={
+                            <ListSubheader component="div" id="nested-list-subheader">
+                                Orders
+                            </ListSubheader>
+                        }
+                        disableGutters
+                    >
+                        <ListItemButton selected={true}>
+                            <ListItemText primary={"Number"}/>
+                            <ListItemText primary={"Status"}/>
+                            <ListItemText primary={"Date"}/>
+                            <ListItemText primary={"Total Price"}/>
+                        </ListItemButton>
+                        {orders.map((order) => {
+                            const {orderId, orderStatus, orderDate, totalPrice, orderItems} = order
+
+                            let openItem = false
+
+                            const handleClick = (id) => {
+                                let val = map1.find((item) => item.key === id)
+                                let newMap = map1.filter((item) => item.key !== id)
+                                if(val) {
+                                    newMap.push({key: id, value: !val.value})
+                                }else{
+                                    newMap.push({key: id, value: true})
+                                }
+                                setMap1(newMap)
+                            };
+
+                            return (
+                                <div>
+                                    <ListItemButton selected={map1.find((item) => item.key === orderId) ? map1.find((item) => item.key === orderId).value : false} onClick={() => handleClick(orderId)}>
+
+                                        <ListItemText primary={orderId}/>
+                                        <ListItemText primary={orderStatus.description}/>
+                                        <ListItemText primary={orderDate}/>
+                                        <ListItemText primary={`${totalPrice}zł`}/>
+                                        {openItem ? <ExpandLess/> : <ExpandMore/>}
+                                    </ListItemButton>
+                                    <Collapse in={map1.find((item) => item.key === orderId) ? map1.find((item) => item.key === orderId).value : false} timeout="auto" unmountOnExit>
+                                        <List component="div" disablePadding>
+                                            {orderItems.map((item) => {
+                                                const{bookHeader, price, quantity} = item
+                                                return (
+                                                    <ListItemButton sx={{pl: 4}}>
+                                                        <ListItemText primary={bookHeader.bookTitle}/>
+                                                        <ListItemText primary={quantity}/>
+                                                        <ListItemText primary={price}/>
+                                                    </ListItemButton>
+                                                )
+                                            })}
+                                        </List>
+                                    </Collapse>
+                                    <Divider variant="fullWidth" component="li" />
+                                </div>
+                            )
+                        })}
+                    </List>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     Item Three
