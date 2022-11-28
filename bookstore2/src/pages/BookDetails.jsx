@@ -181,6 +181,7 @@ export default function BookDetails() {
                     quantity,
                     edition,
                     releaseDate,
+                    icon,
                     bookCategories
                 } = book;
 
@@ -196,7 +197,7 @@ export default function BookDetails() {
 
                             <ButtonBase sx={{width: "600px", height: "400px", marginTop: 5, marginLeft: 5}}>
                                 <Img alt="complex"
-                                     src="https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"/>
+                                     src={icon}/>
                             </ButtonBase>
 
                             <Typography sx={{marginLeft: 10, marginRight: 5, marginTop: 4}} variant="h2">

@@ -2,21 +2,26 @@ import HomePageMenu from "../components/HomePageMenu";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import PropTypes from "prop-types";
-import {Box} from "@mui/system";
+import {Box, Stack} from "@mui/system";
 import {
     Button, Collapse,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader,
-    Tab,
+    DialogTitle, Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Pagination, Paper,
+    Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     Tabs,
     TextField
 } from "@mui/material";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {useSearchParams} from "react-router-dom";
+import Grid from "@mui/material/Grid";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -59,14 +64,86 @@ export default function AccountPage() {
     const [userChange, setUserChange] = useState({})
 
     const [open, setOpen] = React.useState(false);
+    const [openReview, setOpenReview] = React.useState(false);
     const [openPass, setOpenPass] = React.useState(false);
+    const [page, setPage] = React.useState(1);
+    const [pageReview, setPageReview] = React.useState(1);
+    const [count, setCount] = React.useState(1);
+    const [countReview, setCountReview] = React.useState(1);
+    const [marks, setMarks] = React.useState([]);
 
-    const [oldPass, setOldPass] = React.useState('');
-    const [newPass, setNewPass] = React.useState('');
     let [oldPassC, setOldPassC] = React.useState('');
     let [newPassC, setNewPassC] = React.useState('');
 
     const [orders, setOrders] = React.useState([]);
+
+    const getBookCount = useCallback(() => {
+        const xhttp = new XMLHttpRequest();
+        let json;
+        let obj;
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                json = xhttp.response;
+
+                obj = JSON.parse(json);
+                setCountReview(Math.ceil(obj / 2));
+
+            }
+            if (this.readyState === 4 && this.status === 400) {
+                console.log("No access.");
+            }
+        };
+
+        xhttp.open(
+            "GET",
+            `http://localhost:8080/api/bookstore/getReviewsForUserCount`,
+            true,
+            null,
+            null
+        );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xhttp.send();
+
+    }, [ctx.authToken]);
+
+    useEffect(() => {
+        getBookCount();
+    }, [getBookCount]);
+
+    const getMarks = useCallback(() => {
+        const xhttp = new XMLHttpRequest();
+        let json;
+        let obj;
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                json = xhttp.response;
+
+                obj = JSON.parse(json);
+                setMarks(obj)
+
+            }
+            if (this.readyState === 4 && this.status === 400) {
+                console.log("No access.");
+            }
+        };
+
+        xhttp.open(
+            "GET",
+            `http://localhost:8080/api/bookstore/getReviewsForUser?page=${pageReview}`,
+            true,
+            null,
+            null
+        );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xhttp.send();
+
+    }, [ctx.authToken, pageReview]);
+
+    useEffect(() => {
+        getMarks();
+    }, [getMarks]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -120,7 +197,7 @@ export default function AccountPage() {
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterUser?page=1`,
+            `http://localhost:8080/api/bookstore/getOrdersFilterUser?page=${page}`,
             true,
             null,
             null
@@ -128,7 +205,35 @@ export default function AccountPage() {
         xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
         xhttp.send();
 
-    }, [ctx.authToken]);
+    }, [ctx.authToken, page]);
+
+    const getOrdersCount = useCallback(() => {
+        const xhttp = new XMLHttpRequest();
+        let json;
+        let obj;
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                json = xhttp.responseText;
+                obj = JSON.parse(json);
+                setCount(Math.ceil(obj / 2));
+            }
+        };
+
+        xhttp.open(
+            "GET",
+            `http://localhost:8080/api/bookstore/getOrdersFilterUserCount?page=${page}`,
+            true,
+            null,
+            null
+        );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xhttp.send();
+
+    }, [ctx.authToken, page]);
+
+    useEffect(() => {
+        getOrdersCount()
+    }, [getOrdersCount]);
 
     useEffect(() => {
         getOrders()
@@ -232,8 +337,6 @@ export default function AccountPage() {
 
     function handleClosePass() {
         setOpenPass(false);
-        setNewPass('')
-        setOldPass('')
         setNewPassC('')
         setOldPassC('')
     }
@@ -245,13 +348,25 @@ export default function AccountPage() {
     function handleConfirmPass() {
         changePassword({newPass: newPassC, oldPass: oldPassC})
         setOpenPass(false);
-        setNewPass('')
-        setOldPass('')
         setNewPassC('')
         setOldPassC('')
     }
 
-    const [map1, setMap1] = useState([])
+    function handleChangePage(event, value) {
+        setPage(value);
+    }
+
+    function handleChangePageReview(event, value) {
+        setPageReview(value);
+    }
+
+    const handleCloseReview = () => {
+        setOpenReview(false);
+    };
+
+    function handleConfirmReview() {
+        setOpenReview(false);
+    }
 
     return (
         <div>
@@ -381,73 +496,183 @@ export default function AccountPage() {
 
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <List
-                        sx={{width: '100%', alignItems: 'center', maxWidth: 800, bgcolor: 'background.paper'}}
-                        component="nav"
-                        aria-labelledby="nested-list-subheader"
-                        subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
-                                Orders
-                            </ListSubheader>
-                        }
-                        disableGutters
-                    >
-                        <ListItemButton selected={true}>
-                            <ListItemText primary={"Number"}/>
-                            <ListItemText primary={"Status"}/>
-                            <ListItemText primary={"Date"}/>
-                            <ListItemText primary={"Total Price"}/>
-                        </ListItemButton>
-                        {orders.map((order) => {
-                            const {orderId, orderStatus, orderDate, totalPrice, orderItems} = order
 
-                            let openItem = false
+                    <Dialog open={openReview} onClose={handleCloseReview}>
+                        <DialogTitle>Review</DialogTitle>
+                        <DialogContent>
 
-                            const handleClick = (id) => {
-                                let val = map1.find((item) => item.key === id)
-                                let newMap = map1.filter((item) => item.key !== id)
-                                if(val) {
-                                    newMap.push({key: id, value: !val.value})
-                                }else{
-                                    newMap.push({key: id, value: true})
-                                }
-                                setMap1(newMap)
-                            };
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseReview}>Cancel</Button>
+                            <Button onClick={handleConfirmReview}>Apply</Button>
+                        </DialogActions>
+                    </Dialog>
 
-                            return (
-                                <div>
-                                    <ListItemButton selected={map1.find((item) => item.key === orderId) ? map1.find((item) => item.key === orderId).value : false} onClick={() => handleClick(orderId)}>
+                    <Pagination count={count} page={page} onChange={handleChangePage} sx={{
+                        margin: "20px",
+                        alignSelf: "center"
+                    }}/>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="collapsible table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Order Number</TableCell>
+                                    <TableCell align="right">Status</TableCell>
+                                    <TableCell align="right">Date</TableCell>
+                                    <TableCell align="right">Total Price(zł)</TableCell>
+                                    <TableCell/>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {orders.map((row) => (
+                                    <Row key={row.name} row={row}/>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-                                        <ListItemText primary={orderId}/>
-                                        <ListItemText primary={orderStatus.description}/>
-                                        <ListItemText primary={orderDate}/>
-                                        <ListItemText primary={`${totalPrice}zł`}/>
-                                        {openItem ? <ExpandLess/> : <ExpandMore/>}
-                                    </ListItemButton>
-                                    <Collapse in={map1.find((item) => item.key === orderId) ? map1.find((item) => item.key === orderId).value : false} timeout="auto" unmountOnExit>
-                                        <List component="div" disablePadding>
-                                            {orderItems.map((item) => {
-                                                const{bookHeader, price, quantity} = item
-                                                return (
-                                                    <ListItemButton sx={{pl: 4}}>
-                                                        <ListItemText primary={bookHeader.bookTitle}/>
-                                                        <ListItemText primary={quantity}/>
-                                                        <ListItemText primary={price}/>
-                                                    </ListItemButton>
-                                                )
-                                            })}
-                                        </List>
-                                    </Collapse>
-                                    <Divider variant="fullWidth" component="li" />
-                                </div>
-                            )
-                        })}
-                    </List>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Item Three
+                    <Stack spacing={2}>
+                        <Pagination count={countReview} page={pageReview} onChange={handleChangePageReview} sx={{
+                            margin: "20px",
+                            alignSelf: "center"
+                        }}/>
+                    </Stack>
+                    {marks.map((review) => {
+                        const {description, mark, user} = review;
+                        return (
+                            <Grid item>
+                                <Paper
+                                    sx={{
+                                        p: 1,
+                                        margin: 4,
+                                        gridTemplateRows: "1fr auto",
+                                        gridGap: "8px",
+                                        height: "100%",
+                                        flexGrow: 1,
+                                    }}
+                                >
+                                    <Grid container spacing={2}>
+                                        <Grid item container>
+                                            <Typography
+                                                gutterBottom
+                                                variant="h6"
+                                                component="a"
+                                                sx={{
+                                                    color: 'inherit',
+                                                    textDecoration: 'none',
+                                                }}>
+                                                {user.login}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item container>
+                                            <Typography variant="body2" gutterBottom>
+                                                {description}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item container>
+                                            <Typography variant="body2" gutterBottom>
+                                                Mark: {mark}/10
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Paper>
+                            </Grid>
+                        );
+                    })}
                 </TabPanel>
             </Box>
         </div>
     );
+}
+function Row(props) {
+    const {row} = props;
+    const [open, setOpen] = React.useState(false);
+
+    function handleCreateReview(boohHeaderId) {
+        // setOpenReview(true)
+    }
+
+    return (
+        <React.Fragment>
+            <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+                <TableCell component="th" scope="row">
+                    {row.orderId}
+                </TableCell>
+                <TableCell align="right">{row.orderStatus.description}</TableCell>
+                <TableCell align="right">{row.orderDate}</TableCell>
+                <TableCell align="right">{row.totalPrice}</TableCell>
+                <TableCell>
+                    <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => setOpen(!open)}
+                    >
+                        {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                    </IconButton>
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box sx={{margin: 1}}>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Order Items
+                            </Typography>
+                            <Table size="small" aria-label="purchases">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Book Title</TableCell>
+                                        <TableCell>Quantity</TableCell>
+                                        <TableCell align="right">Price(zł)</TableCell>
+                                        <TableCell/>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {row.orderItems.map((item) => (
+                                        <TableRow key={item.itemId}>
+                                            <TableCell component="th" scope="row">
+                                                {item.bookHeader.bookTitle}
+                                            </TableCell>
+                                            <TableCell>{item.quantity}</TableCell>
+                                            <TableCell align="right">{item.price}</TableCell>
+                                            <TableCell align="right">
+                                                <Button onClick={() => handleCreateReview(item.bookHeader.boohHeaderId)}>Add Review</Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
+    );
+}
+
+Row.propTypes = {
+    row: PropTypes.shape({
+        orderId: PropTypes.number.isRequired,
+        orderStatus: PropTypes.arrayOf(
+            PropTypes.shape({
+                description: PropTypes.string.isRequired,
+            }),
+        ).isRequired,
+        orderDate: PropTypes.string.isRequired,
+        totalPrice: PropTypes.number.isRequired,
+        orderItems: PropTypes.arrayOf(
+            PropTypes.shape({
+                itemId: PropTypes.number.isRequired,
+                bookHeader:PropTypes.arrayOf(
+                    PropTypes.shape({
+                        bookTitle: PropTypes.string.isRequired,
+                    }),
+                ).isRequired,
+                quantity: PropTypes.number.isRequired,
+                price: PropTypes.number.isRequired,
+            }),
+        ).isRequired
+    }).isRequired
 }
