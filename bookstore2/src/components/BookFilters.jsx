@@ -1,9 +1,34 @@
 import {Box} from "@mui/system";
 import {TextField, Typography} from "@mui/material";
 import * as React from "react";
+import {useEffect} from "react";
+import {useSearchParams} from "react-router-dom";
 
 
-export default function BookFilters({searchParams, filterParams, textInput}){
+export default function BookFilters({searchParams, filterParams}){
+
+    const [urlSearchParams] = useSearchParams(window.location.search);
+    const [textInput] = React.useState({
+        name: React.useRef(null),
+        surname: React.useRef(null),
+        priceUp: React.useRef(null),
+        priceDown: React.useRef(null)
+    })
+
+    useEffect(() => {
+        if (textInput.priceDown.current !== null)
+            textInput.priceDown.current.value = urlSearchParams.get('priceDown') || '';
+
+        if (textInput.priceUp.current !== null)
+            textInput.priceUp.current.value = urlSearchParams.get('priceUp') || '';
+
+        if (textInput.name.current !== null)
+            textInput.name.current.value = urlSearchParams.get('name') || '';
+
+        if (textInput.surname.current !== null)
+            textInput.surname.current.value = urlSearchParams.get('surname') || '';
+
+    }, [textInput.name, textInput.priceDown, textInput.priceUp, textInput.surname, urlSearchParams]);
 
     function handleChangeSurname(event) {
         filterParams.surname = event.target.value
