@@ -9,9 +9,9 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Pagination, Paper,
+    DialogTitle, Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Pagination, Paper, Rating,
     Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    Tabs,
+    Tabs, TextareaAutosize,
     TextField
 } from "@mui/material";
 import {useCallback, useContext, useEffect, useState} from "react";
@@ -64,7 +64,6 @@ export default function AccountPage() {
     const [userChange, setUserChange] = useState({})
 
     const [open, setOpen] = React.useState(false);
-    const [openReview, setOpenReview] = React.useState(false);
     const [openPass, setOpenPass] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [pageReview, setPageReview] = React.useState(1);
@@ -142,8 +141,9 @@ export default function AccountPage() {
     }, [ctx.authToken, pageReview]);
 
     useEffect(() => {
-        getMarks();
-    }, [getMarks]);
+        if(value === 2)
+            getMarks();
+    }, [getMarks, value]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -359,15 +359,6 @@ export default function AccountPage() {
     function handleChangePageReview(event, value) {
         setPageReview(value);
     }
-
-    const handleCloseReview = () => {
-        setOpenReview(false);
-    };
-
-    function handleConfirmReview() {
-        setOpenReview(false);
-    }
-
     return (
         <div>
             <HomePageMenu/>
@@ -497,17 +488,6 @@ export default function AccountPage() {
                 </TabPanel>
                 <TabPanel value={value} index={1}>
 
-                    <Dialog open={openReview} onClose={handleCloseReview}>
-                        <DialogTitle>Review</DialogTitle>
-                        <DialogContent>
-
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleCloseReview}>Cancel</Button>
-                            <Button onClick={handleConfirmReview}>Apply</Button>
-                        </DialogActions>
-                    </Dialog>
-
                     <Pagination count={count} page={page} onChange={handleChangePage} sx={{
                         margin: "20px",
                         alignSelf: "center"
@@ -588,14 +568,117 @@ export default function AccountPage() {
 }
 function Row(props) {
     const {row} = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [openReview, setOpenReview] = useState(false);
+    const [bookHeaderId, setBookHeaderId] = useState('')
+    const [value, setValue] = React.useState(2);
+    const [description, setDescription] = useState('')
 
-    function handleCreateReview(boohHeaderId) {
-        // setOpenReview(true)
+    const ctx = useContext(Context);
+
+    const addReview = async (data) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/bookstore/reviewBook', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + ctx.authToken
+                },
+                body: JSON.stringify({
+                    bookHeaderId: data.bookHeaderId,
+                    mark: data.mark,
+                    description: data.description
+                }),
+            });
+            const resp = await response.json();
+            if (response.ok) {
+
+            }
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
+    const getReview = async (data) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/bookstore/getReviewsForBookAndUser?bookHeaderId=${data}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + ctx.authToken
+                }
+            });
+            const resp = await response.json();
+            if (response.ok) {
+                if(!resp){
+                    setOpenReview(true)
+                    setBookHeaderId(data)
+                }
+            }
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
+    function handleCreateReview(bookHeaderId) {
+        getReview(bookHeaderId)
     }
+
+    const handleCloseReview = () => {
+        setValue(2)
+        setBookHeaderId('')
+        setDescription('')
+        setOpenReview(false);
+    };
+
+    function handleConfirmReview() {
+        addReview({bookHeaderId: bookHeaderId, mark: value, description: description})
+        setValue(2)
+        setBookHeaderId('')
+        setDescription('')
+        setOpenReview(false);
+    }
+
+    function handleDescriptionChange(event) {
+        setDescription(event.target.value)
+    }
+
 
     return (
         <React.Fragment>
+
+            <Dialog open={openReview} onClose={handleCloseReview}>
+                <DialogTitle>Review</DialogTitle>
+                <DialogContent>
+                    <Rating
+                        name="simple-controlled"
+                        value={value}
+                        max={10}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                    />
+
+                    <TextareaAutosize
+                        aria-label="minimum height"
+                        minRows={3}
+                        placeholder="Description"
+                        onChange={handleDescriptionChange}
+                        style={{
+                            width: 400,
+                            maxWidth: 400,
+                            margin: 25,
+
+                        }}
+                    />
+
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseReview}>Cancel</Button>
+                    <Button onClick={handleConfirmReview}>Apply</Button>
+                </DialogActions>
+            </Dialog>
+
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
                 <TableCell component="th" scope="row">
                     {row.orderId}
@@ -607,8 +690,7 @@ function Row(props) {
                     <IconButton
                         aria-label="expand row"
                         size="small"
-                        onClick={() => setOpen(!open)}
-                    >
+                        onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
@@ -638,7 +720,7 @@ function Row(props) {
                                             <TableCell>{item.quantity}</TableCell>
                                             <TableCell align="right">{item.price}</TableCell>
                                             <TableCell align="right">
-                                                <Button onClick={() => handleCreateReview(item.bookHeader.boohHeaderId)}>Add Review</Button>
+                                                <Button onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}>Add Review</Button>
                                             </TableCell>
                                         </TableRow>
                                     ))}

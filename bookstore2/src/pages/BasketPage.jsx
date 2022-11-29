@@ -15,6 +15,7 @@ export default function BasketPage() {
 
     const [cartItems, setCartItems] = useState([])
     const [emptyCart, setEmptyCart] = useState(true)
+    const [show, setShow] = useState(false)
     const [description, setDescription] = useState('')
 
 
@@ -29,6 +30,12 @@ export default function BasketPage() {
 
                 obj = JSON.parse(json);
                 setCartItems(obj)
+
+                setShow(true)
+
+                if(obj.length !== 0)
+                    setEmptyCart(false)
+
             }
             if (this.readyState === 4 && this.status === 400) {
                 console.log("No access.");
@@ -54,8 +61,9 @@ export default function BasketPage() {
     useEffect(() => {
         if (cartItems.length === 0)
             setEmptyCart(true)
-        else
+        else {
             setEmptyCart(false)
+        }
     }, [cartItems]);
 
 
@@ -149,7 +157,7 @@ export default function BasketPage() {
                         }}>
                 Basket
             </Typography>
-            {emptyCart && <Typography
+            {(show && emptyCart) && <Typography
                 gutterBottom
                 variant="h4"
                 component="a"
