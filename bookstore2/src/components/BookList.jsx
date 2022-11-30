@@ -4,7 +4,7 @@ import * as React from "react";
 import {styled} from "@mui/material/styles";
 import {useContext} from "react";
 import Context from "../store/context";
-import {Box} from "@mui/system";
+import {Box, breakpoints} from "@mui/system";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -15,14 +15,17 @@ const Img = styled('img')({
 });
 
 const StyledMainGrid = styled(Grid)(() => ({
-    display: "inline-block",
+    display: "grid",
     margin: "auto",
     spacing: [1],
 }));
 
 const StyledMainBox = styled(Box)(() => ({
-    margin: 10,
-    display: "grid"
+    margin: "auto",
+    marginBottom: 20,
+    marginTop: 20,
+    display: "grid",
+    width: "90%"
 }));
 
 const StyledTitleWrap = styled(Typography)(() => ({
@@ -34,20 +37,36 @@ const StyledTitleWrap = styled(Typography)(() => ({
 const StyledTitle = styled(Typography)(() => ({
     color: 'inherit',
     textDecoration: 'none',
+    display: "block",
+    maxWidth: window.innerWidth * 0.7,
+    textOverflow: "ellipsis",
+    overflow: "hidden"
 }));
 
 const StyledAuthor = styled(Typography)(() => ({
     marginLeft: 10,
+    display: "block",
+    maxWidth: window.innerWidth * 0.7,
+    textOverflow: "ellipsis",
+    overflow: "hidden"
 }));
 
 const StyledAvailable = styled(Typography)(() => ({
     marginLeft: 10,
-    marginBottom: 50
+    marginBottom: 50,
+    display: "block",
+    maxWidth: window.innerWidth * 0.7,
+    textOverflow: "ellipsis",
+    overflow: "hidden"
 }));
 
 const StyledPrice = styled(Typography)(() => ({
     marginLeft: 10,
-    marginTop: 20
+    marginTop: 20,
+    display: "block",
+    maxWidth: window.innerWidth * 0.7,
+    textOverflow: "ellipsis",
+    overflow: "hidden"
 }));
 
 export default function BookList({cards}) {
@@ -68,7 +87,7 @@ export default function BookList({cards}) {
                     <StyledMainBox>
 
                         <Paper key={bookHeaderId} sx={{
-                            flexGrow: 1, p: 4, display: "grid"
+                            flexGrow: 1, p:4, display: "grid",
                         }}>
 
                             <Box sx={{display: "grid"}}>
@@ -82,10 +101,9 @@ export default function BookList({cards}) {
                                         </ButtonBase>
                                     </Grid>
 
-                                    <Grid item xs={12} sm container>
+                                    <Grid item xs sm container>
                                         <Grid item xs container direction="column" spacing={2}>
                                             <Grid item xs>
-
                                                 <StyledTitleWrap>
                                                     <StyledTitle
                                                         gutterBottom
@@ -118,7 +136,7 @@ export default function BookList({cards}) {
                                 <Grid item xs={6}>
 
                                     <StyledPrice align={"left"} variant="subtitle1" component="div">
-                                        Price: {price} zł
+                                        Price: {price}
                                     </StyledPrice>
 
                                     <StyledAvailable align={"left"} variant="body2" color="text.secondary">

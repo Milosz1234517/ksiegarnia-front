@@ -245,7 +245,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                     <BookFilters filterParams={filterParams} searchParams={searchParams}/>}
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
-                    <StyledSearchResultLabel sx={{marginLeft: 2 }}>
+                    <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5 }}>
                         Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
                     </StyledSearchResultLabel>}
             </Box>
