@@ -28,8 +28,8 @@ export default function HomePage() {
         <Box sx={{flexGrow: 1}}>
             <HomePageMenu/>
             <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
-            <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
             <BookList cards={books}/>
+            <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
         </Box>
     );
 }

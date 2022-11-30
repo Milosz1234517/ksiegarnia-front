@@ -203,50 +203,49 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         <Box>
             <StyledMainBox>
 
-                    <Box sx={{display: "flex"}}>
-                        <StyledAutocomplete
-                            freeSolo
-                            onInputChange={(e, v) => {
-                                setBooksAutocomplete([])
-                                setSearchInput(v)
-                            }}
-                            inputValue={searchInput}
-                            options={booksAutocomplete.map((book) => book.bookTitle)}
-                            renderInput={(params) =>
-                                <TextField {...params} label="Search Books"/>}/>
+                <Box sx={{display: "flex"}}>
+                    <StyledAutocomplete
+                        freeSolo
+                        onInputChange={(e, v) => {
+                            setBooksAutocomplete([])
+                            setSearchInput(v)
+                        }}
+                        inputValue={searchInput}
+                        options={booksAutocomplete.map((book) => book.bookTitle)}
+                        renderInput={(params) =>
+                            <TextField {...params} label="Search Books"/>}/>
 
-                        <StyledSearchButton onClick={handleSearchBooks}><SearchIcon/></StyledSearchButton>
-                    </Box>
-
-                        <StyledAvailableSwitch
-                            control={
-                                <Switch
-                                    checked={available}
-                                    onChange={() => {
-                                        setAvailable(!available)
-                                    }}
-                                    name="loading"
-                                    color="primary"/>}
-                            label="In Stock Only"/>
-
-                        <StyledFilterSwitch
-                            control={
-                                <Switch
-                                    checked={filtersOn}
-                                    onChange={() => setFilters(!filtersOn)}
-                                    name="loading"
-                                    color="primary"/>}
-                            label="Filters"/>
-
-
+                    <StyledSearchButton onClick={handleSearchBooks}><SearchIcon/></StyledSearchButton>
+                </Box>
             </StyledMainBox>
+
+            <StyledAvailableSwitch
+                control={
+                    <Switch
+                        checked={available}
+                        onChange={() => {
+                            setAvailable(!available)
+                        }}
+                        name="loading"
+                        color="primary"/>}
+                label="In Stock Only"/>
+
+            <StyledFilterSwitch
+                control={
+                    <Switch
+                        checked={filtersOn}
+                        onChange={() => setFilters(!filtersOn)}
+                        name="loading"
+                        color="primary"/>}
+                label="Filters"/>
+
 
             <Box>
                 {filtersOn &&
                     <BookFilters filterParams={filterParams} searchParams={searchParams}/>}
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
-                    <StyledSearchResultLabel>
+                    <StyledSearchResultLabel sx={{marginLeft: 2 }}>
                         Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
                     </StyledSearchResultLabel>}
             </Box>
