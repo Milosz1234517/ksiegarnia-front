@@ -48,13 +48,10 @@ export default function BookFilters({searchParams, filterParams}){
 
     return(
         <Box>
-            <Box sx={{display: "flex"}} justifyContent={"center"}>
-
-                <Typography sx={{marginLeft: 10, marginRight: 5, marginTop: 4}}>Price</Typography>
-
+            <Box sx={{display: "inline-block", margin: 1}}>
                 <TextField
                     margin="normal"
-                    sx={{marginRight: 5, marginLeft: 5}}
+                    sx={{margin: 1}}
                     fullWidth
                     variant="filled"
                     id="priceDown"
@@ -66,12 +63,12 @@ export default function BookFilters({searchParams, filterParams}){
                     inputRef={textInput.priceDown}
                     onChange={handleChangePriceDown}
                     autoFocus/>
-
-                <Typography sx={{marginRight: 4, marginLeft: 5, marginTop: 4}}>To</Typography>
+            </Box>
+            <Box sx={{display: "inline-block", margin: 1}}>
 
                 <TextField
                     margin="normal"
-                    sx={{marginLeft: 5, marginRight: 25}}
+                    sx={{margin: 1}}
                     fullWidth
                     variant="filled"
                     id="priceLow"
@@ -86,12 +83,10 @@ export default function BookFilters({searchParams, filterParams}){
 
             </Box>
 
-            <Box sx={{display: "flex"}} justifyContent={"center"}>
-                <Typography sx={{marginLeft: 10, marginRight: 5, marginTop: 4}}>Author</Typography>
-
+            <Box sx={{display: "inline-block", margin: 1}}>
                 <TextField
                     margin="normal"
-                    sx={{marginLeft: 4, marginRight: 11}}
+                    sx={{margin: 1}}
                     fullWidth
                     variant="filled"
                     id="authorName"
@@ -103,9 +98,12 @@ export default function BookFilters({searchParams, filterParams}){
                     onChange={handleChangeName}
                     autoFocus/>
 
+            </Box>
+            <Box sx={{display: "inline-block", margin: 1}}>
+
                 <TextField
                     margin="normal"
-                    sx={{marginLeft: 11, marginRight: 25}}
+                    sx={{margin: 1}}
                     fullWidth
                     variant="filled"
                     id="authorSurname"

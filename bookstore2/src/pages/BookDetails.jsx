@@ -191,6 +191,7 @@ export default function BookDetails() {
 
     return (
         <Box sx={{flexGrow: 1}}>
+            <HomePageMenu/>
             {book.map((book) => {
                 const {
                     authors,
@@ -210,65 +211,82 @@ export default function BookDetails() {
 
                 return (
                     <div>
-                        <HomePageMenu/>
-                        <Box sx={{display: "inline-block"}}>
 
-                            <ButtonBase
-                                sx={{display: "inline-block", marginBottom: 20, scale: "90%", width: size[0], height: size[1], maxWidth: 200, maxHeight: 200}}>
-                                <Img alt="complex"
-                                     src={icon}/>
-                            </ButtonBase>
 
-                        <Box sx={{display: "inline-block"}}>
-                                <Typography sx={{margin: 4}} variant="h2">
+                            <Box sx={{display: "grid"}}>
 
-                                    {bookTitle}
+                                <Grid container spacing={2}>
 
-                                    <Typography sx={{}} variant="h5">
-                                        Authors: {authors.map((author) => {
-                                        return (
-                                            <Typography Typography variant="body2"
-                                                        color="text.secondary"
-                                                        align={"left"}>
-                                                {author.name} {author.surname}
-                                            </Typography>)
-                                    })}
-                                    </Typography>
+                                    <Grid item>
+                                        <ButtonBase
+                                            sx={{
+                                                display: "inline-block",
+                                                scale: "90%",
+                                                width: size[0],
+                                                height: size[1],
+                                                maxWidth: 700,
+                                                maxHeight: 700
+                                            }}>
+                                            <Img alt="complex"
+                                                 src={icon}/>
+                                        </ButtonBase>
+                                    </Grid>
 
-                                    <Typography sx={{}} variant="h5">
-                                        Publishing-house:
-                                        <Typography Typography variant="body2"
-                                                    color="text.secondary"
-                                                    align={"left"}>
-                                            {publishingHouse.name}
-                                        </Typography>
-                                    </Typography>
+                                    <Grid item xs sm container>
+                                        <Grid item xs container direction="column" spacing={2}>
+                                            <Grid item xs>
 
-                                    <Typography sx={{}} variant="h5">
-                                        Quantity:
-                                        <Typography Typography variant="body2"
-                                                    color="text.secondary"
-                                                    align={"left"}>
-                                            {quantity}
-                                        </Typography>
-                                    </Typography>
+                                                    <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
+                                                        {bookTitle}
+                                                    </Typography>
 
-                                    <Typography sx={{marginBottom: 20}} variant="h5">
-                                        Price:
-                                        <Typography Typography variant="body2"
-                                                    color="text.secondary"
-                                                    align={"left"}>
-                                            {price} zł
-                                        </Typography>
-                                    </Typography>
+                                                    <Typography sx={{margin: 2}} variant="h5">
+                                                        Authors: {authors.map((author) => {
+                                                        return (
+                                                            <Typography Typography variant="body2"
+                                                                        color="text.secondary"
+                                                                        align={"left"}>
+                                                                {author.name} {author.surname}
+                                                            </Typography>)
+                                                    })}
+                                                    </Typography>
 
-                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to
-                                        Cart</Button>
+                                                    <Typography sx={{margin: 2}} variant="h5">
+                                                        Publishing-house:
+                                                        <Typography Typography variant="body2"
+                                                                    color="text.secondary"
+                                                                    align={"left"}>
+                                                            {publishingHouse.name}
+                                                        </Typography>
+                                                    </Typography>
 
-                                </Typography>
+                                                    <Typography sx={{margin: 2}} variant="h5">
+                                                        Quantity:
+                                                        <Typography Typography variant="body2"
+                                                                    color="text.secondary"
+                                                                    align={"left"}>
+                                                            {quantity}
+                                                        </Typography>
+                                                    </Typography>
+
+                                                    <Typography sx={{margin: 2}} variant="h5">
+                                                        Price:
+                                                        <Typography Typography variant="body2"
+                                                                    color="text.secondary"
+                                                                    align={"left"}>
+                                                            {price} zł
+                                                        </Typography>
+                                                    </Typography>
+
+                                                    <Button sx={{margin: 2}} size="medium" variant="outlined" onClick={handleAddToCart}>Add to
+                                                        Cart</Button>
+
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+
+                                </Grid>
                             </Box>
-                        </Box>
-
 
 
                         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>

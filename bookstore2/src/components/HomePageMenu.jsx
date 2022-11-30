@@ -12,6 +12,8 @@ import {useContext} from "react";
 import Context from "../store/context";
 import {Button} from "@mui/material";
 import {styled} from "@mui/material/styles";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const StyledMenuBox = styled(Box)(() => ({
     display: "grid",
@@ -29,7 +31,7 @@ const StyledRegisterButton = styled(Button)(() => ({
 const StyledLogo = styled(Typography)(() => ({
     color: 'inherit',
     textDecoration: 'none',
-    minWidth: 110,
+    minWidth: 60,
     flexGrow: 2
 }));
 
@@ -77,22 +79,26 @@ export default function HomePageMenu() {
                         noWrap
                         component="a"
                         href="/">
-                        Book Store
+                        Books
                     </StyledLogo>
 
                     {!ctx.isLoggedIn && (
                         <Box>
 
-                            <StyledLoginButton
-                                color="primary"
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-haspopup="true"
                                 onClick={handleLoginOpen}
-                                variant="contained">
-                                Login
-                            </StyledLoginButton>
+                                color="inherit">
+                                <LoginIcon/>
+                            </IconButton>
 
                             <StyledRegisterButton
                                 color="primary"
                                 onClick={handleRegisterOpen}
+                                size="small"
                                 variant="contained">
                                 Register
                             </StyledRegisterButton>
@@ -122,12 +128,15 @@ export default function HomePageMenu() {
                                 <ShoppingBasket/>
                             </IconButton>
 
-                            <Button
-                                color="primary"
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-haspopup="true"
                                 onClick={handleLogoutOpen}
-                                variant="contained">
-                                Logout
-                            </Button>
+                                color="inherit">
+                                <LogoutIcon/>
+                            </IconButton>
                         </Box>
                     )}
 
