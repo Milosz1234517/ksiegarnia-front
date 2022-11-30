@@ -22,6 +22,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {useSearchParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import RateReviewIcon from '@mui/icons-material/RateReview';
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -371,7 +372,7 @@ export default function AccountPage() {
             </Typography>
             <Box sx={{width: '100%'}}>
                 <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tabs value={value} onChange={handleChange} scrollButtons="auto" variant="scrollable" aria-label="basic tabs example">
                         <Tab label="Account Details" {...a11yProps(0)} />
                         <Tab label="Orders" {...a11yProps(1)} />
                         <Tab label="Reviews" {...a11yProps(2)} />
@@ -496,11 +497,11 @@ export default function AccountPage() {
                         <Table aria-label="collapsible table">
                             <TableHead>
                                 <TableRow>
+                                    <TableCell/>
                                     <TableCell>Order Number</TableCell>
                                     <TableCell align="right">Status</TableCell>
                                     <TableCell align="right">Date</TableCell>
                                     <TableCell align="right">Total Price(zł)</TableCell>
-                                    <TableCell/>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -680,12 +681,6 @@ function Row(props) {
             </Dialog>
 
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
-                <TableCell component="th" scope="row">
-                    {row.orderId}
-                </TableCell>
-                <TableCell align="right">{row.orderStatus.description}</TableCell>
-                <TableCell align="right">{row.orderDate}</TableCell>
-                <TableCell align="right">{row.totalPrice}</TableCell>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -694,12 +689,18 @@ function Row(props) {
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
+                <TableCell component="th" scope="row">
+                    {row.orderId}
+                </TableCell>
+                <TableCell align="right">{row.orderStatus.description}</TableCell>
+                <TableCell align="right">{row.orderDate}</TableCell>
+                <TableCell align="right">{row.totalPrice}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{margin: 1}}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <Typography align="left" variant="h6" gutterBottom component="div">
                                 Order Items
                             </Typography>
                             <Table size="small" aria-label="purchases">
@@ -719,8 +720,8 @@ function Row(props) {
                                             </TableCell>
                                             <TableCell>{item.quantity}</TableCell>
                                             <TableCell align="right">{item.price}</TableCell>
-                                            <TableCell align="right">
-                                                <Button onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}>Add Review</Button>
+                                            <TableCell align="left">
+                                                <Button onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}><RateReviewIcon/></Button>
                                             </TableCell>
                                         </TableRow>
                                     ))}

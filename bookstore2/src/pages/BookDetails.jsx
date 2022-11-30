@@ -9,6 +9,8 @@ import {useParams, useSearchParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Context from "../store/context";
 
+import {useState, useLayoutEffect} from "react";
+
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -50,6 +52,23 @@ function a11yProps(index) {
     };
 }
 
+export const useWindowResize = () => {
+    const [size, setSize] = useState([0, 0]);
+
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+
+        window.addEventListener("resize", updateSize);
+        updateSize();
+
+        return () => window.removeEventListener("resize", updateSize);
+    }, []);
+
+    return size;
+};
+
 export default function BookDetails() {
 
     let {bookHeaderId} = useParams();
@@ -59,6 +78,7 @@ export default function BookDetails() {
     const [marks, setMarks] = React.useState([]);
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(1);
+    const [size] = useWindowResize();
 
     const ctx = useContext(Context);
 
@@ -73,7 +93,6 @@ export default function BookDetails() {
 
                 obj = JSON.parse(json);
                 setBook(obj)
-                // setBookAuthors(obj[0].authors)
 
             }
             if (this.readyState === 4 && this.status === 400) {
@@ -192,35 +211,109 @@ export default function BookDetails() {
                 return (
                     <div>
                         <HomePageMenu/>
+                        <Box sx={{display: "inline-block"}}>
 
-                        <Box sx={{display: "flex"}}>
-
-                            <ButtonBase sx={{width: "600px", height: "400px", marginTop: 5, marginLeft: 5}}>
+                            <ButtonBase
+                                sx={{display: "inline-block", marginBottom: 20, scale: "90%", width: size[0], height: size[1], maxWidth: 200, maxHeight: 200}}>
                                 <Img alt="complex"
                                      src={icon}/>
                             </ButtonBase>
 
-                            <Typography sx={{marginLeft: 10, marginRight: 5, marginTop: 4}} variant="h2">
-                                {bookTitle}
-                                <Typography sx={{marginRight: 5, marginTop: 4}} variant="h5">
+                        <Box sx={{display: "inline-block"}}>
+                                <Typography sx={{margin: 4}} variant="h2">
+
+                                    {bookTitle}
+
+                                    <Typography sx={{}} variant="h5">
+                                        Authors: {authors.map((author) => {
+                                        return (
+                                            <Typography Typography variant="body2"
+                                                        color="text.secondary"
+                                                        align={"left"}>
+                                                {author.name} {author.surname}
+                                            </Typography>)
+                                    })}
+                                    </Typography>
+
+                                    <Typography sx={{}} variant="h5">
+                                        Publishing-house:
+                                        <Typography Typography variant="body2"
+                                                    color="text.secondary"
+                                                    align={"left"}>
+                                            {publishingHouse.name}
+                                        </Typography>
+                                    </Typography>
+
+                                    <Typography sx={{}} variant="h5">
+                                        Quantity:
+                                        <Typography Typography variant="body2"
+                                                    color="text.secondary"
+                                                    align={"left"}>
+                                            {quantity}
+                                        </Typography>
+                                    </Typography>
+
+                                    <Typography sx={{marginBottom: 20}} variant="h5">
+                                        Price:
+                                        <Typography Typography variant="body2"
+                                                    color="text.secondary"
+                                                    align={"left"}>
+                                            {price} zł
+                                        </Typography>
+                                    </Typography>
+
+                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to
+                                        Cart</Button>
+
+                                </Typography>
+                            </Box>
+                        </Box>
+
+
+
+                        <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                            <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
+                                  aria-label="basic tabs example">
+                                <Tab label="Description" {...a11yProps(0)} />
+                                <Tab label="Details" {...a11yProps(1)} />
+                                <Tab label="Marks" {...a11yProps(2)} />
+                            </Tabs>
+                        </Box>
+
+                        <TabPanel value={value} index={0}>
+                            <Box sx={{overflow: "auto", maxWidth: size[0], marginBottom: 10}}>
+                                <Typography variant="body2"
+                                            color="text.secondary"
+                                            align={"left"}>
+                                    {book.description}
+                                </Typography>
+                            </Box>
+                        </TabPanel>
+
+                        <TabPanel value={value} index={1}>
+                            <Box sx={{overflow: "auto", maxWidth: size[0]}}>
+                                <Typography sx={{margin: 3}} Typography variant="h5">
                                     Authors: {authors.map((author) => {
                                     return (
                                         <Typography Typography variant="body2"
                                                     color="text.secondary"
                                                     align={"left"}>
                                             {author.name} {author.surname}
-                                        </Typography>)
+                                        </Typography>
+                                    )
                                 })}
                                 </Typography>
-                                <Typography sx={{marginRight: 5, marginTop: 4}} variant="h5">
+
+                                <Typography sx={{margin: 3}} Typography variant="h5">
                                     Publishing-house:
-                                    <Typography Typography variant="body2"
+                                    <Typography variant="body2"
                                                 color="text.secondary"
                                                 align={"left"}>
                                         {publishingHouse.name}
                                     </Typography>
                                 </Typography>
-                                <Typography sx={{marginRight: 5, marginTop: 4}} variant="h5">
+
+                                <Typography sx={{margin: 3}} Typography variant="h5">
                                     Release Date:
                                     <Typography Typography variant="body2"
                                                 color="text.secondary"
@@ -228,7 +321,8 @@ export default function BookDetails() {
                                         {releaseDate}
                                     </Typography>
                                 </Typography>
-                                <Typography sx={{marginRight: 5, marginTop: 4, marginBottom: 5}} variant="h5">
+
+                                <Typography sx={{margin: 3}} Typography variant="h5">
                                     Edition:
                                     <Typography Typography variant="body2"
                                                 color="text.secondary"
@@ -236,105 +330,31 @@ export default function BookDetails() {
                                         {edition}
                                     </Typography>
                                 </Typography>
-                            </Typography>
-                            <Typography sx={{marginLeft: 4, marginRight: 20, marginTop: 30}} variant="h2">
-                                <Typography sx={{marginRight: 5, marginTop: 4, marginBottom: 5}} variant="h5">
-                                    Quantity:
-                                    <Typography Typography variant="body2"
-                                                color="text.secondary"
-                                                align={"left"}>
-                                        {quantity}
-                                    </Typography>
-                                </Typography>
-                                <Typography sx={{marginRight: 5, marginTop: 4, marginBottom: 5}} variant="h5">
-                                    Price:
-                                    <Typography Typography variant="body2"
-                                                color="text.secondary"
-                                                align={"left"}>
-                                        {price} zł
-                                    </Typography>
-                                </Typography>
-                                <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to Cart</Button>
-                            </Typography>
-                        </Box>
 
+                                <Typography sx={{margin: 3}} Typography variant="h5">
+                                    Categories: {bookCategories.map((cat) => {
+                                    return (
+                                        <Typography Typography variant="body2"
+                                                    color="text.secondary"
+                                                    align={"left"}>
+                                            {cat.description}
+                                        </Typography>
+                                    )
+                                })}
+                                </Typography>
+                            </Box>
 
-                        <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab label="Description" {...a11yProps(0)} />
-                                <Tab label="Details" {...a11yProps(1)} />
-                                <Tab label="Availability" {...a11yProps(2)} />
-                                <Tab label="Marks" {...a11yProps(3)} />
-                            </Tabs>
-                        </Box>
-                        <TabPanel value={value} index={0}>
-                            {book.description}
                         </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <Typography sx={{margin: 3}} Typography variant="h5">
-                                Authors: {authors.map((author) => {
-                                return (
-                                    <Typography Typography variant="body2"
-                                                color="text.secondary"
-                                                align={"left"}>
-                                        {author.name} {author.surname}
-                                    </Typography>
-                                )
-                            })}
-                            </Typography>
-                            <Typography sx={{margin: 3}} Typography variant="h5">
-                                Publishing-house:
-                                <Typography Typography variant="body2"
-                                            color="text.secondary"
-                                            align={"left"}>
-                                    {publishingHouse.name}
-                                </Typography>
-                            </Typography>
-                            <Typography sx={{margin: 3}} Typography variant="h5">
-                                Release Date:
-                                <Typography Typography variant="body2"
-                                            color="text.secondary"
-                                            align={"left"}>
-                                    {releaseDate}
-                                </Typography>
-                            </Typography>
-                            <Typography sx={{margin: 3}} Typography variant="h5">
-                                Edition:
-                                <Typography Typography variant="body2"
-                                            color="text.secondary"
-                                            align={"left"}>
-                                    {edition}
-                                </Typography>
-                            </Typography>
-                            <Typography sx={{margin: 3}} Typography variant="h5">
-                                Categories: {bookCategories.map((cat) => {
-                                return (
-                                    <Typography Typography variant="body2"
-                                                color="text.secondary"
-                                                align={"left"}>
-                                        {cat.description}
-                                    </Typography>
-                                )
-                            })}
-                            </Typography>
-                        </TabPanel>
+
                         <TabPanel value={value} index={2}>
-                            <Typography sx={{margin: 3}} Typography variant="h5">
-                                Quantity:
-                                <Typography Typography variant="body2"
-                                            color="text.secondary"
-                                            align={"left"}>
-                                    {quantity}
-                                </Typography>
-                            </Typography>
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
+
                             <Stack spacing={2}>
                                 <Pagination count={count} page={page} onChange={handleChangePage} sx={{
                                     margin: "20px",
                                     alignSelf: "center"
                                 }}/>
                             </Stack>
+
                             {marks.map((review) => {
                                 const {description, mark, user} = review;
                                 return (
@@ -350,30 +370,32 @@ export default function BookDetails() {
                                                 flexGrow: 1,
                                             }}
                                         >
-                                            <Grid container spacing={2}>
-                                                <Grid item container>
-                                                    <Typography
-                                                        gutterBottom
-                                                        variant="h6"
-                                                        component="a"
-                                                        sx={{
-                                                            color: 'inherit',
-                                                            textDecoration: 'none',
-                                                        }}>
-                                                        {user.login}
-                                                    </Typography>
+                                            <Box sx={{overflow: "auto", maxWidth: size[0], marginBottom: 5}}>
+                                                <Grid container spacing={2}>
+                                                    <Grid item container>
+                                                        <Typography
+                                                            gutterBottom
+                                                            variant="h6"
+                                                            component="a"
+                                                            sx={{
+                                                                color: 'inherit',
+                                                                textDecoration: 'none',
+                                                            }}>
+                                                            {user.login}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item container>
+                                                        <Typography variant="body2" gutterBottom>
+                                                            {description}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item container>
+                                                        <Typography variant="body2" gutterBottom>
+                                                            Mark: {mark}/10
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item container>
-                                                    <Typography variant="body2" gutterBottom>
-                                                        {description}
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid item container>
-                                                    <Typography variant="body2" gutterBottom>
-                                                        Mark: {mark}/10
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
+                                            </Box>
                                         </Paper>
                                     </Grid>
                                 );

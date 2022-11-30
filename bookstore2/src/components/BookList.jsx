@@ -4,7 +4,7 @@ import * as React from "react";
 import {styled} from "@mui/material/styles";
 import {useContext} from "react";
 import Context from "../store/context";
-import {Box, breakpoints} from "@mui/system";
+import {Box} from "@mui/system";
 
 const Img = styled('img')({
     margin: 'auto',
