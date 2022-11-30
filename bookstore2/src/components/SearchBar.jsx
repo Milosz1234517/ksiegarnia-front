@@ -5,6 +5,37 @@ import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import BookFilters from "./BookFilters";
+import {styled} from "@mui/material/styles";
+
+const StyledAutocomplete = styled(Autocomplete)(() => ({
+    width: "100%",
+    display: "flex",
+    margin: 10,
+    minWidth: 170
+}));
+
+const StyledMainBox = styled(Box)(() => ({
+    display: "grid"
+}));
+
+const StyledSearchButton = styled(Button)(() => ({
+    display: "inline-block",
+    margin: 5
+}));
+
+const StyledAvailableSwitch = styled(FormControlLabel)(() => ({
+    display: "inline-block",
+    margin: 10
+}));
+
+const StyledFilterSwitch = styled(FormControlLabel)(() => ({
+    display: "inline-block",
+    margin: 10
+}));
+
+const StyledSearchResultLabel = styled(Typography)(() => ({
+    display: "inline-block"
+}));
 
 
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
@@ -169,69 +200,57 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     }
 
     return (
-        <div>
-            <Box sx={{display: "flex"}} justifyContent={"center"}>
+        <Box>
+            <StyledMainBox>
 
-                <Autocomplete spacing={2} sx={{width: "100%", marginLeft: 10, marginTop: 3, minWidth: 300}}
-                              freeSolo
-                              onInputChange={(e, v) => {
-                                  setBooksAutocomplete([])
-                                  setSearchInput(v)
-                              }}
-                              inputValue={searchInput}
-                              options={booksAutocomplete.map((book) => book.bookTitle)}
-                              renderInput={(params) =>
-                                  <TextField {...params} label="Search Books"/>}
-                />
-                <Button sx={{marginTop: 3, marginLeft: 2}} onClick={handleSearchBooks}><SearchIcon/></Button>
-
-                <FormControlLabel
-                    sx={{
-                        marginTop: 3, marginRight: 2, marginLeft: 2
-                    }}
-                    control={
-                        <Switch
-                            checked={available}
-                            onChange={() => {
-                                setAvailable(!available)
+                    <Box sx={{display: "flex"}}>
+                        <StyledAutocomplete
+                            freeSolo
+                            onInputChange={(e, v) => {
+                                setBooksAutocomplete([])
+                                setSearchInput(v)
                             }}
-                            name="loading"
-                            color="primary"
-                        />
-                    }
-                    label="Available"
-                />
+                            inputValue={searchInput}
+                            options={booksAutocomplete.map((book) => book.bookTitle)}
+                            renderInput={(params) =>
+                                <TextField {...params} label="Search Books"/>}/>
 
-                <FormControlLabel
-                    sx={{
-                        marginTop: 3, marginRight: 10
-                    }}
-                    control={
-                        <Switch
-                            checked={filtersOn}
-                            onChange={() => setFilters(!filtersOn)}
-                            name="loading"
-                            color="primary"
-                        />
-                    }
-                    label="Filters"
-                />
-            </Box>
+                        <StyledSearchButton onClick={handleSearchBooks}><SearchIcon/></StyledSearchButton>
+                    </Box>
+
+                        <StyledAvailableSwitch
+                            control={
+                                <Switch
+                                    checked={available}
+                                    onChange={() => {
+                                        setAvailable(!available)
+                                    }}
+                                    name="loading"
+                                    color="primary"/>}
+                            label="In Stock Only"/>
+
+                        <StyledFilterSwitch
+                            control={
+                                <Switch
+                                    checked={filtersOn}
+                                    onChange={() => setFilters(!filtersOn)}
+                                    name="loading"
+                                    color="primary"/>}
+                            label="Filters"/>
+
+
+            </StyledMainBox>
+
             <Box>
                 {filtersOn &&
-                    <BookFilters filterParams={filterParams} searchParams={searchParams}/>
-                }
-                <Box>
-                </Box>
-                {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) && <Typography sx={{
-                    marginLeft: 10,
-                    marginBottom: 2
-                }}>
-                    Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
-                </Typography>}
+                    <BookFilters filterParams={filterParams} searchParams={searchParams}/>}
 
+                {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
+                    <StyledSearchResultLabel>
+                        Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
+                    </StyledSearchResultLabel>}
             </Box>
-        </div>
 
+        </Box>
     )
 }

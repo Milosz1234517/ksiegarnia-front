@@ -1,20 +1,37 @@
 import * as React from 'react';
-import {styled, alpha} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {ShoppingBasket} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
-import {useCallback, useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import Context from "../store/context";
-import {Autocomplete, Button, TextField} from "@mui/material";
-import {Stack} from "@mui/system";
+import {Button} from "@mui/material";
+import {styled} from "@mui/material/styles";
+
+const StyledMenuBox = styled(Box)(() => ({
+    display: "grid",
+
+}));
+
+const StyledLoginButton = styled(Button)(() => ({
+    display: "inline-block",
+}));
+
+const StyledRegisterButton = styled(Button)(() => ({
+    display: "inline-block"
+}));
+
+const StyledLogo = styled(Typography)(() => ({
+    color: 'inherit',
+    textDecoration: 'none',
+    minWidth: 110,
+    flexGrow: 2
+}));
 
 export default function HomePageMenu() {
 
@@ -43,7 +60,7 @@ export default function HomePageMenu() {
     }
 
     return (
-        <Box sx={{flexGrow: 1}}>
+        <StyledMenuBox>
             <AppBar position="static">
                 <Toolbar>
 
@@ -51,57 +68,47 @@ export default function HomePageMenu() {
                         size="large"
                         edge="start"
                         color="inherit"
-                        aria-label="open drawer"
-                        sx={{mr: 2}}
-                    >
+                        aria-label="open drawer">
                         <MenuIcon/>
                     </IconButton>
 
-                    <Typography
+                    <StyledLogo
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
-                        sx={{
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
+                        href="/">
                         Book Store
-                    </Typography>
-
-                    <Box sx={{flexGrow: 1}} flexGrow={true}/>
+                    </StyledLogo>
 
                     {!ctx.isLoggedIn && (
-                        <div>
-                            <Button
+                        <Box>
+
+                            <StyledLoginButton
                                 color="primary"
                                 onClick={handleLoginOpen}
-                                variant="contained"
-                            >
-                                Log in
-                            </Button>
+                                variant="contained">
+                                Login
+                            </StyledLoginButton>
 
-                            <Button
+                            <StyledRegisterButton
                                 color="primary"
                                 onClick={handleRegisterOpen}
-                                variant="contained"
-                            >
+                                variant="contained">
                                 Register
-                            </Button>
-                        </div>
+                            </StyledRegisterButton>
+
+                        </Box>
                     )}
 
                     {ctx.isLoggedIn && (
-                        <div>
+                        <Box>
                             <IconButton
                                 size="large"
                                 edge="end"
                                 aria-label="account of current user"
                                 aria-haspopup="true"
                                 onClick={handleProfileOpen}
-                                color="inherit"
-                            >
+                                color="inherit">
                                 <AccountCircle/>
                             </IconButton>
 
@@ -111,24 +118,21 @@ export default function HomePageMenu() {
                                 aria-label="account of current user"
                                 aria-haspopup="true"
                                 onClick={handleBasketOpen}
-                                color="inherit"
-                            >
+                                color="inherit">
                                 <ShoppingBasket/>
                             </IconButton>
 
                             <Button
                                 color="primary"
                                 onClick={handleLogoutOpen}
-                                variant="contained"
-                            >
+                                variant="contained">
                                 Logout
                             </Button>
-
-                        </div>
+                        </Box>
                     )}
 
                 </Toolbar>
             </AppBar>
-        </Box>
+        </StyledMenuBox>
     );
 }
