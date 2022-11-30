@@ -82,8 +82,6 @@ export default function BookList({cards}) {
                                         </ButtonBase>
                                     </Grid>
 
-                                    {/*<Box sx={{display: "grid", marginTop: 5, marginLeft: 2}}>*/}
-                                    {/*    <Grid item xs={8}>*/}
                                     <Grid item xs={12} sm container>
                                         <Grid item xs container direction="column" spacing={2}>
                                             <Grid item xs>
@@ -113,7 +111,6 @@ export default function BookList({cards}) {
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    {/*</Box>*/}
 
                                 </Grid>
 
