@@ -53,7 +53,7 @@ const Register = () => {
                         textAlign: "center",
                     }}>
 
-                    <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+                    <Avatar sx={{ m: 1, color: "primary.main" }}>
                         <LockOutlined />
                     </Avatar>
 
@@ -123,19 +123,6 @@ const Register = () => {
                         sx={{ mt: 3, mb: 2 }}>
                         Register
                     </Button>
-
-                    {/*<Grid container justifyContent="right">*/}
-                    {/*    <Grid item>*/}
-                    {/*        <Link*/}
-                    {/*            to="/login"*/}
-                    {/*            variant="body2"*/}
-                    {/*            component={ReactLink}>*/}
-
-                    {/*            {"Login"}*/}
-
-                    {/*        </Link>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
 
                 </Box>
             </Container>

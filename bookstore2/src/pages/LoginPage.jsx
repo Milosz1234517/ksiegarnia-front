@@ -4,13 +4,11 @@ import {
     Button,
     Container,
     CssBaseline,
-    Link,
     TextField,
     Typography,
 } from "@mui/material";
-import {Box, Stack, ThemeProvider} from "@mui/system";
+import {Box, ThemeProvider} from "@mui/system";
 import {useContext} from "react";
-import {Link as ReactLink} from "react-router-dom";
 import {theme} from "../App";
 import Context from "../store/context";
 import * as React from "react";
@@ -53,7 +51,7 @@ const Login = () => {
                         textAlign: "center",
                     }}>
 
-                    <Avatar sx={{m: 1, bgcolor: "primary.main"}}>
+                    <Avatar sx={{m: 1, color: "primary.main"}}>
                         <LockOutlined/>
                     </Avatar>
 
@@ -95,19 +93,6 @@ const Login = () => {
                         sx={{ mt: 3, mb: 2 }}>
                         Sign in
                     </Button>
-
-                    {/*<Box sx={{p: '10px 0px'}}>*/}
-                    {/*    <Typography align='right'>*/}
-                    {/*        <Link*/}
-                    {/*            to="/register"*/}
-                    {/*            bottom={true}*/}
-                    {/*            variant="body1"*/}
-                    {/*            component={ReactLink}>*/}
-                    {/*            {"Register"}*/}
-                    {/*        </Link>*/}
-                    {/*    </Typography>*/}
-                    {/*</Box>*/}
-
                 </Box>
             </Container>
         </ThemeProvider>
