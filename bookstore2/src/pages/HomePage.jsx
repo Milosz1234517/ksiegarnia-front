@@ -1,10 +1,10 @@
 import {Box} from "@mui/system";
-import HomePageMenu from "../components/HomePageMenu";
+import HomePageMenu from "../components/other/HomePageMenu";
 import * as React from "react";
 import {useSearchParams} from "react-router-dom";
-import BookList from "../components/BookList";
-import SearchBar from "../components/SearchBar";
-import CustomPagination from "../components/CustomPagination";
+import BookList from "../components/book/BookList";
+import SearchBar from "../components/other/SearchBar";
+import CustomPagination from "../components/other/CustomPagination";
 import {useEffect} from "react";
 
 export default function HomePage() {

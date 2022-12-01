@@ -1,9 +1,9 @@
 import {Box} from "@mui/system";
 import {Button, TextareaAutosize} from "@mui/material";
 import * as React from "react";
-import {useWindowResize} from "./WindowResizer";
+import {useWindowResize} from "../other/WindowResizer";
 import {useContext, useState} from "react";
-import Context from "../store/context";
+import Context from "../../store/context";
 
 
 export default function CartOrder({emptyCart, cartItems, setCartItems}){

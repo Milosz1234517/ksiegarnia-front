@@ -11,7 +11,7 @@ import { Box, ThemeProvider } from "@mui/system";
 import { useContext } from "react";
 import { theme } from "../App";
 import Context from "../store/context";
-import HomePageMenu from "../components/HomePageMenu";
+import HomePageMenu from "../components/other/HomePageMenu";
 
 
 const Register = () => {

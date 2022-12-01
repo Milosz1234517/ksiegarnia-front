@@ -3,7 +3,7 @@ import {Button, ButtonBase, Paper, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
 import {useContext} from "react";
-import Context from "../store/context";
+import Context from "../../store/context";
 import {Box} from "@mui/system";
 
 const Img = styled('img')({

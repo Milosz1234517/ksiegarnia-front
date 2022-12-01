@@ -3,9 +3,9 @@ import Typography from "@mui/material/Typography";
 import {Box} from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
-import {useWindowResize} from "./WindowResizer";
+import {useWindowResize} from "../other/WindowResizer";
 import {useContext} from "react";
-import Context from "../store/context";
+import Context from "../../store/context";
 
 
 export default function CartItemsTable({cartItems, setCartItems}){

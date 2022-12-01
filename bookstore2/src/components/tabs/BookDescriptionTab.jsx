@@ -2,7 +2,7 @@ import {Box} from "@mui/system";
 import {Typography} from "@mui/material";
 import * as React from "react";
 import TabPanel from "./TabPanel";
-import {useWindowResize} from "./WindowResizer";
+import {useWindowResize} from "../other/WindowResizer";
 
 
 export default function BookDescriptionTab({value, book}){

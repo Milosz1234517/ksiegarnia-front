@@ -1,15 +1,21 @@
-import * as React from "react";
 import TabPanel from "./TabPanel";
-import CustomPagination from "./CustomPagination";
-import {useCallback, useEffect} from "react";
-import ReviewBox from "./ReviewBox";
+import * as React from "react";
+import {useCallback, useContext, useEffect} from "react";
+import Context from "../../store/context";
+import ReviewBox from "../other/ReviewBox";
+import CustomPagination from "../other/CustomPagination";
 
 
-export default function BookReviewsTab({value, book}) {
+export default function UserReviewsTab({value}){
 
+    const [pageReview, setPageReview] = React.useState(1);
+    const [countReview, setCountReview] = React.useState(1);
     const [marks, setMarks] = React.useState([]);
-    const [page, setPage] = React.useState(1);
-    const [count, setCount] = React.useState(1);
+    const ctx = useContext(Context);
+
+    function handleChangePageReview(event, value) {
+        setPageReview(value);
+    }
 
     const getBookCount = useCallback(() => {
         const xhttp = new XMLHttpRequest();
@@ -21,7 +27,7 @@ export default function BookReviewsTab({value, book}) {
                 json = xhttp.response;
 
                 obj = JSON.parse(json);
-                setCount(Math.ceil(obj / 20));
+                setCountReview(Math.ceil(obj / 2));
 
             }
             if (this.readyState === 4 && this.status === 400) {
@@ -31,14 +37,15 @@ export default function BookReviewsTab({value, book}) {
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForBookCount?bookHeaderId=${book.bookHeaderId}`,
+            `http://localhost:8080/api/bookstore/getReviewsForUserCount`,
             true,
             null,
             null
         );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
         xhttp.send();
 
-    }, [book.bookHeaderId]);
+    }, [ctx.authToken]);
 
     useEffect(() => {
         getBookCount();
@@ -64,30 +71,25 @@ export default function BookReviewsTab({value, book}) {
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
+            `http://localhost:8080/api/bookstore/getReviewsForUser?page=${pageReview}`,
             true,
             null,
             null
         );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
         xhttp.send();
 
-    }, [book.bookHeaderId, page]);
+    }, [ctx.authToken, pageReview]);
 
     useEffect(() => {
-        getMarks();
-    }, [getMarks]);
+        if(value === 2)
+            getMarks();
+    }, [getMarks, value]);
 
-    const handleChangePage = (event, value) => {
-        setPage(value);
-    }
-
-    return (
+    return(
         <TabPanel value={value} index={2}>
-
-            <CustomPagination page={page} maxPage={count} handleChange={handleChangePage}/>
-
+            <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
             {marks.map((review) => {
-
                 return (
                     <ReviewBox review={review}/>
                 );

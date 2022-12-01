@@ -1,10 +1,10 @@
 import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
-import HomePageMenu from "../components/HomePageMenu";
-import CartTitle from "../components/CartTitle";
-import CartItemsTable from "../components/CartItemsTable";
-import CartOrder from "../components/CartOrder";
+import HomePageMenu from "../components/other/HomePageMenu";
+import CartTitle from "../components/cart/CartTitle";
+import CartItemsTable from "../components/tables/CartItemsTable";
+import CartOrder from "../components/cart/CartOrder";
 
 
 

@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
-import BookFilters from "./BookFilters";
+import BookFilters from "../book/BookFilters";
 import {styled} from "@mui/material/styles";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
