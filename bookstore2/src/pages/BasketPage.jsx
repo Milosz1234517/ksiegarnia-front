@@ -1,13 +1,39 @@
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import {Button, Paper, TextareaAutosize} from "@mui/material";
+import {
+    Button,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextareaAutosize
+} from "@mui/material";
 import * as React from "react";
-import {useCallback, useContext, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useLayoutEffect, useState} from "react";
 import Context from "../store/context";
 import HomePageMenu from "../components/HomePageMenu";
 import IconButton from "@mui/material/IconButton";
 import {Box} from "@mui/system";
 
+export const useWindowResize = () => {
+    const [size, setSize] = useState([0, 0]);
+
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+
+        window.addEventListener("resize", updateSize);
+        updateSize();
+
+        return () => window.removeEventListener("resize", updateSize);
+    }, []);
+
+    return size;
+};
 
 export default function BasketPage() {
 
@@ -17,6 +43,7 @@ export default function BasketPage() {
     const [emptyCart, setEmptyCart] = useState(true)
     const [show, setShow] = useState(false)
     const [description, setDescription] = useState('')
+    const [size] = useWindowResize()
 
 
     const getCart = useCallback(() => {
@@ -33,7 +60,7 @@ export default function BasketPage() {
 
                 setShow(true)
 
-                if(obj.length !== 0)
+                if (obj.length !== 0)
                     setEmptyCart(false)
 
             }
@@ -120,7 +147,7 @@ export default function BasketPage() {
                 cartItems.forEach((item) => ctx.removeItemFromCart(item.itemId))
                 setCartItems([])
                 setDescription('')
-            }else{
+            } else {
                 ctx.checkTokenExpiration()
             }
         } catch (e) {
@@ -150,122 +177,119 @@ export default function BasketPage() {
     return (
         <div>
             <HomePageMenu/>
-            <Typography variant="h2"
-                        component="a"
-                        sx={{
-                            margin: 4,
-                        }}>
-                Basket
-            </Typography>
-            {(show && emptyCart) && <Typography
-                gutterBottom
-                variant="h4"
-                component="a"
-                sx={{
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    margin: 4,
-                }}>
-                is empty!
-            </Typography>}
-
-            {cartItems.map((bookCart) => {
-                let {itemId, bookHeader, quantity} = bookCart;
-
-                return (
-                    <Grid item>
-                        <Paper
-                            key={itemId}
+            <Box sx={{display: "grid"}}>
+                <Typography variant="h2"
+                            component="a"
                             sx={{
-                                p: 1,
                                 margin: 4,
-                                gridTemplateRows: "1fr auto",
-                                gridGap: "8px",
-                                height: "100%",
-                                flexGrow: 1,
-                            }}
-                        >
-                            <Grid container spacing={2}>
-                                <Grid item container>
+                            }}>
+                    Basket
+                </Typography>
+
+                {(show && emptyCart) && <Typography
+                    gutterBottom
+                    variant="h4"
+                    component="a"
+                    sx={{
+                        color: 'inherit',
+                        textDecoration: 'none',
+                        marginLeft: 4,
+                    }}>
+                    is empty!
+                </Typography>}
+            </Box>
+
+            <TableContainer>
+                <Table sx={{maxWidth: size[0]}} aria-label="simple table">
+                    <TableBody>
+                        {cartItems.map((row) => (
+                            <TableRow
+                                key={row.itemId}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+
+                                <TableCell align="left"
+                                           sx={{maxWidth: size[0], overflow: "hidden", textOverflow: "ellipsis"}}>
                                     <Typography
                                         gutterBottom
                                         variant="h6"
-                                        component="a"
-                                        sx={{
-                                            color: 'inherit',
-                                            textDecoration: 'none',
-                                            margin: 4,
-                                        }}>
-                                        {bookHeader.bookTitle}
+                                        component="a">
+                                        {row.bookHeader.bookTitle}
                                     </Typography>
-                                    <IconButton size="medium" variant="outlined"
-                                                onClick={() => handleRemoveMore({
-                                                    itemId: itemId,
-                                                    bookHeader: bookHeader,
-                                                    quantity: quantity
-                                                })} sx={{
-                                        marginTop: 5,
-                                        marginBottom: 5,
-                                        marginLeft: 5,
-                                        marginRight: 1
-                                    }}>
-                                        -
-                                    </IconButton>
+                                </TableCell>
+
+                                <TableCell align="left">
+                                    <Box sx={{display: "flex"}}>
+                                        <IconButton
+                                            size="medium"
+                                            variant="outlined"
+                                            onClick={() => handleRemoveMore({
+                                                itemId: row.itemId,
+                                                bookHeader: row.bookHeader,
+                                                quantity: row.quantity
+                                            })}>
+                                            -
+                                        </IconButton>
+
+                                        <IconButton
+                                            size="medium"
+                                            variant="outlined">
+                                            {row.quantity}
+                                        </IconButton>
+
+                                        <IconButton
+                                            size="medium" variant="outlined"
+                                            onClick={() =>
+                                                handleAddMore({
+                                                    itemId: row.itemId,
+                                                    bookHeader: row.bookHeader,
+                                                    quantity: row.quantity
+                                                })
+                                            }>
+                                            +
+                                        </IconButton>
+                                    </Box>
+                                </TableCell>
+
+                                <TableCell align="left">
                                     <Typography
-                                        sx={{
-                                            marginTop: 6
-                                        }}
-                                        variant="body2" gutterBottom>
-                                        {quantity}
+                                        gutterBottom
+                                        variant="h6"
+                                        component="a">
+                                        {row.quantity * row.bookHeader.price}zł
                                     </Typography>
-                                    <IconButton size="medium" variant="outlined"
-                                                onClick={() =>
-                                                    handleAddMore({
-                                                        itemId: itemId,
-                                                        bookHeader: bookHeader,
-                                                        quantity: quantity
-                                                    })
-                                                } sx={{
-                                        marginTop: 5,
-                                        marginBottom: 5,
-                                        marginLeft: 1,
-                                        marginRight: 5
-                                    }}>
-                                        +
-                                    </IconButton>
-                                    <Button size="medium" variant="outlined"
-                                            onClick={() => handleRemove({itemId: itemId})}
-                                            sx={{
-                                                margin: 5,
-                                                marginLeft: 20
-                                            }}>
-                                        Remove
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                )
-                    ;
-            })}
-            <Box sx={{display: "flex"}} justifyContent={"left"}>
+                                </TableCell>
+
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            <Box
+                sx={{
+                    display: "inline-block",
+                    width: "80%",
+                    maxWidth: size[0],
+                }}
+                justifyContent={"left"}>
+
                 {!emptyCart && <TextareaAutosize
                     aria-label="minimum height"
-                    minRows={3}
-                    placeholder="Description"
+                    minRows={5}
+                    placeholder="Order Additional Information's"
                     onChange={handleDescriptionChange}
                     style={{
-                        width: 400,
-                        maxWidth: 400,
-                        margin: 25,
+                        width: "100%",
+                        maxWidth: size[0],
+                        margin: 15,
 
                     }}
                 />}
+
                 {!emptyCart && <Button size="medium" variant="outlined"
                                        onClick={() => handlePlaceOrder()}
                                        sx={{
-                                           margin: 5,
-                                           maxHeight: 35
+                                           margin: 2,
                                        }}>
                     Place order
                 </Button>}
