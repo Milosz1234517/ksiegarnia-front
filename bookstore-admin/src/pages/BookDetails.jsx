@@ -12,6 +12,7 @@ import BookReviewsTab from "../components/tabs/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
 import BookParameters from "../components/book/BookParameters";
 import {useWindowResize} from "../components/other/WindowResizer";
+import ChangeBookDetailsDialog from "../components/dialogs/ChangeBookDetailsDialog";
 
 function a11yProps(index) {
     return {
@@ -26,9 +27,9 @@ export default function BookDetails() {
 
     const [value, setValue] = React.useState(0);
     const [book, setBook] = React.useState([]);
+    const [bookChange, setBookChange] = React.useState([]);
+    const [open, setOpen] = React.useState(false);
     const [size] = useWindowResize();
-
-    const ctx = useContext(Context);
 
     const getBooksSearch = useCallback(() => {
         const xhttp = new XMLHttpRequest();
@@ -41,6 +42,7 @@ export default function BookDetails() {
 
                 obj = JSON.parse(json);
                 setBook(obj)
+                setBookChange(obj)
 
             }
             if (this.readyState === 4 && this.status === 400) {
@@ -69,16 +71,24 @@ export default function BookDetails() {
 
     return (
         <Box sx={{flexGrow: 1}}>
+
             <HomePageMenu/>
 
             {book.map((book) => {
 
-                function handleAddToCart() {
-                    ctx.addItemToCart(bookHeaderId)
+                function handleEdit() {
+                    setOpen(true)
                 }
 
                 return (
                     <div>
+                        <ChangeBookDetailsDialog
+                            book={book}
+                            bookChange={bookChange}
+                            open={open}
+                            setBook={setBook}
+                            setBookChange={setBookChange}
+                            setOpen={setOpen}/>
 
                         <Box sx={{display: "grid"}}>
 
@@ -97,8 +107,9 @@ export default function BookDetails() {
                                             <BookParameters book={book}/>
 
                                             <Button sx={{margin: 2}} size="medium" variant="outlined"
-                                                    onClick={handleAddToCart}>Add to
-                                                Cart</Button>
+                                                    onClick={handleEdit}>
+                                                Edit
+                                            </Button>
 
                                         </Grid>
                                     </Grid>

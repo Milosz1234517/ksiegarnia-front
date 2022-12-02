@@ -6,11 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import {ShoppingBasket} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import Context from "../../store/context";
-import {Button} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -18,14 +16,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 const StyledMenuBox = styled(Box)(() => ({
     display: "grid",
 
-}));
-
-const StyledLoginButton = styled(Button)(() => ({
-    display: "inline-block",
-}));
-
-const StyledRegisterButton = styled(Button)(() => ({
-    display: "inline-block"
 }));
 
 const StyledLogo = styled(Typography)(() => ({
@@ -45,16 +35,8 @@ export default function HomePageMenu() {
         navigate("/profile")
     };
 
-    const handleBasketOpen = () => {
-        navigate("/basket")
-    };
-
     const handleLoginOpen = () => {
         navigate("/login")
-    };
-
-    const handleRegisterOpen = () => {
-        navigate("/register")
     };
 
     function handleLogoutOpen() {
@@ -79,7 +61,7 @@ export default function HomePageMenu() {
                         noWrap
                         component="a"
                         href="/">
-                        Books
+                        Books Admin
                     </StyledLogo>
 
                     {!ctx.isLoggedIn && (
@@ -95,14 +77,6 @@ export default function HomePageMenu() {
                                 <LoginIcon/>
                             </IconButton>
 
-                            <StyledRegisterButton
-                                color="primary"
-                                onClick={handleRegisterOpen}
-                                size="small"
-                                variant="contained">
-                                Register
-                            </StyledRegisterButton>
-
                         </Box>
                     )}
 
@@ -116,16 +90,6 @@ export default function HomePageMenu() {
                                 onClick={handleProfileOpen}
                                 color="inherit">
                                 <AccountCircle/>
-                            </IconButton>
-
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-haspopup="true"
-                                onClick={handleBasketOpen}
-                                color="inherit">
-                                <ShoppingBasket/>
                             </IconButton>
 
                             <IconButton

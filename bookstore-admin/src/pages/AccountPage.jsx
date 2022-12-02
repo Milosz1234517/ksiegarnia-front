@@ -2,24 +2,61 @@ import HomePageMenu from "../components/other/HomePageMenu";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import {Box} from "@mui/system";
-import {Tab, Tabs,} from "@mui/material";
-import AccountDetailsTab from "../components/tabs/AccountDetailsTab";
-import OrderItemsTab from "../components/tabs/OrderItemsTab";
-import UserReviewsTab from "../components/tabs/UserReviewsTab";
+import {Button} from "@mui/material";
+import ChangeDetailsDialog from "../components/dialogs/ChangeDetailsDialog";
+import ChangePasswordDialog from "../components/dialogs/ChangePasswordDialog";
+import {useCallback, useContext, useEffect, useState} from "react";
+import Context from "../store/context";
 
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tab panel-${index}`,
-    };
-}
 
 export default function AccountPage() {
-    const [value, setValue] = React.useState(0);
+    const [openPass, setOpenPass] = React.useState(false);
+    const [user, setUser] = useState({})
+    const [userChange, setUserChange] = useState({})
+    const [open, setOpen] = React.useState(false);
+    const ctx = useContext(Context)
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const getUser = useCallback(() => {
+        const xhttp = new XMLHttpRequest();
+        let json;
+        let obj;
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                json = xhttp.responseText;
+                obj = JSON.parse(json);
+                setUser(obj)
+                setUserChange({
+                    login: obj.login,
+                    name: obj.name,
+                    surname: obj.surname,
+                    phoneNumber: obj.phoneNumber
+                })
+            }
+        };
+
+        xhttp.open(
+            "GET",
+            `http://localhost:8080/api/bookstore/getUserDetails`,
+            true,
+            null,
+            null
+        );
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xhttp.send();
+
+    }, [ctx.authToken]);
+
+    useEffect(() => {
+        getUser()
+    }, [getUser]);
+
+    const handleClickOpen = () => {
+        setOpen(true);
     };
+
+    function handleClickOpenPass() {
+        setOpenPass(true);
+    }
 
     return (
         <div>
@@ -34,17 +71,38 @@ export default function AccountPage() {
 
             <Box sx={{width: '100%'}}>
 
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                    <Tabs value={value} onChange={handleChange} scrollButtons="auto" variant="scrollable" aria-label="basic tabs example">
-                        <Tab label="Account Details" {...a11yProps(0)} />
-                        <Tab label="Orders" {...a11yProps(1)} />
-                        <Tab label="Reviews" {...a11yProps(2)} />
-                    </Tabs>
-                </Box>
+                <Typography sx={{margin: 3}} Typography variant="h5">
+                    Username: {user.login}
+                </Typography>
 
-                <AccountDetailsTab value={value}/>
-                <OrderItemsTab value={value}/>
-                <UserReviewsTab value={value}/>
+                <Typography sx={{margin: 3}} Typography variant="h5">
+                    Name: {user.name}
+                </Typography>
+
+                <Typography sx={{margin: 3}} Typography variant="h5">
+                    Surname: {user.surname}
+                </Typography>
+
+                <Typography sx={{margin: 3}} Typography variant="h5">
+                    Phone: {user.phoneNumber}
+                </Typography>
+
+                <Button variant="outlined" sx={{margin: 3}} onClick={handleClickOpen}>
+                    Modify Profile Data
+                </Button>
+
+                <Button variant="outlined" sx={{margin: 3}} onClick={handleClickOpenPass}>
+                    Change Password
+                </Button>
+
+                <ChangeDetailsDialog
+                    open={open} user={user}
+                    userChange={userChange}
+                    setOpen={setOpen}
+                    setUser={setUser}
+                    setUserChange={setUserChange}/>
+
+                <ChangePasswordDialog openPass={openPass} setOpenPass={setOpenPass}/>
 
             </Box>
         </div>

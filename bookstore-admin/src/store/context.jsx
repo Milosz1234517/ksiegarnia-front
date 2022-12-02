@@ -14,24 +14,6 @@ export const ContextProvider = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
 
-    const removeItemFromCart = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/deleteItemFromBasket?itemId=${data}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + authToken
-                },
-            });
-            const resp = await response.json();
-            if (response.ok) {
-
-            }
-        } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-        }
-    }
-
     const checkTokenExpiration = useCallback(() => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -42,7 +24,7 @@ export const ContextProvider = (props) => {
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/connection/user`,
+            `http://localhost:8080/api/connection/admin`,
             true,
             null,
             null
@@ -55,50 +37,6 @@ export const ContextProvider = (props) => {
     useEffect(() => {
         checkTokenExpiration()
     }, [checkTokenExpiration, location]);
-
-
-    const addItemToCart = async (data) => {
-        try {
-            const response = await fetch('http://localhost:8080/api/bookstore/addItemToBasket', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + authToken
-                },
-                body: JSON.stringify({
-                    bookHeaderId: data
-                }),
-            });
-            const resp = await response.json();
-            if (response.ok) {
-
-            }
-        } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-        }
-    };
-
-    const updateItemCart = async (data) => {
-        try {
-            const response = await fetch('http://localhost:8080/api/bookstore/updateItem', {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + authToken
-                },
-                body: JSON.stringify({
-                    bookHeader: data.bookHeader,
-                    quantity: data.quantity
-                }),
-            });
-            const resp = await response.json();
-            if (response.ok) {
-
-            }
-        } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-        }
-    };
 
     const login = async (data) => {
         const url = 'http://localhost:8080/api/auth/login';
@@ -162,10 +100,7 @@ export const ContextProvider = (props) => {
             value={{
                 authToken,
                 isLoggedIn,
-                addItemToCart,
                 checkTokenExpiration,
-                removeItemFromCart,
-                updateItemCart,
                 login,
                 logout,
                 register,

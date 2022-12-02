@@ -67,64 +67,60 @@ export default function BookDetails() {
         setValue(newValue);
     };
 
+    function handleAddToCart() {
+        ctx.addItemToCart(bookHeaderId)
+    }
+
     return (
         <Box sx={{flexGrow: 1}}>
             <HomePageMenu/>
 
-            {book.map((book) => {
+            {book && <div>
 
-                function handleAddToCart() {
-                    ctx.addItemToCart(bookHeaderId)
-                }
+                <Box sx={{display: "grid"}}>
 
-                return (
-                    <div>
+                    <Grid container spacing={2}>
 
-                        <Box sx={{display: "grid"}}>
+                        <BookDetailsPhoto size={size} icon={book.icon}/>
 
-                            <Grid container spacing={2}>
+                        <Grid item xs sm container>
+                            <Grid item xs container direction="column" spacing={2}>
+                                <Grid item xs>
 
-                                <BookDetailsPhoto size={size} icon={book.icon}/>
+                                    <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
+                                        {book.bookTitle}
+                                    </Typography>
 
-                                <Grid item xs sm container>
-                                    <Grid item xs container direction="column" spacing={2}>
-                                        <Grid item xs>
+                                    <BookParameters book={book}/>
 
-                                            <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
-                                                {book.bookTitle}
-                                            </Typography>
+                                    <Button sx={{margin: 2}} size="medium" variant="outlined"
+                                            onClick={handleAddToCart}>Add to
+                                        Cart</Button>
 
-                                            <BookParameters book={book}/>
-
-                                            <Button sx={{margin: 2}} size="medium" variant="outlined"
-                                                    onClick={handleAddToCart}>Add to
-                                                Cart</Button>
-
-                                        </Grid>
-                                    </Grid>
                                 </Grid>
-
                             </Grid>
-                        </Box>
+                        </Grid>
+
+                    </Grid>
+                </Box>
 
 
-                        <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                            <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
-                                  aria-label="basic tabs example">
-                                <Tab label="Description" {...a11yProps(0)} />
-                                <Tab label="Details" {...a11yProps(1)} />
-                                <Tab label="Marks" {...a11yProps(2)} />
-                            </Tabs>
-                        </Box>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
+                          aria-label="basic tabs example">
+                        <Tab label="Description" {...a11yProps(0)} />
+                        <Tab label="Details" {...a11yProps(1)} />
+                        <Tab label="Marks" {...a11yProps(2)} />
+                    </Tabs>
+                </Box>
 
-                        <BookDescriptionTab value={value} book={book}/>
+                <BookDescriptionTab value={value} book={book}/>
 
-                        <BookMoreDetailsTab value={value} book={book}/>
+                <BookMoreDetailsTab value={value} book={book}/>
 
-                        <BookReviewsTab value={value} book={book}/>
+                <BookReviewsTab value={value} book={book}/>
 
-                    </div>)
-            })}
+            </div>}
         </Box>
     );
 

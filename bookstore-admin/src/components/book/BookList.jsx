@@ -143,9 +143,6 @@ export default function BookList({cards}) {
                                         Available: {quantity}
                                     </StyledAvailable>
 
-                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to
-                                        Cart</Button>
-
                                 </Grid>
                             </Box>
                         </Paper>

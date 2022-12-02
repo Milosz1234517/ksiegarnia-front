@@ -77,7 +77,7 @@ export default function BookList({cards}) {
         <StyledMainGrid container>
 
             {cards.map((cards) => {
-                const {authors, bookHeaderId, bookTitle, price, quantity} = cards;
+                const {bookAuthors, bookHeaderId, bookTitle, price, quantity} = cards;
 
                 function handleAddToCart() {
                     ctx.addItemToCart(bookHeaderId)
@@ -115,7 +115,7 @@ export default function BookList({cards}) {
                                                 </StyledTitleWrap>
 
                                                 <Typography variant="body2" gutterBottom>
-                                                    {authors.map((author) => {
+                                                    {bookAuthors.map((author) => {
                                                         return (
                                                             <StyledAuthor variant="body2"
                                                                           color="text.secondary"
