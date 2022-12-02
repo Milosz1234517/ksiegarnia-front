@@ -27,7 +27,6 @@ export default function BookDetails() {
 
     const [value, setValue] = React.useState(0);
     const [book, setBook] = React.useState({});
-    const [bookChange, setBookChange] = React.useState({});
     const [open, setOpen] = React.useState(false);
     const [size] = useWindowResize();
 
@@ -42,7 +41,6 @@ export default function BookDetails() {
 
                 obj = JSON.parse(json);
                 setBook(obj)
-                setBookChange(obj)
             }
             if (this.readyState === 4 && this.status === 400) {
                 console.log("No access.");
@@ -80,10 +78,8 @@ export default function BookDetails() {
 
                 <ChangeBookDetailsDialog
                     book={book}
-                    bookChange={bookChange}
                     open={open}
                     setBook={setBook}
-                    setBookChange={setBookChange}
                     setOpen={setOpen}/>
 
                 <Box sx={{display: "grid"}}>

@@ -1,12 +1,16 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
+import ChangePasswordDialog from "./ChangePasswordDialog";
+import AddAuthorDialog from "./AddAuthorDialog";
+import Box from "@mui/material/Box";
 
 
-export default function ChangeBookDetailsDialog({book, setBook, bookChange, setBookChange, setOpen, open}){
+export default function ChangeBookDetailsDialog({book, setBook, setOpen, open}) {
 
     const ctx = useContext(Context)
+    const [openAuthor, setOpenAuthor] = useState(false)
 
     const changeBookDetails = async (data) => {
         try {
@@ -30,25 +34,8 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
                     bookCategories: data.bookCategories
                 }),
             });
-            const resp = await response.json();
+            await response.json();
 
-            console.log(data)
-
-            if (!response.ok) {
-                setBook({
-                    bookAuthors: book.bookAuthors,
-                    bookHeaderId: book.bookHeaderId,
-                    bookTitle: book.bookTitle,
-                    description: book.description,
-                    edition: book.edition,
-                    icon: book.icon,
-                    price: book.price,
-                    publishingHouse: book.publishingHouse,
-                    quantity: book.quantity,
-                    releaseDate: book.releaseDate,
-                    bookCategories: book.bookCategories
-                })
-            }
         } catch (e) {
             // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
         }
@@ -56,51 +43,47 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
 
     const handleClose = () => {
         setOpen(false);
-        setBookChange({
-            bookAuthors: book.bookAuthors,
-            bookHeaderId: book.bookHeaderId,
-            bookTitle: book.bookTitle,
-            description: book.description,
-            edition: book.edition,
-            icon: book.icon,
-            price: book.price,
-            publishingHouse: book.publishingHouse,
-            quantity: book.quantity,
-            releaseDate: book.releaseDate,
-            bookCategories: book.bookCategories
-        })
+        window.location.reload()
     };
 
     function handleConfirm() {
-        changeBookDetails(bookChange)
+        changeBookDetails(book)
         setOpen(false);
     }
 
     function changeTitle(event) {
-        bookChange.bookTitle = event.target.value
+        book.bookTitle = event.target.value
     }
 
     function changeEdition(event) {
-        bookChange.edition = event.target.value
+        book.edition = event.target.value
     }
 
     function changePrice(event) {
-        bookChange.price = event.target.value
+        book.price = event.target.value
     }
-    //
-    // function changePublishingHouse(event) {
-    //     bookChange.publishingHouse.name = event.target.value
-    // }
+
+    function changePublishingHouse(event) {
+        book.publishingHouse.name = event.target.value
+    }
 
     function changeQuantity(event) {
-        bookChange.quantity = event.target.value
+        book.quantity = event.target.value
     }
 
     function changeReleaseDate(event) {
-        bookChange.releaseDate = event.target.value
+        book.releaseDate = event.target.value
     }
 
-    return(
+    function handleAddAuthor(event) {
+        setOpenAuthor(true)
+    }
+
+    function changeIcon(event) {
+        book.icon = event.target.value
+    }
+
+    return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Edit Book</DialogTitle>
             <DialogContent>
@@ -136,16 +119,16 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
                     variant="standard"
                     onChange={changePrice}
                 />
-                {/*<TextField*/}
-                {/*    autoFocus*/}
-                {/*    margin="dense"*/}
-                {/*    id="name"*/}
-                {/*    label="Publishing-house"*/}
-                {/*    fullWidth*/}
-                {/*    defaultValue={book.publishingHouse.name}*/}
-                {/*    variant="standard"*/}
-                {/*    onChange={changePublishingHouse}*/}
-                {/*/>*/}
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Publishing-house"
+                    fullWidth
+                    defaultValue={book.publishingHouse?.name}
+                    variant="standard"
+                    onChange={changePublishingHouse}
+                />
                 <TextField
                     autoFocus
                     margin="dense"
@@ -156,6 +139,42 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
                     variant="standard"
                     onChange={changeQuantity}
                 />
+
+                {book.bookAuthors?.map((author) => {
+
+                    function changeAuthorName(event) {
+                        book.bookAuthors.find((a) => a.authorId === author.authorId).name = event.target.value
+                    }
+
+                    function changeAuthorSurame(event) {
+                        book.bookAuthors.find((a) => a.authorId === author.authorId).surname = event.target.value
+                    }
+
+                    return (
+                        <Box>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="releaseDate"
+                                label="Author Name"
+                                fullWidth
+                                defaultValue={author.name}
+                                variant="standard"
+                                onChange={changeAuthorName}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="releaseDate"
+                                label="Author Surname"
+                                fullWidth
+                                defaultValue={author.surname}
+                                variant="standard"
+                                onChange={changeAuthorSurame}
+                            />
+                        </Box>
+                    )
+                })}
                 <TextField
                     autoFocus
                     margin="dense"
@@ -167,6 +186,21 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
                     variant="standard"
                     onChange={changeReleaseDate}
                 />
+
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="icon"
+                    label="Icon"
+                    fullWidth
+                    defaultValue={book.icon}
+                    variant="standard"
+                    onChange={changeIcon}
+                />
+
+                <AddAuthorDialog open={openAuthor} setOpen={setOpenAuthor} bookChange={book}
+                                 setBookChange={setBook}/>
+                <Button onClick={handleAddAuthor}>Add Author</Button>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
