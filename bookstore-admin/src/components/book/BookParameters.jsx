@@ -6,7 +6,7 @@ export default function BookParameters({book}) {
     return (
         <div>
             <Typography sx={{margin: 2}} variant="h5">
-                Authors: {book.authors.map((author) => {
+                Authors: {book.bookAuthors?.map((author) => {
                 return (
                     <Typography Typography variant="body2"
                                 color="text.secondary"
@@ -21,7 +21,7 @@ export default function BookParameters({book}) {
                 <Typography Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
-                    {book.publishingHouse.name}
+                    {book.publishingHouse?.name}
                 </Typography>
             </Typography>
 

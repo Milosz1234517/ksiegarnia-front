@@ -34,7 +34,7 @@ export default function BookMoreDetailsTab({value, book}){
                 </Typography>
 
                 <Typography sx={{margin: 2}} Typography variant="h5">
-                    Categories: {book.bookCategories.map((cat) => {
+                    Categories: {book.bookCategories?.map((cat) => {
                     return (
                         <Typography Typography variant="body2"
                                     color="text.secondary"

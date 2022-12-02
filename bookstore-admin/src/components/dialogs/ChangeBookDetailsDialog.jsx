@@ -17,7 +17,7 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
                     'Authorization': 'Bearer ' + ctx.authToken
                 },
                 body: JSON.stringify({
-                    authors: data.authors,
+                    bookAuthors: data.bookAuthors,
                     bookHeaderId: data.bookHeaderId,
                     bookTitle: data.bookTitle,
                     description: data.description,
@@ -26,24 +26,28 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
                     price: data.price,
                     publishingHouse: data.publishingHouse,
                     quantity: data.quantity,
-                    releaseDate: data.releaseDate
+                    releaseDate: data.releaseDate,
+                    bookCategories: data.bookCategories
                 }),
             });
             const resp = await response.json();
+
             console.log(data)
+
             if (!response.ok) {
-                // setBook([{
-                //     authors: book.authors,
-                //     bookHeaderId: book.bookHeaderId,
-                //     bookTitle: book.bookTitle,
-                //     description: book.description,
-                //     edition: book.edition,
-                //     icon: book.icon,
-                //     price: book.price,
-                //     publishingHouse: book.publishingHouse,
-                //     quantity: book.quantity,
-                //     releaseDate: book.releaseDate
-                // }])
+                setBook({
+                    bookAuthors: book.bookAuthors,
+                    bookHeaderId: book.bookHeaderId,
+                    bookTitle: book.bookTitle,
+                    description: book.description,
+                    edition: book.edition,
+                    icon: book.icon,
+                    price: book.price,
+                    publishingHouse: book.publishingHouse,
+                    quantity: book.quantity,
+                    releaseDate: book.releaseDate,
+                    bookCategories: book.bookCategories
+                })
             }
         } catch (e) {
             // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
@@ -53,7 +57,7 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
     const handleClose = () => {
         setOpen(false);
         setBookChange({
-            authors: book.authors,
+            bookAuthors: book.bookAuthors,
             bookHeaderId: book.bookHeaderId,
             bookTitle: book.bookTitle,
             description: book.description,
@@ -62,12 +66,13 @@ export default function ChangeBookDetailsDialog({book, setBook, bookChange, setB
             price: book.price,
             publishingHouse: book.publishingHouse,
             quantity: book.quantity,
-            releaseDate: book.releaseDate
+            releaseDate: book.releaseDate,
+            bookCategories: book.bookCategories
         })
     };
 
     function handleConfirm() {
-        changeBookDetails(bookChange[0])
+        changeBookDetails(bookChange)
         setOpen(false);
     }
 

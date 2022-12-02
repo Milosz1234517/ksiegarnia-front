@@ -75,7 +75,7 @@ export default function BookDetails() {
         <Box sx={{flexGrow: 1}}>
             <HomePageMenu/>
 
-            {book && <div>
+            <div>
 
                 <Box sx={{display: "grid"}}>
 
@@ -94,8 +94,7 @@ export default function BookDetails() {
                                     <BookParameters book={book}/>
 
                                     <Button sx={{margin: 2}} size="medium" variant="outlined"
-                                            onClick={handleAddToCart}>Add to
-                                        Cart</Button>
+                                            onClick={handleAddToCart}>Add to Cart</Button>
 
                                 </Grid>
                             </Grid>
@@ -120,7 +119,7 @@ export default function BookDetails() {
 
                 <BookReviewsTab value={value} book={book}/>
 
-            </div>}
+            </div>
         </Box>
     );
 

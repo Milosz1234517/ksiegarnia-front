@@ -23,11 +23,11 @@ function a11yProps(index) {
 
 export default function BookDetails() {
 
-    let {bookHeaderId} = useParams();
+    let { bookHeaderId } = useParams();
 
     const [value, setValue] = React.useState(0);
-    const [book, setBook] = React.useState([]);
-    const [bookChange, setBookChange] = React.useState([]);
+    const [book, setBook] = React.useState({});
+    const [bookChange, setBookChange] = React.useState({});
     const [open, setOpen] = React.useState(false);
     const [size] = useWindowResize();
 
@@ -43,7 +43,6 @@ export default function BookDetails() {
                 obj = JSON.parse(json);
                 setBook(obj)
                 setBookChange(obj)
-
             }
             if (this.readyState === 4 && this.status === 400) {
                 console.log("No access.");
@@ -69,73 +68,67 @@ export default function BookDetails() {
         setValue(newValue);
     };
 
+    function handleEdit() {
+        setOpen(true)
+    }
+
     return (
         <Box sx={{flexGrow: 1}}>
-
             <HomePageMenu/>
 
-            {book.map((book) => {
+            <div>
 
-                function handleEdit() {
-                    setOpen(true)
-                }
+                <ChangeBookDetailsDialog
+                    book={book}
+                    bookChange={bookChange}
+                    open={open}
+                    setBook={setBook}
+                    setBookChange={setBookChange}
+                    setOpen={setOpen}/>
 
-                return (
-                    <div>
-                        <ChangeBookDetailsDialog
-                            book={book}
-                            bookChange={bookChange}
-                            open={open}
-                            setBook={setBook}
-                            setBookChange={setBookChange}
-                            setOpen={setOpen}/>
+                <Box sx={{display: "grid"}}>
 
-                        <Box sx={{display: "grid"}}>
+                    <Grid container spacing={2}>
 
-                            <Grid container spacing={2}>
+                        <BookDetailsPhoto size={size} icon={book.icon}/>
 
-                                <BookDetailsPhoto size={size} icon={book.icon}/>
+                        <Grid item xs sm container>
+                            <Grid item xs container direction="column" spacing={2}>
+                                <Grid item xs>
 
-                                <Grid item xs sm container>
-                                    <Grid item xs container direction="column" spacing={2}>
-                                        <Grid item xs>
+                                    <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
+                                        {book.bookTitle}
+                                    </Typography>
 
-                                            <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
-                                                {book.bookTitle}
-                                            </Typography>
+                                    <BookParameters book={book}/>
 
-                                            <BookParameters book={book}/>
+                                    <Button sx={{margin: 2}} size="medium" variant="outlined"
+                                            onClick={handleEdit}>Edit</Button>
 
-                                            <Button sx={{margin: 2}} size="medium" variant="outlined"
-                                                    onClick={handleEdit}>
-                                                Edit
-                                            </Button>
-
-                                        </Grid>
-                                    </Grid>
                                 </Grid>
-
                             </Grid>
-                        </Box>
+                        </Grid>
+
+                    </Grid>
+                </Box>
 
 
-                        <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                            <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
-                                  aria-label="basic tabs example">
-                                <Tab label="Description" {...a11yProps(0)} />
-                                <Tab label="Details" {...a11yProps(1)} />
-                                <Tab label="Marks" {...a11yProps(2)} />
-                            </Tabs>
-                        </Box>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
+                          aria-label="basic tabs example">
+                        <Tab label="Description" {...a11yProps(0)} />
+                        <Tab label="Details" {...a11yProps(1)} />
+                        <Tab label="Marks" {...a11yProps(2)} />
+                    </Tabs>
+                </Box>
 
-                        <BookDescriptionTab value={value} book={book}/>
+                <BookDescriptionTab value={value} book={book}/>
 
-                        <BookMoreDetailsTab value={value} book={book}/>
+                <BookMoreDetailsTab value={value} book={book}/>
 
-                        <BookReviewsTab value={value} book={book}/>
+                <BookReviewsTab value={value} book={book}/>
 
-                    </div>)
-            })}
+            </div>
         </Box>
     );
 
