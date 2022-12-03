@@ -48,14 +48,6 @@ export default function HomePageMenu() {
             <AppBar position="static">
                 <Toolbar>
 
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer">
-                        <MenuIcon/>
-                    </IconButton>
-
                     <StyledLogo
                         variant="h6"
                         noWrap

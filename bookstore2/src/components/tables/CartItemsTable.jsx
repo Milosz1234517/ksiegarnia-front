@@ -100,7 +100,7 @@ export default function CartItemsTable({cartItems, setCartItems}){
                                     gutterBottom
                                     variant="h6"
                                     component="a">
-                                    {row.quantity * row.bookHeader.price}zł
+                                    {(row.quantity * row.bookHeader.price).toFixed(2)}zł
                                 </Typography>
                             </TableCell>
 

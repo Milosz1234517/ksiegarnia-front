@@ -8,7 +8,6 @@ import {
     DialogTitle,
     FormControl, InputLabel,
     MenuItem, Select,
-    TextField
 } from "@mui/material";
 import * as React from "react";
 
@@ -70,7 +69,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
         }
     };
 
-    const getCategories = useCallback(() => {
+    const getStatuses = useCallback(() => {
         const xHttp = new XMLHttpRequest();
         let json;
         let obj;
@@ -99,8 +98,8 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
     }, []);
 
     useEffect(() => {
-        getCategories();
-    }, [getCategories]);
+        getStatuses();
+    }, [getStatuses]);
 
 
     function handleClose() {

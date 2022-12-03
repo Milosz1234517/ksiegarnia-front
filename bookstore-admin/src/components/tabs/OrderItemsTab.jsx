@@ -5,6 +5,8 @@ import * as React from "react";
 import CustomPagination from "../other/CustomPagination";
 import {useCallback, useContext, useEffect} from "react";
 import Context from "../../store/context";
+import OrderSearchBar from "../other/OrderSearchBar";
+import {useSearchParams} from "react-router-dom";
 
 
 export default function OrderItemsTab({value}){
@@ -12,72 +14,22 @@ export default function OrderItemsTab({value}){
     const [orders, setOrders] = React.useState([]);
     const [count, setCount] = React.useState(1);
     const [page, setPage] = React.useState(1);
-    const ctx = useContext(Context)
+    const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
 
-    const getOrders = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
-        let json;
-        let obj;
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
-                obj = JSON.parse(json);
-                setOrders(obj)
-            }
-        };
-
-        xhttp.open(
-            "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterAdmin?page=${page}`,
-            true,
-            null,
-            null
-        );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
-
-    }, [ctx.authToken, page]);
-
-    const getOrdersCount = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
-        let json;
-        let obj;
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
-                obj = JSON.parse(json);
-                setCount(Math.ceil(obj / 2));
-            }
-        };
-
-        xhttp.open(
-            "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterUserCount?page=${page}`,
-            true,
-            null,
-            null
-        );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
-
-    }, [ctx.authToken, page]);
-
-    useEffect(() => {
-        getOrdersCount()
-    }, [getOrdersCount]);
-
-    useEffect(() => {
-        getOrders()
-    }, [getOrders]);
-
-    function handleChangePage(event, value) {
+    const handleChangePage = (event, value) => {
         setPage(value);
-    }
+        urlSearchParams.set('page', value)
+        setUrlSearchParams(urlSearchParams)
+    };
+
+    useEffect(() => {
+        setPage(parseInt(urlSearchParams.get('page')) || 1)
+    }, [setPage, urlSearchParams]);
 
     return(
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={0}>
 
-            <CustomPagination handleChange={handleChangePage} maxPage={count} page={page}/>
+            <OrderSearchBar page={page} setOrders={setOrders} setCount={setCount}/>
 
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
@@ -97,6 +49,8 @@ export default function OrderItemsTab({value}){
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <CustomPagination handleChange={handleChangePage} maxPage={count} page={page}/>
 
         </TabPanel>
     );

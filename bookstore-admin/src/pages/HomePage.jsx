@@ -5,11 +5,12 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import BookList from "../components/book/BookList";
 import SearchBar from "../components/other/SearchBar";
 import CustomPagination from "../components/other/CustomPagination";
-import {useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {Button, Pagination, Tab, Tabs, Typography} from "@mui/material";
 import BookTemplate from "../components/book/BookTemplate";
 import TabPanel from "../components/tabs/TabPanel";
 import OrderItemsTab from "../components/tabs/OrderItemsTab";
+import Context from "../store/context";
 
 
 function a11yProps(index) {
@@ -19,14 +20,15 @@ function a11yProps(index) {
     };
 }
 
-export default function HomePage() {
+export default function HomePage({tab}) {
 
     const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
     const [page, setPage] = React.useState(parseInt(urlSearchParams.get('page')) || 1);
     const [books, setBooks] = React.useState([]);
     const [booksPagesCount, setBooksPagesCount] = React.useState(1);
-    const [value, setValue] = React.useState(0)
+    const [value, setValue] = React.useState(tab)
     const navigation = useNavigate()
+    const ctx = useContext(Context)
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -46,6 +48,10 @@ export default function HomePage() {
         navigation("/createBook")
     }
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     return (
         <Box sx={{flexGrow: 1}}>
             <HomePageMenu/>
@@ -53,14 +59,16 @@ export default function HomePage() {
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
                       aria-label="basic tabs example">
-                    <Tab label="Books" {...a11yProps(0)} />
-                    <Tab label="Orders" {...a11yProps(1)} />
-                    <Tab label="Clients" {...a11yProps(2)} />
-                    <Tab label="Reviews" {...a11yProps(3)} />
+                    <Tab label="Orders" {...a11yProps(0)} onClick={()=>navigation("/orders")}/>
+                    <Tab label="Books" {...a11yProps(1)} onClick={()=>navigation("/books")}/>
+                    <Tab label="Clients" {...a11yProps(2)} onClick={()=>navigation("/clients")}/>
+                    <Tab label="Reviews" {...a11yProps(3)} onClick={()=>navigation("/reviews")}/>
                 </Tabs>
             </Box>
 
-            <TabPanel value={value} index={0}>
+            <OrderItemsTab value={value}/>
+
+            <TabPanel value={value} index={1}>
                 <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
 
                 <Stack spacing={2} sx={{
@@ -75,8 +83,6 @@ export default function HomePage() {
                 <BookList cards={books}/>
                 <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
             </TabPanel>
-
-            <OrderItemsTab value={value}/>
         </Box>
     );
 }
