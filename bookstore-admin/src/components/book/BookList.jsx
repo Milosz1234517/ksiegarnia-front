@@ -2,8 +2,6 @@ import Grid from "@mui/material/Grid";
 import {Button, ButtonBase, Paper, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
-import {useContext} from "react";
-import Context from "../../store/context";
 import {Box} from "@mui/system";
 
 const Img = styled('img')({
@@ -71,17 +69,11 @@ const StyledPrice = styled(Typography)(() => ({
 
 export default function BookList({cards}) {
 
-    const ctx = useContext(Context)
-
     return (
         <StyledMainGrid container>
 
             {cards.map((cards) => {
-                const {bookAuthors, bookHeaderId, bookTitle, price, quantity} = cards;
-
-                function handleAddToCart() {
-                    ctx.addItemToCart(bookHeaderId)
-                }
+                const {bookAuthors, bookHeaderId, icon, bookTitle, price, quantity} = cards;
 
                 return (
                     <StyledMainBox>
@@ -97,7 +89,7 @@ export default function BookList({cards}) {
                                     <Grid item>
                                         <ButtonBase sx={{width: 200, height: 200}}>
                                             <Img alt="complex"
-                                                 src="https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"/>
+                                                 src={icon}/>
                                         </ButtonBase>
                                     </Grid>
 

@@ -36,13 +36,23 @@ function a11yProps(index) {
     };
 }
 
-export default function BookDetails() {
+export default function NewBook() {
 
-    let {bookHeaderId} = useParams();
     const ctx = useContext(Context)
 
     const [value, setValue] = React.useState(0);
-    const [book, setBook] = React.useState({});
+    const [book, setBook] = React.useState({
+        bookAuthors: [],
+        bookTitle: "New Book Template",
+        description: "Enter some description",
+        edition: 0,
+        icon: "https://www.adazing.com/wp-content/uploads/2019/02/open-book-clipart-07-300x300.png",
+        price: 0,
+        publishingHouse: {name: ""},
+        quantity: 0,
+        releaseDate: "2000-01-01",
+        bookCategories: []
+    });
     const [bookCopy, setBookCopy] = useState({})
     const [publishingHouseCopy, setPublishingHouseCopy] = useState({})
     const [authors, setAuthors] = React.useState([]);
@@ -52,73 +62,15 @@ export default function BookDetails() {
     const [openCategories, setOpenCategories] = useState(false)
     const [size] = useWindowResize();
 
-    const getBooksSearch = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
-        let json;
-        let obj;
-
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.response;
-
-                obj = JSON.parse(json);
-                setBook(obj)
-                setAuthors(obj.bookAuthors)
-                setCategories(obj.bookCategories)
-            }
-            if (this.readyState === 4 && this.status === 400) {
-                console.log("No access.");
-            }
-        };
-
-        xhttp.open(
-            "GET",
-            `http://localhost:8080/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
-            true,
-            null,
-            null
-        );
-        xhttp.send();
-
-    }, [bookHeaderId]);
-
-    useEffect(() => {
-        getBooksSearch();
-    }, [getBooksSearch]);
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    function handleConfirm() {
-        ctx.changeBookDetails(book).then(function (response) {
-            if (!response.ok) {
-                setBook({
-                    bookAuthors: bookCopy.bookAuthors,
-                    bookTitle: bookCopy.bookTitle,
-                    bookHeaderId: bookCopy.bookHeaderId,
-                    description: bookCopy.description,
-                    edition: bookCopy.edition,
-                    icon: bookCopy.icon,
-                    price: bookCopy.price,
-                    publishingHouse: publishingHouseCopy,
-                    quantity: bookCopy.quantity,
-                    releaseDate: bookCopy.releaseDate,
-                    bookCategories: bookCopy.bookCategories
-                })
-            }
-            setBookCopy({})
-            setPublishingHouseCopy({})
-            setOpen(false);
-        })
-    }
-
     function handleEdit() {
-        setPublishingHouseCopy({name : book.publishingHouse.name})
+        setPublishingHouseCopy({name: book.publishingHouse.name})
         setBookCopy({
             bookAuthors: book.bookAuthors,
             bookTitle: book.bookTitle,
-            bookHeaderId: book.bookHeaderId,
             description: book.description,
             edition: book.edition,
             icon: book.icon,
@@ -137,24 +89,39 @@ export default function BookDetails() {
 
     function handleDelete(author) {
         book.bookAuthors = book.bookAuthors.filter((a) => a !== author)
-        ctx.changeBookDetails(book).then(function (response){
-            if(response.ok) {
-                setAuthors(book.bookAuthors)
-            }
-        })
+        setAuthors(book.bookAuthors)
     }
 
     function handleDeleteCat(cat) {
         book.bookCategories = book.bookCategories.filter((c) => c !== cat)
-        ctx.changeBookDetails(book).then(function (response) {
-            if (response.ok) {
-                setCategories(book.bookCategories)
-            }
-        })
+        setCategories(book.bookCategories)
     }
 
     function handleAddCat() {
         setOpenCategories(true)
+    }
+
+    function handleConfirm() {
+        setBookCopy({})
+        setPublishingHouseCopy({})
+        setOpen(false);
+    }
+
+    function handleSave() {
+        ctx.createBook(book).then(() => {
+            setBook({
+                bookAuthors: [],
+                bookTitle: "New Book Template",
+                description: "Enter some description",
+                edition: 0,
+                icon: "https://www.adazing.com/wp-content/uploads/2019/02/open-book-clipart-07-300x300.png",
+                price: 0,
+                publishingHouse: {name: ""},
+                quantity: 0,
+                releaseDate: "2000-01-01",
+                bookCategories: []
+            })
+        })
     }
 
     return (
@@ -162,10 +129,9 @@ export default function BookDetails() {
             <HomePageMenu/>
 
             <div>
-
                 <ChangeBookDetailsDialog
                     book={book}
-                    bookCopy = {bookCopy}
+                    bookCopy={bookCopy}
                     publishingHouseCopy={publishingHouseCopy}
                     open={open}
                     onConfirm={handleConfirm}
@@ -176,17 +142,15 @@ export default function BookDetails() {
                     bookChange={book}
                     open={openAuthor}
                     setOpen={setOpenAuthor}
-                    setAuthors={setAuthors}
-                    handeChange={ctx.changeBookDetails}/>
+                    setAuthors={setAuthors}/>
 
                 <AddCategoryDialog
                     bookChange={book}
                     open={openCategories}
                     setOpen={setOpenCategories}
-                    setCategories={setCategories}
-                    handeChange={ctx.changeBookDetails}/>
+                    setCategories={setCategories}/>
 
-                <Box sx={{display: "grid", overflow:"auto"}}>
+                <Box sx={{display: "grid", overflow: "auto"}}>
 
                     <Grid container spacing={2} alignItems={"center"}>
 
@@ -275,6 +239,9 @@ export default function BookDetails() {
 
                     <Button sx={{margin: 2}} size="medium" variant="outlined"
                             onClick={handleAddCat}>Add Category</Button>
+
+                    <Button sx={{margin: 2}} size="medium" variant="outlined"
+                            onClick={handleSave}>Save Book</Button>
                 </Box>
 
 
@@ -283,15 +250,11 @@ export default function BookDetails() {
                           aria-label="basic tabs example">
                         <Tab label="Description" {...a11yProps(0)} />
                         <Tab label="Details" {...a11yProps(1)} />
-                        <Tab label="Marks" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
 
                 <BookDescriptionTab value={value} book={book}/>
-
                 <BookMoreDetailsTab value={value} book={book}/>
-
-                <BookReviewsTab value={value} book={book}/>
 
             </div>
         </Box>

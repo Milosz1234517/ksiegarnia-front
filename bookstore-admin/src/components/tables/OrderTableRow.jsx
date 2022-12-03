@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as React from "react";
 import {TableCell, TableRow} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -6,14 +6,32 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PropTypes from "prop-types";
 import OrderItemsTableRow from "./OrderItemsTableRow";
+import EditIcon from '@mui/icons-material/Edit';
+import ChangeOrderStatusDialog from "../dialogs/ChangeOrderStatusDialog";
 
 
 export default function OrderTableRow(props) {
     const {row} = props;
     const [open, setOpen] = useState(false);
+    const [openStatus, setOpenStatus] = useState(false);
+    const [status, setStatus] = useState()
+
+    function handleStatusChange() {
+        setOpenStatus(true)
+    }
+
+    useEffect(()=>{
+        setStatus(row.orderStatus)
+    }, [row.orderStatus])
 
     return (
         <React.Fragment>
+
+            <ChangeOrderStatusDialog
+                orderId={row.orderId}
+                open={openStatus}
+                setOpen={setOpenStatus}
+                setStatus={setStatus}/>
 
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
                 <TableCell>
@@ -27,8 +45,14 @@ export default function OrderTableRow(props) {
                 <TableCell component="th" scope="row">
                     {row.orderId}
                 </TableCell>
-                <TableCell align="right">{row.orderStatus.description}</TableCell>
-                <TableCell align="right">{row.orderDate}</TableCell>
+                <TableCell align="right">
+                    {status?.description}
+                    <IconButton
+                        size="small">
+                        <EditIcon onClick={handleStatusChange}/>
+                    </IconButton>
+                </TableCell>
+                <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
                 <TableCell align="right">{row.totalPrice}</TableCell>
             </TableRow>
 

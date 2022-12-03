@@ -28,7 +28,7 @@ export default function OrderItemsTab({value}){
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterUser?page=${page}`,
+            `http://localhost:8080/api/bookstore/getOrdersFilterAdmin?page=${page}`,
             true,
             null,
             null

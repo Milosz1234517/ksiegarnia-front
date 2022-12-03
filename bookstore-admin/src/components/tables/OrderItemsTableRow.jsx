@@ -10,43 +10,8 @@ import Context from "../../store/context";
 
 export default function OrderItemsTableRow({row, open}) {
 
-    const [openReview, setOpenReview] = useState(false);
-    const [bookHeaderId, setBookHeaderId] = useState('')
-    const ctx = useContext(Context)
-
-    const getReview = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/getReviewsForBookAndUser?bookHeaderId=${data}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + ctx.authToken
-                }
-            });
-            const resp = await response.json();
-            if (response.ok) {
-                if (!resp) {
-                    setOpenReview(true)
-                    setBookHeaderId(data)
-                }
-            }
-        } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-        }
-    };
-
-    function handleCreateReview(bookHeaderId) {
-        getReview(bookHeaderId)
-    }
-
     return (
         <TableRow>
-            <CreateReviewDialog
-                bookHeaderId={bookHeaderId}
-                openReview={openReview}
-                setBookHeaderId={setBookHeaderId}
-                setOpenReview={setOpenReview}/>
-
             <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <Box sx={{margin: 1}}>
@@ -70,10 +35,7 @@ export default function OrderItemsTableRow({row, open}) {
                                         </TableCell>
                                         <TableCell>{item.quantity}</TableCell>
                                         <TableCell align="right">{item.price}</TableCell>
-                                        <TableCell align="left">
-                                            <Button
-                                                onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}><RateReviewIcon/></Button>
-                                        </TableCell>
+                                        <TableCell/>
                                     </TableRow>
                                 ))}
                             </TableBody>

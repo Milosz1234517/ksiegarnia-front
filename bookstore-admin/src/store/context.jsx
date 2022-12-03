@@ -14,6 +14,67 @@ export const ContextProvider = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
 
+    const changeBookDetails = async (data) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/bookstore/updateBook', {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                },
+                body: JSON.stringify({
+                    bookAuthors: data.bookAuthors,
+                    bookHeaderId: data.bookHeaderId,
+                    bookTitle: data.bookTitle,
+                    description: data.description,
+                    edition: data.edition,
+                    icon: data.icon,
+                    price: data.price,
+                    publishingHouse: data.publishingHouse,
+                    quantity: data.quantity,
+                    releaseDate: data.releaseDate,
+                    bookCategories: data.bookCategories
+                }),
+            });
+            await response.json();
+            return response
+
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
+    const createBook = async (data) => {
+        try {
+            const response = await fetch('http://localhost:8080/api/bookstore/addBook', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                },
+                body: JSON.stringify({
+                    bookAuthors: data.bookAuthors,
+                    bookTitle: data.bookTitle,
+                    description: data.description,
+                    edition: data.edition,
+                    icon: data.icon,
+                    price: data.price,
+                    publishingHouse: data.publishingHouse,
+                    quantity: data.quantity,
+                    releaseDate: data.releaseDate,
+                    bookCategories: data.bookCategories
+                }),
+            });
+            await response.json();
+
+            if (!response.ok)
+                window.location.reload()
+
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
     const checkTokenExpiration = useCallback(() => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -99,11 +160,13 @@ export const ContextProvider = (props) => {
         <Context.Provider
             value={{
                 authToken,
+                changeBookDetails,
                 isLoggedIn,
                 checkTokenExpiration,
                 login,
                 logout,
                 register,
+                createBook,
             }}
         >
             {props.children}

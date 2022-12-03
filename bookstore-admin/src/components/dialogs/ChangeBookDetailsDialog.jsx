@@ -1,55 +1,34 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle, TextareaAutosize,
+    TextField,
+} from "@mui/material";
 import * as React from "react";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import Context from "../../store/context";
-import ChangePasswordDialog from "./ChangePasswordDialog";
-import AddAuthorDialog from "./AddAuthorDialog";
-import Box from "@mui/material/Box";
 
 
-export default function ChangeBookDetailsDialog({book, setBook, setOpen, open}) {
-
-    const ctx = useContext(Context)
-    const [openAuthor, setOpenAuthor] = useState(false)
-
-    const changeBookDetails = async (data) => {
-        try {
-            const response = await fetch('http://localhost:8080/api/bookstore/updateBook', {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + ctx.authToken
-                },
-                body: JSON.stringify({
-                    bookAuthors: data.bookAuthors,
-                    bookHeaderId: data.bookHeaderId,
-                    bookTitle: data.bookTitle,
-                    description: data.description,
-                    edition: data.edition,
-                    icon: data.icon,
-                    price: data.price,
-                    publishingHouse: data.publishingHouse,
-                    quantity: data.quantity,
-                    releaseDate: data.releaseDate,
-                    bookCategories: data.bookCategories
-                }),
-            });
-            await response.json();
-
-        } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-        }
-    };
+export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publishingHouseCopy, bookCopy, setOpen, open}) {
 
     const handleClose = () => {
         setOpen(false);
-        window.location.reload()
+        setBook({
+            bookHeaderId: bookCopy.bookHeaderId,
+            bookAuthors: bookCopy.bookAuthors,
+            bookTitle: bookCopy.bookTitle,
+            description: bookCopy.description,
+            edition: bookCopy.edition,
+            icon: bookCopy.icon,
+            price: bookCopy.price,
+            publishingHouse: publishingHouseCopy,
+            quantity: bookCopy.quantity,
+            releaseDate: bookCopy.releaseDate,
+            bookCategories: bookCopy.bookCategories
+        })
     };
-
-    function handleConfirm() {
-        changeBookDetails(book)
-        setOpen(false);
-    }
 
     function changeTitle(event) {
         book.bookTitle = event.target.value
@@ -75,12 +54,12 @@ export default function ChangeBookDetailsDialog({book, setBook, setOpen, open}) 
         book.releaseDate = event.target.value
     }
 
-    function handleAddAuthor(event) {
-        setOpenAuthor(true)
-    }
-
     function changeIcon(event) {
         book.icon = event.target.value
+    }
+
+    function handleDescriptionChange(event) {
+        book.description = event.target.value
     }
 
     return (
@@ -94,6 +73,7 @@ export default function ChangeBookDetailsDialog({book, setBook, setOpen, open}) 
                     id="bookTitle"
                     label="Book Title"
                     fullWidth
+                    required={true}
                     defaultValue={book.bookTitle}
                     variant="standard"
                     onChange={changeTitle}
@@ -140,41 +120,7 @@ export default function ChangeBookDetailsDialog({book, setBook, setOpen, open}) 
                     onChange={changeQuantity}
                 />
 
-                {book.bookAuthors?.map((author) => {
 
-                    function changeAuthorName(event) {
-                        book.bookAuthors.find((a) => a.authorId === author.authorId).name = event.target.value
-                    }
-
-                    function changeAuthorSurame(event) {
-                        book.bookAuthors.find((a) => a.authorId === author.authorId).surname = event.target.value
-                    }
-
-                    return (
-                        <Box>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                id="releaseDate"
-                                label="Author Name"
-                                fullWidth
-                                defaultValue={author.name}
-                                variant="standard"
-                                onChange={changeAuthorName}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                id="releaseDate"
-                                label="Author Surname"
-                                fullWidth
-                                defaultValue={author.surname}
-                                variant="standard"
-                                onChange={changeAuthorSurame}
-                            />
-                        </Box>
-                    )
-                })}
                 <TextField
                     autoFocus
                     margin="dense"
@@ -198,13 +144,23 @@ export default function ChangeBookDetailsDialog({book, setBook, setOpen, open}) 
                     onChange={changeIcon}
                 />
 
-                <AddAuthorDialog open={openAuthor} setOpen={setOpenAuthor} bookChange={book}
-                                 setBookChange={setBook}/>
-                <Button onClick={handleAddAuthor}>Add Author</Button>
+                <TextareaAutosize
+                    aria-label="desc"
+                    minRows={5}
+                    placeholder="Description"
+                    defaultValue={book.description}
+                    onChange={handleDescriptionChange}
+                    style={{
+                        width: "90%",
+                        maxWidth: "90%",
+                        margin: 1
+                    }}
+                />
+
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleConfirm}>Apply</Button>
+                <Button onClick={onConfirm}>Apply</Button>
             </DialogActions>
         </Dialog>
     );

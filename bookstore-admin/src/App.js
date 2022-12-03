@@ -7,6 +7,7 @@ import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
+import NewBook from "./pages/NewBook";
 
 export const theme = createTheme();
 
@@ -31,6 +32,10 @@ function App() {
                 <Route
                     path="product/:bookHeaderId"
                     element={<BookDetails/>}
+                />
+                <Route
+                    path="/createBook"
+                    element={<NewBook/>}
                 />
                 <Route
                     path="search/"
