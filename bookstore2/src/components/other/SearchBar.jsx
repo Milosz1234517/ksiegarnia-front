@@ -1,5 +1,14 @@
 import {Box} from "@mui/system";
-import {Autocomplete, Button, FormControlLabel, Switch, TextField, Typography} from "@mui/material";
+import {
+    Autocomplete,
+    Button,
+    FormControl,
+    FormControlLabel, MenuItem,
+    Select,
+    Switch,
+    TextField,
+    Typography
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
@@ -41,17 +50,19 @@ const StyledSearchResultLabel = styled(Typography)(() => ({
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     const navigate = useNavigate();
-    const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
+    const [urlSearchParams] = useSearchParams(window.location.search);
     const [booksAutocomplete, setBooksAutocomplete] = React.useState([]);
     const [searchInput, setSearchInput] = React.useState('')
     const [available, setAvailable] = React.useState(parseInt(urlSearchParams.get('available')) || false);
     const [filtersOn, setFilters] = React.useState(false);
+
     const [filterParams, setFilterParams] = useState({
         name: urlSearchParams.get('name') || '',
         surname: urlSearchParams.get('surname') || '',
         priceUp: urlSearchParams.get('priceUp') || '',
         priceDown: urlSearchParams.get('priceDown') || ''
     })
+
     const [searchParams, setSearchParams] = useState({
         title: urlSearchParams.get('bookTitle') || '',
         name: urlSearchParams.get('name') || '',
@@ -142,6 +153,8 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
             priceDown: urlSearchParams.get('priceDown') || ''
         })
 
+        setAvailable(urlSearchParams.get('available') || false)
+
     }, [urlSearchParams]);
 
 
@@ -199,8 +212,8 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         // setAvailable(false)
     }
 
-    function handleChangeAvailable() {
-        setAvailable(!available)
+    function handleChangeAvailable(event) {
+        setAvailable(event.target.value)
     }
 
     return (
@@ -223,14 +236,33 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 </Box>
             </StyledMainBox>
 
-            <StyledAvailableSwitch
-                control={
-                    <Switch
-                        checked={available}
-                        onClick={handleChangeAvailable}
-                        name="loading"
-                        color="primary"/>}
-                label="In Stock Only"/>
+            {/*<StyledAvailableSwitch*/}
+            {/*    control={*/}
+            {/*        <Switch*/}
+            {/*            checked={available}*/}
+            {/*            onClick={handleChangeAvailable}*/}
+            {/*            name="loading"*/}
+            {/*            color="primary"/>}*/}
+            {/*    label="In Stock Only"/>*/}
+                <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
+                    <Select
+                        labelId="status-label"
+                        id="status"
+                        variant="outlined"
+                        value={available}
+                        displayEmpty
+                        onChange={handleChangeAvailable}
+                    >
+                        <MenuItem value="false">
+                            <em>Show All</em>
+                        </MenuItem>
+
+                        <MenuItem value="true">
+                            Show Available
+                        </MenuItem>
+
+                    </Select>
+                </FormControl>
 
             <StyledFilterSwitch
                 control={
@@ -248,7 +280,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
                     <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5}}>
-                        Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
+                        Search Results for "{searchParams.title}"
                     </StyledSearchResultLabel>}
             </Box>
 

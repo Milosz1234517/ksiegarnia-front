@@ -165,7 +165,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBooksFilter?title=${searchInput}&&available=false&&page=1`,
+            `http://localhost:8080/api/bookstore/getBooksByTitle?title=${searchInput}&page=1`,
             true,
             null,
             null
@@ -211,7 +211,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                             setSearchInput(v)
                         }}
                         inputValue={searchInput}
-                        options={booksAutocomplete.map((book) => book.bookTitle)}
+                        options={booksAutocomplete.map((book) => book)}
                         renderInput={(params) =>
                             <TextField {...params} label="Search Books"/>}/>
 
