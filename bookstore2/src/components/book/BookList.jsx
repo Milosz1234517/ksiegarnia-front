@@ -77,7 +77,7 @@ export default function BookList({cards}) {
         <StyledMainGrid container>
 
             {cards.map((cards) => {
-                const {bookAuthors, bookHeaderId, bookTitle, price, quantity} = cards;
+                const {bookAuthors, bookHeaderId, icon, bookTitle, price, quantity} = cards;
 
                 function handleAddToCart() {
                     ctx.addItemToCart(bookHeaderId)
@@ -97,7 +97,7 @@ export default function BookList({cards}) {
                                     <Grid item>
                                         <ButtonBase sx={{width: 200, height: 200}}>
                                             <Img alt="complex"
-                                                 src="https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"/>
+                                                 src={icon}/>
                                         </ButtonBase>
                                     </Grid>
 

@@ -89,7 +89,7 @@ export default function BookReviewsTab({value, book}) {
             {marks.map((review) => {
 
                 return (
-                    <ReviewBox review={review}/>
+                    <ReviewBox review={review} title={false}/>
                 );
             })}
         </TabPanel>

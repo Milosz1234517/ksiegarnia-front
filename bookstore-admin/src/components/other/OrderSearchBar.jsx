@@ -6,7 +6,6 @@ import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom
 import {useCallback, useContext, useEffect, useState} from "react";
 import {styled} from "@mui/material/styles";
 import Context from "../../store/context";
-import BookFilters from "../book/BookFilters";
 import OrderFilters from "./OrderFilters";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
@@ -36,6 +35,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
     const navigate = useNavigate();
     const ctx = useContext(Context)
     const [urlSearchParams] = useSearchParams(window.location.search);
+    const [status, setStatus] = useState('')
     const [searchInput, setSearchInput] = React.useState(urlSearchParams.get('orderNumber') || '')
     const [filtersOn, setFilters] = React.useState(false);
     const [filterParams, setFilterParams] = useState({
@@ -92,7 +92,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterUserCount?page=${page}`,
+            `http://localhost:8080/api/bookstore/getOrdersFilterAdminCount?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
             true,
             null,
             null
@@ -100,7 +100,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
         xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
         xhttp.send();
 
-    }, [ctx.authToken, page, setCount]);
+    }, [ctx.authToken, page, searchParams.finalizedFrom, searchParams.finalizedTo, searchParams.orderNumber, searchParams.placedFrom, searchParams.placedTo, searchParams.status, setCount]);
 
     useEffect(() => {
         getOrdersCount()
@@ -128,6 +128,9 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
             status: urlSearchParams.get('status') || ''
         })
 
+        setStatus(urlSearchParams.get('status') || '')
+        setSearchInput(urlSearchParams.get('orderNumber') || '')
+
     }, [urlSearchParams]);
 
     function handleSearchBooks() {
@@ -138,7 +141,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
             ['finalizedTo', filterParams.finalizedTo],
             ['placedFrom', filterParams.placedFrom],
             ['placedTo', filterParams.placedTo],
-            ['status', filterParams.status],
+            ['status', status],
         ];
 
         navigate({
@@ -152,7 +155,6 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
     return (
         <Box>
             <StyledMainBox>
-
                 <Box sx={{display: "flex"}}>
                     <StyledAutocomplete
                         freeSolo
@@ -180,7 +182,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
             <Box>
                 {filtersOn &&
-                    <OrderFilters filterParams={filterParams} searchParams={searchParams}/>}
+                    <OrderFilters status={status} setStatus={setStatus} filterParams={filterParams} searchParams={searchParams}/>}
             </Box>
 
         </Box>

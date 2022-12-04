@@ -4,9 +4,12 @@ import {useCallback, useContext, useEffect} from "react";
 import Context from "../../store/context";
 import ReviewBox from "../other/ReviewBox";
 import CustomPagination from "../other/CustomPagination";
+import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
 
 
-export default function UserReviewsTab({value}){
+export default function UserReviewsTab({value}) {
 
     const [pageReview, setPageReview] = React.useState(1);
     const [countReview, setCountReview] = React.useState(1);
@@ -37,7 +40,7 @@ export default function UserReviewsTab({value}){
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForUserCount`,
+            `http://localhost:8080/api/bookstore/getReviewsForApproveCount`,
             true,
             null,
             null
@@ -49,7 +52,7 @@ export default function UserReviewsTab({value}){
 
     useEffect(() => {
         getBookCount();
-    }, [getBookCount]);
+    }, [getBookCount, marks.length]);
 
     const getMarks = useCallback(() => {
         const xhttp = new XMLHttpRequest();
@@ -71,7 +74,7 @@ export default function UserReviewsTab({value}){
 
         xhttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForUser?page=${pageReview}`,
+            `http://localhost:8080/api/bookstore/getReviewsForApprove?page=${pageReview}`,
             true,
             null,
             null
@@ -82,18 +85,86 @@ export default function UserReviewsTab({value}){
     }, [ctx.authToken, pageReview]);
 
     useEffect(() => {
-        if(value === 2)
+        if (value === 3)
             getMarks();
     }, [getMarks, value]);
 
-    return(
-        <TabPanel value={value} index={2}>
+    const deleteReview = async (data) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/bookstore/deleteReview?reviewId=${data}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + ctx.authToken
+                }
+            });
+            await response.json();
+            return response
+
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
+    const approveReview = async (data) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/bookstore/approveReview?reviewId=${data}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + ctx.authToken
+                }
+            });
+            await response.json();
+            return response
+
+        } catch (e) {
+            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+        }
+    };
+
+    function handleDeleteReview(reviewId) {
+        deleteReview(reviewId).then(function (response){
+            if(response.ok){
+                const reviews = marks.filter((m) => m.reviewId !== reviewId)
+                setMarks(reviews)
+                if(reviews.length === 0 && pageReview - 1 > 0)
+                    setPageReview(pageReview - 1)
+            }
+        })
+    }
+
+    function handleApproveReview(reviewId) {
+        approveReview(reviewId).then(function (response){
+            if(response.ok){
+                const reviews = marks.filter((m) => m.reviewId !== reviewId)
+                setMarks(reviews)
+                if(reviews.length === 0 && pageReview - 1 > 0)
+                    setPageReview(pageReview - 1)
+            }
+        })
+    }
+
+    return (
+        <TabPanel value={value} index={3}>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
-            {marks.map((review) => {
-                return (
-                    <ReviewBox review={review}/>
-                );
-            })}
+            <TableContainer>
+                <Table sx={{minWidth: 650}} aria-label="simple table">
+                    <TableBody>
+                        {marks.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+                                <TableCell align="left"><ReviewBox review={row} user={true} title={true}/></TableCell>
+                                <TableCell align="left"><Button onClick={() => handleDeleteReview(row.reviewId)}><DeleteIcon/></Button></TableCell>
+                                <TableCell align="left"><Button onClick={() => handleApproveReview(row.reviewId)}><CheckIcon/></Button></TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
         </TabPanel>
     );
 }

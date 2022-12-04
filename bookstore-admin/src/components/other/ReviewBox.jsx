@@ -5,7 +5,7 @@ import * as React from "react";
 import {useWindowResize} from "./WindowResizer";
 
 
-export default function ReviewBox({review}){
+export default function ReviewBox({review, title, user}){
 
     const size = useWindowResize()
 
@@ -32,7 +32,19 @@ export default function ReviewBox({review}){
                                     color: 'inherit',
                                     textDecoration: 'none',
                                 }}>
-                                {review.user.login}
+                                {user ? review.user.login : ""}
+                            </Typography>
+                        </Grid>
+                        <Grid item container>
+                            <Typography
+                                gutterBottom
+                                variant="h6"
+                                component="a"
+                                sx={{
+                                    color: 'inherit',
+                                    textDecoration: 'none',
+                                }}>
+                                {title ? review.bookHeader.bookTitle : ""}
                             </Typography>
                         </Grid>
                         <Grid item container>

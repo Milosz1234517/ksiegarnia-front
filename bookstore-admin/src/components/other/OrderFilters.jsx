@@ -5,12 +5,10 @@ import {useCallback, useEffect, useState} from "react";
 import {useLocation, useSearchParams} from "react-router-dom";
 
 
-export default function OrderFilters({searchParams, filterParams}){
+export default function OrderFilters({searchParams, filterParams, status, setStatus}){
 
     const [urlSearchParams] = useSearchParams(window.location.search);
     const [statuses, setStatuses] = useState([])
-    const [status, setStatus] = useState([])
-    let location = useLocation();
     const [textInput] = React.useState({
         finalizedFrom: React.useRef(null),
         finalizedTo: React.useRef(null),
@@ -18,10 +16,6 @@ export default function OrderFilters({searchParams, filterParams}){
         placedTo: React.useRef(null),
         status: React.useRef(null)
     })
-
-    useEffect(()=>{
-        setStatus([])
-    },[location])
 
     useEffect(() => {
         if (textInput.finalizedFrom.current !== null)
@@ -98,14 +92,18 @@ export default function OrderFilters({searchParams, filterParams}){
         <Box>
             <Box sx={{display: "inline-block", margin: 1}}>
                 <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
-                    <InputLabel id="status-label">Order Status</InputLabel>
+                    {/*<InputLabel id="status-label">Order Status</InputLabel>*/}
                     <Select
                         labelId="status-label"
                         id="status"
-                        variant="standard"
+                        variant="outlined"
                         value={status}
+                        displayEmpty
                         onChange={handleChangeStatus}
                     >
+                        <MenuItem value="">
+                            <em>Show All</em>
+                        </MenuItem>
                         {statuses.map((option) => (
                             <MenuItem key={option.statusId} value={option.statusId}>
                                 {option.description}
@@ -113,24 +111,6 @@ export default function OrderFilters({searchParams, filterParams}){
                         ))}
                     </Select>
                 </FormControl>
-            </Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
-
-                <TextField
-                    margin="normal"
-                    sx={{margin: 1}}
-                    InputLabelProps={{ shrink: true }}
-                    fullWidth
-                    variant="filled"
-                    id="placedTo"
-                    type="date"
-                    label="Placed To"
-                    name="placedTo"
-                    inputRef={textInput.placedTo}
-                    defaultValue={searchParams.placedTo}
-                    onChange={handleChangePlacedTo}
-                    autoFocus/>
-
             </Box>
 
             <Box sx={{display: "inline-block", margin: 1}}>
@@ -183,6 +163,25 @@ export default function OrderFilters({searchParams, filterParams}){
                     inputRef={textInput.placedFrom}
                     defaultValue={searchParams.placedFrom}
                     onChange={handleChangePlacedFrom}
+                    autoFocus/>
+
+            </Box>
+
+            <Box sx={{display: "inline-block", margin: 1}}>
+
+                <TextField
+                    margin="normal"
+                    sx={{margin: 1}}
+                    InputLabelProps={{ shrink: true }}
+                    fullWidth
+                    variant="filled"
+                    id="placedTo"
+                    type="date"
+                    label="Placed To"
+                    name="placedTo"
+                    inputRef={textInput.placedTo}
+                    defaultValue={searchParams.placedTo}
+                    onChange={handleChangePlacedTo}
                     autoFocus/>
 
             </Box>

@@ -11,6 +11,8 @@ import BookTemplate from "../components/book/BookTemplate";
 import TabPanel from "../components/tabs/TabPanel";
 import OrderItemsTab from "../components/tabs/OrderItemsTab";
 import Context from "../store/context";
+import ClientsTab from "../components/tabs/ClientsTab";
+import UserReviewsTab from "../components/tabs/UserReviewsTab";
 
 
 function a11yProps(index) {
@@ -83,6 +85,10 @@ export default function HomePage({tab}) {
                 <BookList cards={books}/>
                 <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
             </TabPanel>
+
+            <ClientsTab value={value}/>
+
+            <UserReviewsTab value={value}/>
         </Box>
     );
 }

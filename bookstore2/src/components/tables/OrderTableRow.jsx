@@ -32,7 +32,7 @@ export default function OrderTableRow(props) {
                 <TableCell align="right">{row.totalPrice}</TableCell>
             </TableRow>
 
-            <OrderItemsTableRow open={open} row={row}/>
+            <OrderItemsTableRow open={open} row={row} order={row.orderId}/>
 
         </React.Fragment>
     );

@@ -3,7 +3,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import OrderTableRow from "../tables/OrderTableRow";
 import * as React from "react";
 import CustomPagination from "../other/CustomPagination";
-import {useCallback, useContext, useEffect} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
 import OrderSearchBar from "../other/OrderSearchBar";
 import {useSearchParams} from "react-router-dom";
@@ -29,7 +29,7 @@ export default function OrderItemsTab({value}){
     return(
         <TabPanel value={value} index={0}>
 
-            <OrderSearchBar page={page} setOrders={setOrders} setCount={setCount}/>
+            <OrderSearchBar page={page} setOrders={setOrders} setCount={setCount} />
 
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">

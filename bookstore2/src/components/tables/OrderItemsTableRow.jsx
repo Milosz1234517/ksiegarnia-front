@@ -8,7 +8,7 @@ import {useContext, useState} from "react";
 import Context from "../../store/context";
 
 
-export default function OrderItemsTableRow({row, open}) {
+export default function OrderItemsTableRow({row, open, order}) {
 
     const [openReview, setOpenReview] = useState(false);
     const [bookHeaderId, setBookHeaderId] = useState('')
@@ -16,7 +16,7 @@ export default function OrderItemsTableRow({row, open}) {
 
     const getReview = async (data) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/getReviewsForBookAndUser?bookHeaderId=${data}`, {
+            const response = await fetch(`http://localhost:8080/api/bookstore/checkReviewPossibility?bookHeaderId=${data}&orderId=${order}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +45,8 @@ export default function OrderItemsTableRow({row, open}) {
                 bookHeaderId={bookHeaderId}
                 openReview={openReview}
                 setBookHeaderId={setBookHeaderId}
-                setOpenReview={setOpenReview}/>
+                setOpenReview={setOpenReview}
+                order={order}/>
 
             <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>

@@ -41,7 +41,7 @@ const StyledSearchResultLabel = styled(Typography)(() => ({
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     const navigate = useNavigate();
-    const [urlSearchParams] = useSearchParams(window.location.search);
+    const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
     const [booksAutocomplete, setBooksAutocomplete] = React.useState([]);
     const [searchInput, setSearchInput] = React.useState('')
     const [available, setAvailable] = React.useState(parseInt(urlSearchParams.get('available')) || false);
@@ -165,7 +165,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBooksFilter?title=${searchInput}&&available=false&&page=1`,
+            `http://localhost:8080/api/bookstore/getBooksByTitle?title=${searchInput}&page=1`,
             true,
             null,
             null
@@ -196,7 +196,11 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         })
 
         setSearchInput('')
-        setAvailable(false)
+        // setAvailable(false)
+    }
+
+    function handleChangeAvailable() {
+        setAvailable(!available)
     }
 
     return (
@@ -211,7 +215,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                             setSearchInput(v)
                         }}
                         inputValue={searchInput}
-                        options={booksAutocomplete.map((book) => book.bookTitle)}
+                        options={booksAutocomplete.map((book) => book)}
                         renderInput={(params) =>
                             <TextField {...params} label="Search Books"/>}/>
 
@@ -223,9 +227,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 control={
                     <Switch
                         checked={available}
-                        onChange={() => {
-                            setAvailable(!available)
-                        }}
+                        onClick={handleChangeAvailable}
                         name="loading"
                         color="primary"/>}
                 label="In Stock Only"/>
@@ -245,7 +247,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                     <BookFilters filterParams={filterParams} searchParams={searchParams}/>}
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
-                    <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5 }}>
+                    <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5}}>
                         Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
                     </StyledSearchResultLabel>}
             </Box>

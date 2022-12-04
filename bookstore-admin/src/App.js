@@ -1,5 +1,5 @@
 import {createTheme, ThemeProvider} from "@mui/material";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
@@ -9,6 +9,10 @@ import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
 import NewBook from "./pages/NewBook";
 import * as React from "react";
+import HomePageOrders from "./pages/HomePageOrders";
+import HomePageBooks from "./pages/HomePageBooks";
+import HomePageClients from "./pages/HomePageClients";
+import HomePageReviews from "./pages/HomePageReviews";
 
 export const theme = createTheme();
 
@@ -17,6 +21,7 @@ theme.palette.primary.main = "#000";
 function App() {
 
     const ctx = useContext(Context);
+    const location = useLocation()
 
     useEffect(() => {
         ctx.checkTokenExpiration()
@@ -26,10 +31,10 @@ function App() {
         <ThemeProvider theme={theme}>
 
             <Routes>
-                <Route path="/orders" element={<HomePage tab={0}/>}/>
-                <Route path="/books" element={<HomePage tab={1}/>}/>
-                <Route path="/clients" element={<HomePage tab={2}/>}/>
-                <Route path="/reviews" element={<HomePage tab={3}/>}/>
+                <Route path="/orders" element={<HomePageOrders/>}/>
+                <Route path="/books" element={<HomePageBooks/>}/>
+                <Route path="/clients" element={<HomePageClients/>}/>
+                <Route path="/reviews" element={<HomePageReviews/>}/>
                 <Route path="/" element={<HomePage tab={0}/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/profile" element={
@@ -53,6 +58,11 @@ function App() {
                 <Route
                     path="searchOrder/"
                     element={<HomePage tab={0}/>}
+                />
+
+                <Route
+                    path="searchClients/"
+                    element={<HomePage tab={2}/>}
                 />
             </Routes>
 

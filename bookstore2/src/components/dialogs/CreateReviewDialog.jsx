@@ -4,7 +4,7 @@ import {useContext, useState} from "react";
 import Context from "../../store/context";
 
 
-export default function CreateReviewDialog({openReview, bookHeaderId, setBookHeaderId, setOpenReview}){
+export default function CreateReviewDialog({openReview, bookHeaderId, setBookHeaderId, setOpenReview, order}){
 
     const ctx = useContext(Context)
     const [value, setValue] = React.useState(2);
@@ -12,7 +12,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
 
     const addReview = async (data) => {
         try {
-            const response = await fetch('http://localhost:8080/api/bookstore/reviewBook', {
+            const response = await fetch(`http://localhost:8080/api/bookstore/reviewBook?orderId=${order}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
