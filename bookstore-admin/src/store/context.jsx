@@ -148,10 +148,6 @@ export const ContextProvider = (props) => {
 
     }, [authToken]);
 
-    useEffect(() => {
-        checkTokenExpiration()
-    }, [checkTokenExpiration, location]);
-
     const login = async (data) => {
         const url = 'http://localhost:8080/api/auth/login';
         try {
@@ -171,7 +167,7 @@ export const ContextProvider = (props) => {
                 setIsLoggedIn(true)
                 setAuthToken(resp.accessToken);
                 localStorage.setItem('token', resp.accessToken);
-                navigate("/");
+                navigate("/cockpit");
             } else {
                 showErrorAlert(resp.message);
             }

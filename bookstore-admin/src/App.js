@@ -88,7 +88,12 @@ function App() {
                         <HomePage tab={0}/>
                     )}/>
 
-                <Route path="/" element={<LoginPage/>}/>
+                <Route path="/" element={
+                    ctx.isLoggedIn ? (
+                    <Navigate to="/cockpit" replace />
+                ) : (
+                    <LoginPage/>
+                )}/>
 
                 <Route path="/profile" element={
                     !ctx.isLoggedIn ? (

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import * as React from "react";
 import {TableCell, TableRow} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import OrderItemsTableRow from "./OrderItemsTableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import ChangeOrderStatusDialog from "../dialogs/ChangeOrderStatusDialog";
+import Context from "../../store/context";
 
 
 export default function OrderTableRow(props) {
@@ -15,6 +16,7 @@ export default function OrderTableRow(props) {
     const [open, setOpen] = useState(false);
     const [openStatus, setOpenStatus] = useState(false);
     const [status, setStatus] = useState()
+    const ctx = useContext(Context)
 
     function handleStatusChange() {
         setOpenStatus(true)
@@ -23,6 +25,10 @@ export default function OrderTableRow(props) {
     useEffect(()=>{
         setStatus(row.orderStatus)
     }, [row.orderStatus])
+
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
 
     return (
         <React.Fragment>

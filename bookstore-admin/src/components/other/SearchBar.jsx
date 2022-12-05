@@ -12,9 +12,10 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import BookFilters from "../book/BookFilters";
 import {styled} from "@mui/material/styles";
+import Context from "../../store/context";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
     width: "100%",
@@ -50,6 +51,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     const [searchInput, setSearchInput] = React.useState('')
     const [available, setAvailable] = React.useState(parseInt(urlSearchParams.get('available')) || false);
     const [filtersOn, setFilters] = React.useState(false);
+    const ctx = useContext(Context)
     const [filterParams, setFilterParams] = useState({
         name: urlSearchParams.get('name') || '',
         surname: urlSearchParams.get('surname') || '',
@@ -96,6 +98,10 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     useEffect(() => {
         getBooksCount();
     }, [getBooksCount]);
+
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
 
     const getBooks = useCallback(() => {
         const xHttp = new XMLHttpRequest();

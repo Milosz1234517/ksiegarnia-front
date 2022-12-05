@@ -12,7 +12,7 @@ import {
 import * as React from "react";
 import HomePageMenu from "../components/other/HomePageMenu";
 import {Box} from "@mui/system";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Grid from "@mui/material/Grid";
 import Context from "../store/context";
 import BookDescriptionTab from "../components/tabs/BookDescriptionTab";
@@ -57,6 +57,10 @@ export default function NewBook() {
     const [openAuthor, setOpenAuthor] = useState(false)
     const [openCategories, setOpenCategories] = useState(false)
     const [size] = useWindowResize();
+
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

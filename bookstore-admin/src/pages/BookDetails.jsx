@@ -155,6 +155,10 @@ export default function BookDetails() {
         setOpenCategories(true)
     }
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     return (
         <Box sx={{flexGrow: 1}}>
             <HomePageMenu/>

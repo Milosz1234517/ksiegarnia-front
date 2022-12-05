@@ -54,6 +54,10 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
         status: urlSearchParams.get('status') || '',
     })
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     const getOrders = useCallback(() => {
         const xHttp = new XMLHttpRequest();
         let json;

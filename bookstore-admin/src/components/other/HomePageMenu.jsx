@@ -39,7 +39,7 @@ export default function HomePageMenu() {
     };
 
     function handleLogoutOpen() {
-        ctx.logout().then(() => navigate("/"));
+        ctx.logout()
     }
 
     return (

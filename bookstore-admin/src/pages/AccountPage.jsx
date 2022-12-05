@@ -58,6 +58,10 @@ export default function AccountPage() {
         setOpenPass(true);
     }
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     return (
         <div>
             <HomePageMenu/>
