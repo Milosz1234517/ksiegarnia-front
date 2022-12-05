@@ -7,8 +7,6 @@ import {
     TextField,
 } from "@mui/material";
 import * as React from "react";
-import {useContext} from "react";
-import Context from "../../store/context";
 
 
 export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publishingHouseCopy, bookCopy, setOpen, open}) {

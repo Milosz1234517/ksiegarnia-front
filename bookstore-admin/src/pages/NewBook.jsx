@@ -7,21 +7,17 @@ import {
     TableContainer,
     TableRow,
     Tabs,
-    TextField,
     Typography
 } from "@mui/material";
 import * as React from "react";
 import HomePageMenu from "../components/other/HomePageMenu";
 import {Box} from "@mui/system";
-import {useCallback, useContext, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useContext, useState} from "react";
 import Grid from "@mui/material/Grid";
 import Context from "../store/context";
 import BookDescriptionTab from "../components/tabs/BookDescriptionTab";
 import BookMoreDetailsTab from "../components/tabs/BookMoreDetailsTab";
-import BookReviewsTab from "../components/tabs/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
-import BookParameters from "../components/book/BookParameters";
 import {useWindowResize} from "../components/other/WindowResizer";
 import ChangeBookDetailsDialog from "../components/dialogs/ChangeBookDetailsDialog";
 import AddAuthorDialog from "../components/dialogs/AddAuthorDialog";
@@ -68,18 +64,7 @@ export default function NewBook() {
 
     function handleEdit() {
         setPublishingHouseCopy({name: book.publishingHouse.name})
-        setBookCopy({
-            bookAuthors: book.bookAuthors,
-            bookTitle: book.bookTitle,
-            description: book.description,
-            edition: book.edition,
-            icon: book.icon,
-            price: book.price,
-            publishingHouse: book.publishingHouse,
-            quantity: book.quantity,
-            releaseDate: book.releaseDate,
-            bookCategories: book.bookCategories
-        })
+        setBookCopy(JSON.parse(JSON.stringify(book)))
         setOpen(true)
     }
 
@@ -108,19 +93,12 @@ export default function NewBook() {
     }
 
     function handleSave() {
-        ctx.createBook(book).then(() => {
-            setBook({
-                bookAuthors: [],
-                bookTitle: "New Book Template",
-                description: "Enter some description",
-                edition: 0,
-                icon: "https://www.adazing.com/wp-content/uploads/2019/02/open-book-clipart-07-300x300.png",
-                price: 0,
-                publishingHouse: {name: ""},
-                quantity: 0,
-                releaseDate: "2000-01-01",
-                bookCategories: []
-            })
+        ctx.createBook(book).then((res) => {
+            if(res){
+                if(res.ok) {
+                    window.location.reload()
+                }
+            }
         })
     }
 

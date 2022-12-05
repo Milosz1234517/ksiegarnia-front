@@ -5,12 +5,6 @@ import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
 import SearchIcon from "@mui/icons-material/Search";
-import {styled} from "@mui/material/styles";
-
-const StyledSearchButton = styled(Button)(() => ({
-    display: "inline-block",
-    margin: 5
-}));
 
 export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
 
@@ -34,13 +28,13 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
     })
 
     const getUsers = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
 
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
 
                 obj = JSON.parse(json);
                 setUsers(obj)
@@ -51,15 +45,15 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getUsersFilter?name=${searchParams.name}&page=${pageUsers}&surname=${searchParams.surname}&login=${searchParams.login}`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken, pageUsers, searchParams.login, searchParams.name, searchParams.surname, setUsers]);
 
@@ -68,13 +62,13 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
     }, [getUsers]);
 
     const getUsersCount = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
 
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
 
                 obj = JSON.parse(json);
                 setUsersCount(Math.ceil(obj / 2));
@@ -85,15 +79,15 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getUsersFilterCount?name=${searchParams.name}&surname=${searchParams.surname}&login=${searchParams.login}`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken, searchParams.login, searchParams.name, searchParams.surname, setUsersCount]);
 

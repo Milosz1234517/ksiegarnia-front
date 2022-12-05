@@ -3,8 +3,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import OrderTableRow from "../tables/OrderTableRow";
 import * as React from "react";
 import CustomPagination from "../other/CustomPagination";
-import {useCallback, useContext, useEffect, useState} from "react";
-import Context from "../../store/context";
+import {useEffect} from "react";
 import OrderSearchBar from "../other/OrderSearchBar";
 import {useSearchParams} from "react-router-dom";
 

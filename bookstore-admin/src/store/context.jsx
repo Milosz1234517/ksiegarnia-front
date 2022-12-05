@@ -10,12 +10,29 @@ export const ContextProvider = (props) => {
 
     const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState({isError: false, message: null});
+    const [success, setSuccess] = useState({isSuccess: false, message: null});
     const navigate = useNavigate();
     let location = useLocation();
 
+    const showErrorAlert = (message) => {
+        setError({isError: true, message: message});
+        setTimeout(() => {
+            setError({isError: false, message: null});
+        }, 6000);
+    };
+
+    const showSuccessAlert = (message) => {
+        setSuccess({isSuccess: true, message: message});
+        setTimeout(() => {
+            setSuccess({isSuccess: false, message: null});
+        }, 6000);
+    };
+
     const changeBookDetails = async (data) => {
         try {
+            setIsLoading(true)
             const response = await fetch('http://localhost:8080/api/bookstore/updateBook', {
                 method: "PUT",
                 headers: {
@@ -36,16 +53,45 @@ export const ContextProvider = (props) => {
                     bookCategories: data.bookCategories
                 }),
             });
-            await response.json();
+            const resp = await response.json()
+            if (response.ok) {
+                showSuccessAlert(resp.message)
+            } else {
+                showErrorAlert(resp.message)
+            }
+
+            setIsLoading(false)
             return response
 
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            showErrorAlert("Connection lost");
         }
+        setIsLoading(false)
+    };
+
+    const deleteReview = async (data) => {
+        try {
+            setIsLoading(true)
+            const response = await fetch(`http://localhost:8080/api/bookstore/deleteReview?reviewId=${data}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                }
+            });
+
+            setIsLoading(false)
+            return response
+
+        } catch (e) {
+            showErrorAlert("Connection lost");
+        }
+        setIsLoading(false)
     };
 
     const createBook = async (data) => {
         try {
+            setIsLoading(true)
             const response = await fetch('http://localhost:8080/api/bookstore/addBook', {
                 method: "POST",
                 headers: {
@@ -65,33 +111,40 @@ export const ContextProvider = (props) => {
                     bookCategories: data.bookCategories
                 }),
             });
-            await response.json();
+            const resp = await response.json();
 
-            if (!response.ok)
-                window.location.reload()
+            if (response.ok){
+                showSuccessAlert(resp.message)
+            }else{
+                showErrorAlert(resp.message)
+            }
+
+            setIsLoading(false)
+            return response
 
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            showErrorAlert("Connection lost");
         }
+        setIsLoading(false)
     };
 
     const checkTokenExpiration = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
+        const xHttp = new XMLHttpRequest();
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status !== 200) {
                 logout()
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/connection/admin`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + authToken)
+        xHttp.send();
 
     }, [authToken]);
 
@@ -102,6 +155,7 @@ export const ContextProvider = (props) => {
     const login = async (data) => {
         const url = 'http://localhost:8080/api/auth/login';
         try {
+            setIsLoading(true);
             const response = await fetch(`${url}`, {
                 method: "POST",
                 headers: {
@@ -118,42 +172,19 @@ export const ContextProvider = (props) => {
                 setAuthToken(resp.accessToken);
                 localStorage.setItem('token', resp.accessToken);
                 navigate("/");
+            } else {
+                showErrorAlert(resp.message);
             }
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            showErrorAlert("Connection lost");
         }
+        setIsLoading(false);
     };
 
-    const logout = async () => {
+    const logout = function () {
         setIsLoggedIn(false)
         setAuthToken(null);
         localStorage.removeItem('token');
-    }
-
-    const register = async (data) => {
-        const url = 'http://localhost:8080/api/auth/register';
-        try {
-            const response = await fetch(`${url}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name: data.name,
-                    password: data.password,
-                    phone: data.phone,
-                    sname: data.sname,
-                    username: data.username,
-                }),
-            });
-            const resp = await response.json();
-            resp.accessToken = undefined;
-            if (response.ok) {
-                navigate("/login");
-            }
-        } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
-        }
     }
 
     return (
@@ -162,11 +193,17 @@ export const ContextProvider = (props) => {
                 authToken,
                 changeBookDetails,
                 isLoggedIn,
+                isLoading,
                 checkTokenExpiration,
                 login,
                 logout,
-                register,
                 createBook,
+                error,
+                success,
+                showErrorAlert,
+                setIsLoading,
+                deleteReview,
+                showSuccessAlert,
             }}
         >
             {props.children}

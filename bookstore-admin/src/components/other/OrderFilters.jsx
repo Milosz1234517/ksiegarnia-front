@@ -1,8 +1,8 @@
 import {Box} from "@mui/system";
-import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {FormControl, MenuItem, Select, TextField} from "@mui/material";
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
-import {useLocation, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 
 export default function OrderFilters({searchParams, filterParams, status, setStatus}){

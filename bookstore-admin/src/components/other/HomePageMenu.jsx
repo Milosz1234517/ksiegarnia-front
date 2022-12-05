@@ -35,7 +35,7 @@ export default function HomePageMenu() {
     };
 
     const handleLoginOpen = () => {
-        navigate("/login")
+        navigate("/")
     };
 
     function handleLogoutOpen() {
@@ -51,7 +51,7 @@ export default function HomePageMenu() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/">
+                        href="/cockpit">
                         Books Admin
                     </StyledLogo>
 

@@ -32,12 +32,7 @@ export default function ChangeDetailsDialog({user, userChange, setUserChange, se
                 if (data.login !== oldLogin.login)
                     window.location.reload()
             } else {
-                setUserChange({
-                    login: user.login,
-                    name: user.name,
-                    surname: user.surname,
-                    phoneNumber: user.phoneNumber
-                })
+                setUserChange(JSON.parse(JSON.stringify(user)))
                 ctx.showErrorAlert("Action canceled because:" + resp.message);
             }
 
@@ -49,12 +44,7 @@ export default function ChangeDetailsDialog({user, userChange, setUserChange, se
 
     const handleClose = () => {
         setOpen(false);
-        setUserChange({
-            login: user.login,
-            name: user.name,
-            surname: user.surname,
-            phoneNumber: user.phoneNumber
-        })
+        setUserChange(JSON.parse(JSON.stringify(user)))
     };
 
     function handleConfirm() {

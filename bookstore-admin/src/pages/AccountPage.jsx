@@ -17,12 +17,12 @@ export default function AccountPage() {
     const ctx = useContext(Context)
 
     const getUser = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
                 obj = JSON.parse(json);
                 setUser(obj)
                 setUserChange({
@@ -34,15 +34,15 @@ export default function AccountPage() {
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getUserDetails`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken]);
 

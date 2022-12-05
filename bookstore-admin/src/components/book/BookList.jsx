@@ -1,10 +1,10 @@
 import Grid from "@mui/material/Grid";
-import {Button, ButtonBase, Paper, Typography} from "@mui/material";
+import {ButtonBase, Paper, Typography} from "@mui/material";
 import * as React from "react";
-import {styled} from "@mui/material/styles";
 import {Box} from "@mui/system";
+import {styled} from "@mui/material/styles";
 
-const Img = styled('img')({
+export const Img = styled('img')({
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
@@ -12,13 +12,13 @@ const Img = styled('img')({
     alignSelf: "center",
 });
 
-const StyledMainGrid = styled(Grid)(() => ({
+export const StyledMainGrid = styled(Grid)(() => ({
     display: "grid",
     margin: "auto",
     spacing: [1],
 }));
 
-const StyledMainBox = styled(Box)(() => ({
+export const StyledMainBox = styled(Box)(() => ({
     margin: "auto",
     marginBottom: 20,
     marginTop: 20,
@@ -26,13 +26,13 @@ const StyledMainBox = styled(Box)(() => ({
     width: "90%"
 }));
 
-const StyledTitleWrap = styled(Typography)(() => ({
+export const StyledTitleWrap = styled(Typography)(() => ({
     color: 'inherit',
     textDecoration: 'none',
     marginLeft: 10,
 }));
 
-const StyledTitle = styled(Typography)(() => ({
+export const StyledTitle = styled(Typography)(() => ({
     color: 'inherit',
     textDecoration: 'none',
     display: "block",
@@ -41,7 +41,7 @@ const StyledTitle = styled(Typography)(() => ({
     overflow: "hidden"
 }));
 
-const StyledAuthor = styled(Typography)(() => ({
+export const StyledAuthor = styled(Typography)(() => ({
     marginLeft: 10,
     display: "block",
     maxWidth: window.innerWidth * 0.7,
@@ -49,7 +49,7 @@ const StyledAuthor = styled(Typography)(() => ({
     overflow: "hidden"
 }));
 
-const StyledAvailable = styled(Typography)(() => ({
+export const StyledAvailable = styled(Typography)(() => ({
     marginLeft: 10,
     marginBottom: 50,
     display: "block",
@@ -58,7 +58,7 @@ const StyledAvailable = styled(Typography)(() => ({
     overflow: "hidden"
 }));
 
-const StyledPrice = styled(Typography)(() => ({
+export const StyledPrice = styled(Typography)(() => ({
     marginLeft: 10,
     marginTop: 20,
     display: "block",

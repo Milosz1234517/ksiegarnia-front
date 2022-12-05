@@ -8,23 +8,23 @@ import {styled} from "@mui/material/styles";
 import Context from "../../store/context";
 import OrderFilters from "./OrderFilters";
 
-const StyledAutocomplete = styled(Autocomplete)(() => ({
+export const StyledAutocomplete = styled(Autocomplete)(() => ({
     width: "100%",
     display: "flex",
     margin: 10,
     minWidth: 170
 }));
 
-const StyledMainBox = styled(Box)(() => ({
+export const StyledMainBox = styled(Box)(() => ({
     display: "grid"
 }));
 
-const StyledSearchButton = styled(Button)(() => ({
+export const StyledSearchButton = styled(Button)(() => ({
     display: "inline-block",
     margin: 5
 }));
 
-const StyledFilterSwitch = styled(FormControlLabel)(() => ({
+export const StyledFilterSwitch = styled(FormControlLabel)(() => ({
     display: "inline-block",
     margin: 10
 }));
@@ -55,50 +55,50 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
     })
 
     const getOrders = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
                 obj = JSON.parse(json);
                 setOrders(obj)
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getOrdersFilterAdmin?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken, page, searchParams.finalizedFrom, searchParams.finalizedTo, searchParams.orderNumber, searchParams.placedFrom, searchParams.placedTo, searchParams.status, setOrders]);
 
     const getOrdersCount = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
                 obj = JSON.parse(json);
                 setCount(Math.ceil(obj / 2));
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getOrdersFilterAdminCount?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken, page, searchParams.finalizedFrom, searchParams.finalizedTo, searchParams.orderNumber, searchParams.placedFrom, searchParams.placedTo, searchParams.status, setCount]);
 
@@ -148,8 +148,6 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
             pathname: '/searchOrder',
             search: `?${createSearchParams(params)}`
         })
-
-        // setSearchInput('')
     }
 
     return (

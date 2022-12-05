@@ -5,7 +5,6 @@ export default function BookParameters({book}) {
 
     return (
         <div>
-
             <Typography sx={{margin: 2}} variant="h5">
                 Publishing-house:
                 <Typography Typography variant="body2"

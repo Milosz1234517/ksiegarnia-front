@@ -10,29 +10,31 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
     let [newPassC, setNewPassC] = React.useState('');
     const ctx = useContext(Context)
 
-    function handleClosePass() {
+    function handleClose() {
         setOpenPass(false);
         setNewPassC('')
         setOldPassC('')
     }
 
-    function handleOldPass(event) {
+    function handleEnterOldPass(event) {
         oldPassC = event.target.value
     }
 
-    function handleConfirmPass() {
-        changePassword({newPass: newPassC, oldPass: oldPassC})
-        setOpenPass(false);
-        setNewPassC('')
-        setOldPassC('')
+    function handleConfirm() {
+        changePassword({newPass: newPassC, oldPass: oldPassC}).then(()=>{
+            setOpenPass(false);
+            setNewPassC('')
+            setOldPassC('')
+        })
     }
 
-    function handleNewPass(event) {
+    function handleEnterNewPass(event) {
         newPassC = event.target.value
     }
 
     const changePassword = async (data) => {
         try {
+            ctx.setIsLoading(true)
             const response = await fetch(`http://localhost:8080/api/bookstore/changePassword?newPass=${data.newPass}&oldPass=${data.oldPass}`, {
                 method: "PUT",
                 headers: {
@@ -40,16 +42,21 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
                     'Authorization': 'Bearer ' + ctx.authToken
                 },
             });
+            const resp = await response.json()
+
             if (response.ok) {
-                // await ctx.logout()
+                ctx.showSuccessAlert(resp.message)
+            }else{
+                ctx.showErrorAlert(resp.message);
             }
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
+        ctx.setIsLoading(false)
     };
 
     return(
-        <Dialog open={openPass} onClose={handleClosePass}>
+        <Dialog open={openPass} onClose={handleClose}>
             <DialogTitle>Subscribe</DialogTitle>
             <DialogContent>
                 <TextField
@@ -60,7 +67,7 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
                     type="password"
                     fullWidth
                     variant="standard"
-                    onChange={handleOldPass}
+                    onChange={handleEnterOldPass}
                 />
                 <TextField
                     autoFocus
@@ -70,12 +77,12 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
                     type="password"
                     fullWidth
                     variant="standard"
-                    onChange={handleNewPass}
+                    onChange={handleEnterNewPass}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClosePass}>Cancel</Button>
-                <Button onClick={handleConfirmPass}>Apply</Button>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleConfirm}>Apply</Button>
             </DialogActions>
         </Dialog>
     );

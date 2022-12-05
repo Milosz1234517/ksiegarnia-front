@@ -1,15 +1,16 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import Context from "../../store/context";
 
 
-export default function ChangeDetailsDialog({user, setUser, userChange, setUserChange, setOpen, open}){
+export default function ChangeDetailsDialog({user, userChange, setUserChange, setOpen, open}){
 
     const ctx = useContext(Context)
 
     const changeUserDetails = async (data) => {
         try {
+            ctx.setIsLoading(true)
             const response = await fetch('http://localhost:8080/api/bookstore/changeUserDetails', {
                 method: "PUT",
                 headers: {
@@ -23,40 +24,34 @@ export default function ChangeDetailsDialog({user, setUser, userChange, setUserC
                     surname: data.surname
                 }),
             });
+
             const resp = await response.json();
 
             if (response.ok) {
                 const oldLogin = user.login
-                setUser(data)
-
                 if (data.login !== oldLogin.login)
                     window.location.reload()
             } else {
-                setUserChange({
-                    login: user.login,
-                    name: user.name,
-                    surname: user.surname,
-                    phoneNumber: user.phoneNumber
-                })
+                setUserChange(JSON.parse(JSON.stringify(user)))
+                ctx.showErrorAlert("Action canceled because:" + resp.message);
             }
+
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
+        ctx.setIsLoading(false)
     };
 
     const handleClose = () => {
         setOpen(false);
-        setUserChange({
-            login: user.login,
-            name: user.name,
-            surname: user.surname,
-            phoneNumber: user.phoneNumber
-        })
+        setUserChange(JSON.parse(JSON.stringify(user)))
     };
 
     function handleConfirm() {
-        changeUserDetails(userChange)
-        setOpen(false);
+        changeUserDetails(userChange).then(()=>{
+            setOpen(false);
+        })
+
     }
 
     function handleChangeEmail(event) {

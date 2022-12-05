@@ -1,9 +1,7 @@
 import TabPanel from "./TabPanel";
-import HomePageMenu from "../other/HomePageMenu";
 import * as React from "react";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {useCallback, useContext, useEffect, useState} from "react";
-import Context from "../../store/context";
+import {useEffect, useState} from "react";
 import CustomPagination from "../other/CustomPagination";
 import {useSearchParams} from "react-router-dom";
 import ClientFilter from "../other/ClientFilter";

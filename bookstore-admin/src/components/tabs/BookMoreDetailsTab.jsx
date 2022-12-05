@@ -32,18 +32,6 @@ export default function BookMoreDetailsTab({value, book}){
                         {book.edition}
                     </Typography>
                 </Typography>
-
-                <Typography sx={{margin: 2}} Typography variant="h5">
-                    Categories: {book.bookCategories?.map((cat) => {
-                    return (
-                        <Typography Typography variant="body2"
-                                    color="text.secondary"
-                                    align={"left"}>
-                            {cat.description}
-                        </Typography>
-                    )
-                })}
-                </Typography>
             </Box>
 
         </TabPanel>

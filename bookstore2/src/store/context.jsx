@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import React, {useCallback, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Context = React.createContext({
     authToken: null,
@@ -16,7 +16,6 @@ export const ContextProvider = (props) => {
     const [error, setError] = useState({isError: false, message: null});
     const [success, setSuccess] = useState({isSuccess: false, message: null});
     const navigate = useNavigate();
-    let location = useLocation();
 
     const showErrorAlert = (message) => {
         setError({isError: true, message: message});

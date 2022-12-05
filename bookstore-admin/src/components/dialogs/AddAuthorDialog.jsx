@@ -7,14 +7,22 @@ export default function AddAuthorDialog({bookChange, setOpen, open, setAuthors, 
     const [authorChange, setAuthorChange] = useState({})
 
     function addAuthor(data) {
-        bookChange.bookAuthors = [...bookChange.bookAuthors, data]
+        const book = JSON.parse(JSON.stringify(bookChange));
+        book.bookAuthors = [...bookChange.bookAuthors, data]
+
         if(handeChange) {
-            handeChange(bookChange).then(() => {
+            handeChange(book).then((res) => {
                 setAuthorChange({})
-                setAuthors(bookChange.bookAuthors)
+                if(res) {
+                    if(res.ok) {
+                        bookChange.bookAuthors = book.bookAuthors
+                        setAuthors(bookChange.bookAuthors)
+                    }
+                }
             })
         }else {
             setAuthorChange({})
+            bookChange.bookAuthors = book.bookAuthors
             setAuthors(bookChange.bookAuthors)
         }
     }

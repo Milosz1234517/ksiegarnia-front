@@ -101,7 +101,6 @@ export default function UserReviewsTab({value}) {
                     'Authorization': 'Bearer ' + ctx.authToken
                 }
             });
-            await response
 
             ctx.setIsLoading(false)
             return response

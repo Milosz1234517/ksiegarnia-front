@@ -32,11 +32,6 @@ const StyledSearchButton = styled(Button)(() => ({
     margin: 5
 }));
 
-const StyledAvailableSwitch = styled(FormControlLabel)(() => ({
-    display: "inline-block",
-    margin: 10
-}));
-
 const StyledFilterSwitch = styled(FormControlLabel)(() => ({
     display: "inline-block",
     margin: 10

@@ -1,7 +1,6 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
-import Context from "../../store/context";
 
 
 export default function AddCategoryDialog({bookChange, setOpen, open, setCategories, handeChange}) {
@@ -9,14 +8,22 @@ export default function AddCategoryDialog({bookChange, setOpen, open, setCategor
     const [catChange, setCatChange] = useState({})
 
     function addCat(data) {
-        bookChange.bookCategories = [...bookChange.bookCategories, data]
+        const book = JSON.parse(JSON.stringify(bookChange));
+        book.bookCategories = [...bookChange.bookCategories, data]
+
         if (handeChange) {
-            handeChange(bookChange).then(() => {
+            handeChange(book).then((resp) => {
                 setCatChange({})
-                setCategories(bookChange.bookCategories)
+                if(resp) {
+                    if(resp.ok) {
+                        bookChange.bookCategories = book.bookCategories
+                        setCategories(bookChange.bookCategories)
+                    }
+                }
             })
         } else {
             setCatChange({})
+            bookChange.bookCategories = book.bookCategories
             setCategories(bookChange.bookCategories)
         }
     }

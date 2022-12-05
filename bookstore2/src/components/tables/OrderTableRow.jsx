@@ -28,7 +28,7 @@ export default function OrderTableRow(props) {
                     {row.orderId}
                 </TableCell>
                 <TableCell align="right">{row.orderStatus.description}</TableCell>
-                <TableCell align="right">{row.orderDate}</TableCell>
+                <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
                 <TableCell align="right">{row.totalPrice}</TableCell>
             </TableRow>
 

@@ -7,7 +7,6 @@ import {
     TableContainer,
     TableRow,
     Tabs,
-    TextField,
     Typography
 } from "@mui/material";
 import * as React from "react";
@@ -21,7 +20,6 @@ import BookDescriptionTab from "../components/tabs/BookDescriptionTab";
 import BookMoreDetailsTab from "../components/tabs/BookMoreDetailsTab";
 import BookReviewsTab from "../components/tabs/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
-import BookParameters from "../components/book/BookParameters";
 import {useWindowResize} from "../components/other/WindowResizer";
 import ChangeBookDetailsDialog from "../components/dialogs/ChangeBookDetailsDialog";
 import AddAuthorDialog from "../components/dialogs/AddAuthorDialog";
@@ -53,13 +51,13 @@ export default function BookDetails() {
     const [size] = useWindowResize();
 
     const getBooksSearch = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
 
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.response;
+                json = xHttp.response;
 
                 obj = JSON.parse(json);
                 setBook(obj)
@@ -71,14 +69,14 @@ export default function BookDetails() {
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
             true,
             null,
             null
         );
-        xhttp.send();
+        xHttp.send();
 
     }, [bookHeaderId]);
 
