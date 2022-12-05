@@ -92,7 +92,6 @@ export default function OrderFilters({searchParams, filterParams, status, setSta
         <Box>
             <Box sx={{display: "inline-block", margin: 1}}>
                 <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
-                    {/*<InputLabel id="status-label">Order Status</InputLabel>*/}
                     <Select
                         labelId="status-label"
                         id="status"

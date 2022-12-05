@@ -1,11 +1,11 @@
-import {createTheme, ThemeProvider} from "@mui/material";
+import {Alert, Backdrop, CircularProgress, createTheme, Snackbar, ThemeProvider} from "@mui/material";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import BasketPage from "./pages/BasketPage";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
@@ -14,13 +14,34 @@ export const theme = createTheme();
 
 theme.palette.primary.main = "#000";
 
+const Loading = (props) => {
+    return (
+        <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={props.isOpen}
+        >
+            <CircularProgress />
+        </Backdrop>
+    );
+};
+
 function App() {
 
     const ctx = useContext(Context);
 
     return (
         <ThemeProvider theme={theme}>
-
+            <Snackbar open={ctx.error.isError} autoHideDuration={6000}>
+                <Alert severity="error" sx={{ width: "100%" }}>
+                    {ctx.error.message}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={ctx.success.isSuccess} autoHideDuration={6000}>
+                <Alert severity="success" sx={{ width: "100%" }}>
+                    {ctx.success.message}
+                </Alert>
+            </Snackbar>
+            <Loading isOpen={ctx.isLoading} />
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
@@ -44,7 +65,6 @@ function App() {
                     element={<BookDetails/>}
                 />
                 <Route
-                    // path="search/:bookTitle/:available"
                     path="search/"
                     element={<HomePage/>}
                 />

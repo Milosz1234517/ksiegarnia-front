@@ -14,51 +14,55 @@ export default function OrderItemsTab({value}){
     const [page, setPage] = React.useState(1);
     const ctx = useContext(Context)
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     const getOrders = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
                 obj = JSON.parse(json);
                 setOrders(obj)
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getOrdersFilterUser?page=${page}`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken, page]);
 
     const getOrdersCount = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
                 obj = JSON.parse(json);
                 setCount(Math.ceil(obj / 2));
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getOrdersFilterUserCount?page=${page}`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken, page]);
 

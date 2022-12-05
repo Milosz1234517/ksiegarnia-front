@@ -1,5 +1,14 @@
 import {Box} from "@mui/system";
-import {Autocomplete, Button, FormControlLabel, Switch, TextField, Typography} from "@mui/material";
+import {
+    Autocomplete,
+    Button,
+    FormControl,
+    FormControlLabel, MenuItem,
+    Select,
+    Switch,
+    TextField,
+    Typography
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
@@ -142,6 +151,8 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
             priceDown: urlSearchParams.get('priceDown') || ''
         })
 
+        setAvailable(urlSearchParams.get('available') || false)
+
     }, [urlSearchParams]);
 
 
@@ -199,6 +210,10 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         setAvailable(false)
     }
 
+    function handleChangeAvailable(event) {
+        setAvailable(event.target.value)
+    }
+
     return (
         <Box>
             <StyledMainBox>
@@ -219,16 +234,25 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 </Box>
             </StyledMainBox>
 
-            <StyledAvailableSwitch
-                control={
-                    <Switch
-                        checked={available}
-                        onChange={() => {
-                            setAvailable(!available)
-                        }}
-                        name="loading"
-                        color="primary"/>}
-                label="In Stock Only"/>
+            <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
+                <Select
+                    labelId="status-label"
+                    id="status"
+                    variant="outlined"
+                    value={available}
+                    displayEmpty
+                    onChange={handleChangeAvailable}
+                >
+                    <MenuItem value="false">
+                        <em>Show All</em>
+                    </MenuItem>
+
+                    <MenuItem value="true">
+                        Show Available
+                    </MenuItem>
+
+                </Select>
+            </FormControl>
 
             <StyledFilterSwitch
                 control={
@@ -246,7 +270,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
                     <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5 }}>
-                        Search Results for "{searchParams.title}" stock available: {searchParams.availableOnly}
+                        Search Results for "{searchParams.title}"
                     </StyledSearchResultLabel>}
             </Box>
 

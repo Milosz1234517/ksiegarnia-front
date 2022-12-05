@@ -14,7 +14,7 @@ export default function OrderItemsTableRow({row, open, order}) {
     const [bookHeaderId, setBookHeaderId] = useState('')
     const ctx = useContext(Context)
 
-    const getReview = async (data) => {
+    const checkReview = async (data) => {
         try {
             const response = await fetch(`http://localhost:8080/api/bookstore/checkReviewPossibility?bookHeaderId=${data}&orderId=${order}`, {
                 method: "GET",
@@ -28,15 +28,19 @@ export default function OrderItemsTableRow({row, open, order}) {
                 if (!resp) {
                     setOpenReview(true)
                     setBookHeaderId(data)
+                }else{
+                    ctx.showErrorAlert("Can't create review for this book because it's already has been created or order is not completed yet");
                 }
+            }else{
+                ctx.showErrorAlert("Can't create review for this book");
             }
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
     };
 
     function handleCreateReview(bookHeaderId) {
-        getReview(bookHeaderId)
+        checkReview(bookHeaderId).then(()=>{})
     }
 
     return (

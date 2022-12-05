@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {ShoppingBasket} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
@@ -18,10 +17,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 const StyledMenuBox = styled(Box)(() => ({
     display: "grid",
 
-}));
-
-const StyledLoginButton = styled(Button)(() => ({
-    display: "inline-block",
 }));
 
 const StyledRegisterButton = styled(Button)(() => ({
@@ -58,21 +53,13 @@ export default function HomePageMenu() {
     };
 
     function handleLogoutOpen() {
-        ctx.logout().then(() => navigate("/"));
+        ctx.logout()
     }
 
     return (
         <StyledMenuBox>
             <AppBar position="static">
                 <Toolbar>
-
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer">
-                        <MenuIcon/>
-                    </IconButton>
 
                     <StyledLogo
                         variant="h6"

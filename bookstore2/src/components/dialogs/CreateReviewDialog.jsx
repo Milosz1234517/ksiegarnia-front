@@ -12,6 +12,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
 
     const addReview = async (data) => {
         try {
+            ctx.setIsLoading(true)
             const response = await fetch(`http://localhost:8080/api/bookstore/reviewBook?orderId=${order}`, {
                 method: "POST",
                 headers: {
@@ -25,12 +26,17 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
                 }),
             });
             const resp = await response.json();
-            if (response.ok) {
 
+            if (response.ok) {
+                ctx.showSuccessAlert(resp.message)
+            }else{
+                ctx.showErrorAlert(resp.message);
             }
+
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
+        ctx.setIsLoading(false)
     };
 
     const handleCloseReview = () => {
@@ -41,11 +47,12 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
     };
 
     function handleConfirmReview() {
-        addReview({bookHeaderId: bookHeaderId, mark: value, description: description})
-        setValue(2)
-        setBookHeaderId('')
-        setDescription('')
-        setOpenReview(false);
+        addReview({bookHeaderId: bookHeaderId, mark: value, description: description}).then(()=>{
+            setValue(2)
+            setBookHeaderId('')
+            setDescription('')
+            setOpenReview(false);
+        })
     }
 
     function handleDescriptionChange(event) {
@@ -62,8 +69,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
                     max={10}
                     onChange={(event, newValue) => {
                         setValue(newValue);
-                    }}
-                />
+                    }}/>
 
                 <TextareaAutosize
                     aria-label="minimum height"
@@ -75,8 +81,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
                         maxWidth: 400,
                         margin: 25,
 
-                    }}
-                />
+                    }}/>
 
             </DialogContent>
             <DialogActions>

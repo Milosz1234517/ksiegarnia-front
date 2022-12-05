@@ -21,7 +21,6 @@ theme.palette.primary.main = "#000";
 function App() {
 
     const ctx = useContext(Context);
-    const location = useLocation()
 
     useEffect(() => {
         ctx.checkTokenExpiration()

@@ -31,13 +31,13 @@ export default function BookDetails() {
     const ctx = useContext(Context);
 
     const getBooksSearch = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
 
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.response;
+                json = xHttp.response;
 
                 obj = JSON.parse(json);
                 setBook(obj)
@@ -48,14 +48,14 @@ export default function BookDetails() {
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
             true,
             null,
             null
         );
-        xhttp.send();
+        xHttp.send();
 
     }, [bookHeaderId]);
 
@@ -68,7 +68,7 @@ export default function BookDetails() {
     };
 
     function handleAddToCart() {
-        ctx.addItemToCart(bookHeaderId)
+        ctx.addItemToCart(bookHeaderId).then(()=>{})
     }
 
     return (

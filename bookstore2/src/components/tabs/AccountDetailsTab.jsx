@@ -16,13 +16,17 @@ export default function AccountDetailsTab({value}){
     const [open, setOpen] = React.useState(false);
     const ctx = useContext(Context)
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     const getUser = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
                 obj = JSON.parse(json);
                 setUser(obj)
                 setUserChange({
@@ -34,15 +38,15 @@ export default function AccountDetailsTab({value}){
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getUserDetails`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken]);
 
@@ -89,7 +93,6 @@ export default function AccountDetailsTab({value}){
                 open={open} user={user}
                 userChange={userChange}
                 setOpen={setOpen}
-                setUser={setUser}
                 setUserChange={setUserChange}/>
 
             <ChangePasswordDialog openPass={openPass} setOpenPass={setOpenPass}/>

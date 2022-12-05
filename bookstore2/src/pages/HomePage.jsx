@@ -25,11 +25,13 @@ export default function HomePage() {
     }, [setPage, urlSearchParams]);
 
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={{flexGrow: 5}}>
             <HomePageMenu/>
-            <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
-            <BookList cards={books}/>
-            <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
+            <Box sx={{margin: 1}}>
+                <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
+                <BookList cards={books}/>
+                <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
+            </Box>
         </Box>
     );
 }

@@ -12,9 +12,10 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import BookFilters from "../book/BookFilters";
 import {styled} from "@mui/material/styles";
+import Context from "../../store/context";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
     width: "100%",
@@ -30,11 +31,6 @@ const StyledMainBox = styled(Box)(() => ({
 const StyledSearchButton = styled(Button)(() => ({
     display: "inline-block",
     margin: 5
-}));
-
-const StyledAvailableSwitch = styled(FormControlLabel)(() => ({
-    display: "inline-block",
-    margin: 10
 }));
 
 const StyledFilterSwitch = styled(FormControlLabel)(() => ({
@@ -55,12 +51,14 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     const [searchInput, setSearchInput] = React.useState('')
     const [available, setAvailable] = React.useState(parseInt(urlSearchParams.get('available')) || false);
     const [filtersOn, setFilters] = React.useState(false);
-
+    const [category, setCategory] = useState('')
+    const ctx = useContext(Context)
     const [filterParams, setFilterParams] = useState({
         name: urlSearchParams.get('name') || '',
         surname: urlSearchParams.get('surname') || '',
         priceUp: urlSearchParams.get('priceUp') || '',
-        priceDown: urlSearchParams.get('priceDown') || ''
+        priceDown: urlSearchParams.get('priceDown') || '',
+        category: urlSearchParams.get('category') || ''
     })
 
     const [searchParams, setSearchParams] = useState({
@@ -69,7 +67,8 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         surname: urlSearchParams.get('surname') || '',
         priceUp: urlSearchParams.get('priceUp') || '',
         priceDown: urlSearchParams.get('priceDown') || '',
-        availableOnly: urlSearchParams.get('available') || false
+        availableOnly: urlSearchParams.get('available') || false,
+        category: urlSearchParams.get('category') || ''
     })
 
     const getBooksCount = useCallback(() => {
@@ -91,50 +90,59 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBooksFilterCount?title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
+            `http://localhost:8080/api/bookstore/getBooksFilterCount?category=${searchParams.category}&title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
             true,
             null,
             null
         );
         xHttp.send();
 
-    }, [page, searchParams.availableOnly, searchParams.name, searchParams.priceDown, searchParams.priceUp, searchParams.surname, searchParams.title, setBooksPagesCount]);
+    }, [page, searchParams.availableOnly, searchParams.category, searchParams.name, searchParams.priceDown, searchParams.priceUp, searchParams.surname, searchParams.title, setBooksPagesCount]);
 
     useEffect(() => {
         getBooksCount();
     }, [getBooksCount]);
 
     const getBooks = useCallback(() => {
-        const xHttp = new XMLHttpRequest();
-        let json;
-        let obj;
-        xHttp.onreadystatechange = function () {
+        try {
+            const xHttp = new XMLHttpRequest();
+            let json;
+            let obj;
+            xHttp.onreadystatechange = function () {
 
-            if (this.readyState === 4 && this.status === 200) {
-                json = xHttp.responseText;
+                if (this.readyState === 4) {
+                    ctx.setIsLoading(false)
+                }
 
-                obj = JSON.parse(json);
-                setBooks(obj)
-            }
-            if (this.readyState === 4 && this.status === 400) {
-                console.log("No access.");
-            }
-        };
+                if (this.readyState === 4 && this.status === 200) {
+                    json = xHttp.responseText;
 
-        xHttp.open(
-            "GET",
-            `http://localhost:8080/api/bookstore/getBooksFilter?title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
-            true,
-            null,
-            null
-        );
-        xHttp.send();
+                    obj = JSON.parse(json);
+                    setBooks(obj)
+                }
+                if (this.readyState === 4 && this.status === 400) {
+                    console.log("No access.");
+                }
+            };
 
-    }, [page, searchParams.availableOnly, searchParams.name, searchParams.priceDown, searchParams.priceUp, searchParams.surname, searchParams.title, setBooks]);
+            xHttp.open(
+                "GET",
+                `http://localhost:8080/api/bookstore/getBooksFilter?category=${searchParams.category}&title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
+                true,
+                null,
+                null
+            );
+            xHttp.send();
+
+        }catch (e) {
+            ctx.showErrorAlert("Connection lost");
+        }
+
+    }, [ctx, page, searchParams.availableOnly, searchParams.category, searchParams.name, searchParams.priceDown, searchParams.priceUp, searchParams.surname, searchParams.title, setBooks]);
 
     useEffect(() => {
         getBooks();
-    }, [getBooks]);
+    }, [ctx, getBooks]);
 
     useEffect(() => {
         setSearchParams({
@@ -143,20 +151,22 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
             surname: urlSearchParams.get('surname') || '',
             priceUp: urlSearchParams.get('priceUp') || '',
             priceDown: urlSearchParams.get('priceDown') || '',
-            availableOnly: urlSearchParams.get('available') || false
+            availableOnly: urlSearchParams.get('available') || false,
+            category: urlSearchParams.get('category') || ''
         })
 
         setFilterParams({
             name: urlSearchParams.get('name') || '',
             surname: urlSearchParams.get('surname') || '',
             priceUp: urlSearchParams.get('priceUp') || '',
-            priceDown: urlSearchParams.get('priceDown') || ''
+            priceDown: urlSearchParams.get('priceDown') || '',
+            category: urlSearchParams.get('category') || ''
         })
 
+        setCategory( urlSearchParams.get('category') || '')
         setAvailable(urlSearchParams.get('available') || false)
 
     }, [urlSearchParams]);
-
 
     const getBooksSearch = useCallback(() => {
         const xHttp = new XMLHttpRequest();
@@ -200,6 +210,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
             ['surname', filterParams.surname],
             ['priceUp', filterParams.priceUp],
             ['priceDown', filterParams.priceDown],
+            ['category', category]
 
         ];
 
@@ -209,7 +220,6 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         })
 
         setSearchInput('')
-        // setAvailable(false)
     }
 
     function handleChangeAvailable(event) {
@@ -236,33 +246,25 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 </Box>
             </StyledMainBox>
 
-            {/*<StyledAvailableSwitch*/}
-            {/*    control={*/}
-            {/*        <Switch*/}
-            {/*            checked={available}*/}
-            {/*            onClick={handleChangeAvailable}*/}
-            {/*            name="loading"*/}
-            {/*            color="primary"/>}*/}
-            {/*    label="In Stock Only"/>*/}
-                <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
-                    <Select
-                        labelId="status-label"
-                        id="status"
-                        variant="outlined"
-                        value={available}
-                        displayEmpty
-                        onChange={handleChangeAvailable}
-                    >
-                        <MenuItem value="false">
-                            <em>Show All</em>
-                        </MenuItem>
+            <FormControl variant="filled" sx={{ m: 2, minWidth: 150}}>
+                <Select
+                    labelId="status-label"
+                    id="status"
+                    variant="standard"
+                    value={available}
+                    displayEmpty
+                    onChange={handleChangeAvailable}>
 
-                        <MenuItem value="true">
-                            Show Available
-                        </MenuItem>
+                    <MenuItem value="false">
+                        <em>Show All</em>
+                    </MenuItem>
 
-                    </Select>
-                </FormControl>
+                    <MenuItem value="true">
+                        Show Available
+                    </MenuItem>
+
+                </Select>
+            </FormControl>
 
             <StyledFilterSwitch
                 control={
@@ -273,10 +275,9 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                         color="primary"/>}
                 label="Filters"/>
 
-
             <Box>
                 {filtersOn &&
-                    <BookFilters filterParams={filterParams} searchParams={searchParams}/>}
+                    <BookFilters category={category} setCategory={setCategory} filterParams={filterParams} searchParams={searchParams}/>}
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
                     <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5}}>

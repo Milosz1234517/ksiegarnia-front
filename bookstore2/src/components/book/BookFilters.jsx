@@ -1,19 +1,52 @@
 import {Box} from "@mui/system";
-import {TextField, Typography} from "@mui/material";
+import {FormControl, MenuItem, Select, TextField} from "@mui/material";
 import * as React from "react";
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 
 
-export default function BookFilters({searchParams, filterParams}){
+export default function BookFilters({searchParams, filterParams, category, setCategory}){
 
     const [urlSearchParams] = useSearchParams(window.location.search);
+    const [categories, setCategories] = useState([])
     const [textInput] = React.useState({
         name: React.useRef(null),
         surname: React.useRef(null),
         priceUp: React.useRef(null),
         priceDown: React.useRef(null)
     })
+
+    const getCategories = useCallback(() => {
+        const xHttp = new XMLHttpRequest();
+        let json;
+        let obj;
+        xHttp.onreadystatechange = function () {
+
+            if (this.readyState === 4 && this.status === 200) {
+                json = xHttp.responseText;
+
+                obj = JSON.parse(json);
+                setCategories(obj)
+            }
+            if (this.readyState === 4 && this.status === 400) {
+                console.log("No access.");
+            }
+        };
+
+        xHttp.open(
+            "GET",
+            `http://localhost:8080/api/bookstore/getCategories`,
+            true,
+            null,
+            null
+        );
+        xHttp.send();
+
+    }, []);
+
+    useEffect(() => {
+        getCategories();
+    }, [getCategories]);
 
     useEffect(() => {
         if (textInput.priceDown.current !== null)
@@ -44,6 +77,11 @@ export default function BookFilters({searchParams, filterParams}){
 
     function handleChangePriceDown(event) {
         filterParams.priceDown = event.target.value
+    }
+
+    function handleChangeCategory(event) {
+        setCategory(event.target.value)
+        filterParams.category = event.target.value
     }
 
     return(
@@ -115,6 +153,28 @@ export default function BookFilters({searchParams, filterParams}){
                     onChange={handleChangeSurname}
                     autoFocus/>
 
+            </Box>
+
+            <Box sx={{display: "inline-block", margin: 1}}>
+                <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
+                    <Select
+                        labelId="status-label"
+                        id="status"
+                        variant="outlined"
+                        value={category}
+                        displayEmpty
+                        onChange={handleChangeCategory}
+                    >
+                        <MenuItem value="">
+                            <em>All Categories</em>
+                        </MenuItem>
+                        {categories.map((option) => (
+                            <MenuItem key={option.categoryId} value={option.description}>
+                                {option.description}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
             </Box>
         </Box>
     )

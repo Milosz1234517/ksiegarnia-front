@@ -21,7 +21,8 @@ export default function BookDetailsPhoto({icon, size}){
                     width: size[0],
                     height: size[1],
                     maxWidth: 700,
-                    maxHeight: 700
+                    maxHeight: 700,
+                    overflow:"auto"
                 }}>
                 <Img alt="complex"
                      src={icon}/>

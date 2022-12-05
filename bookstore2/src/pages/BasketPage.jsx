@@ -15,14 +15,18 @@ export default function BasketPage() {
     const [emptyCart, setEmptyCart] = useState(true)
     const [show, setShow] = useState(false)
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     const getCart = useCallback(() => {
-        const xhttp = new XMLHttpRequest();
+        const xHttp = new XMLHttpRequest();
         let json;
         let obj;
-        xhttp.onreadystatechange = function () {
+        xHttp.onreadystatechange = function () {
 
             if (this.readyState === 4 && this.status === 200) {
-                json = xhttp.responseText;
+                json = xHttp.responseText;
 
                 obj = JSON.parse(json);
                 setCartItems(obj)
@@ -38,15 +42,15 @@ export default function BasketPage() {
             }
         };
 
-        xhttp.open(
+        xHttp.open(
             "GET",
             `http://localhost:8080/api/bookstore/getBasket`,
             true,
             null,
             null
         );
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xhttp.send();
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
+        xHttp.send();
 
     }, [ctx.authToken]);
 

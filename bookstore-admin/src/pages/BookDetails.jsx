@@ -186,7 +186,7 @@ export default function BookDetails() {
                     setCategories={setCategories}
                     handeChange={ctx.changeBookDetails}/>
 
-                <Box sx={{display: "grid", overflow:"auto"}}>
+                <Box sx={{display: "grid"}}>
 
                     <Grid container spacing={2} alignItems={"center"}>
 

@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import {Button, ButtonBase, Paper, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import Context from "../../store/context";
 import {Box} from "@mui/system";
 
@@ -25,7 +25,7 @@ const StyledMainBox = styled(Box)(() => ({
     marginBottom: 20,
     marginTop: 20,
     display: "grid",
-    width: "90%"
+    width: "100%",
 }));
 
 const StyledTitleWrap = styled(Typography)(() => ({
@@ -73,6 +73,10 @@ export default function BookList({cards}) {
 
     const ctx = useContext(Context)
 
+    useEffect(() => {
+        ctx.checkTokenExpiration()
+    });
+
     return (
         <StyledMainGrid container>
 
@@ -80,7 +84,10 @@ export default function BookList({cards}) {
                 const {bookAuthors, bookHeaderId, icon, bookTitle, price, quantity} = cards;
 
                 function handleAddToCart() {
-                    ctx.addItemToCart(bookHeaderId)
+                    if(ctx.isLoggedIn)
+                        ctx.addItemToCart(bookHeaderId).then(() => {})
+                    else
+                        ctx.showErrorAlert("Login or Register to proceed this action")
                 }
 
                 return (

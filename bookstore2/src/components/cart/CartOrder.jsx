@@ -1,8 +1,8 @@
 import {Box} from "@mui/system";
 import {Button, TextareaAutosize} from "@mui/material";
 import * as React from "react";
-import {useWindowResize} from "../other/WindowResizer";
 import {useContext, useState} from "react";
+import {useWindowResize} from "../other/WindowResizer";
 import Context from "../../store/context";
 
 
@@ -14,6 +14,7 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}){
 
     const placeOrder = async (data) => {
         try {
+            ctx.setIsLoading(true)
             const response = await fetch(`http://localhost:8080/api/bookstore/placeOrder`, {
                 method: "POST",
                 headers: {
@@ -25,21 +26,31 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}){
                     orderItems: data.orderItems
                 }),
             });
-            const resp = await response.json();
+
+           const respJson = await response.json()
+
             if (response.ok) {
-                cartItems.forEach((item) => ctx.removeItemFromCart(item.itemId))
-                setCartItems([])
+                ctx.showSuccessAlert(respJson.message)
                 setDescription('')
-            } else {
-                ctx.checkTokenExpiration()
+                cartItems.forEach((item) => ctx.removeItemFromCart(item.itemId).then((respItem) => {
+                    if(respItem) {
+                        if (respItem.ok) {
+                            setCartItems(cartItems.filter((it) => it.itemId !== item.itemId))
+                        }
+                    }
+                }))
+            }else{
+                ctx.showErrorAlert(respJson.message);
             }
+            ctx.setIsLoading(false)
+
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
+        ctx.setIsLoading(false)
     }
 
     const handlePlaceOrder = () => {
-
         const cartOrder = cartItems.map((item) => {
                 return {
                     bookHeader: {
@@ -49,8 +60,7 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}){
                 }
             }
         )
-
-        placeOrder({description: description, orderItems: cartOrder})
+        placeOrder({description: description, orderItems: cartOrder}).then(() =>{})
     }
 
     function handleDescriptionChange(event) {

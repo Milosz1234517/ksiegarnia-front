@@ -11,13 +11,20 @@ import Context from "../../store/context";
 export default function CartItemsTable({cartItems, setCartItems}){
 
     const ctx = useContext(Context)
+    const [size] = useWindowResize()
 
     const handleAddMore = obj => {
         setCartItems(cartItems.map(item => {
             if (item.itemId === obj.itemId) {
                 if (obj.quantity < obj.bookHeader.quantity) {
-                    ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1})
-                    item.quantity = item.quantity + 1
+                    ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp)=>{
+                        if(resp){
+                            if (resp.ok){
+                                item.quantity = item.quantity + 1
+                            }
+                        }
+                    })
+
                 }
             }
             return item
@@ -25,24 +32,32 @@ export default function CartItemsTable({cartItems, setCartItems}){
     }
 
     const handleRemoveMore = obj => {
-        let cartItemsCopy = cartItems.map(item => {
-            if (item.itemId === obj.itemId) {
-                if (item.quantity > 0) {
-                    item.quantity = item.quantity - 1
+        if(obj.quantity > 1) {
+            setCartItems(cartItems.map(item => {
+                if (item.itemId === obj.itemId) {
                     if (item.quantity > 0) {
-                        ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity - 1})
-                    } else {
-                        ctx.removeItemFromCart(obj.itemId)
+                        const quantity = item.quantity - 1
+                        if (quantity > 0) {
+                            ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then((resp) => {
+                                if (resp.ok)
+                                    item.quantity = quantity
+                            })
+                        }
                     }
                 }
-            }
-            return item
-        })
-        cartItemsCopy = cartItemsCopy.filter((item) => item.quantity !== 0)
-        setCartItems(cartItemsCopy)
+                return item
+            }))
+        }else{
+            ctx.removeItemFromCart(obj.itemId).then((r)=>{
+                if(r.ok){
+                    setCartItems(cartItems.filter((it)=>obj.itemId !== it.itemId))
+                }
+
+            })
+
+        }
     }
 
-    const [size] = useWindowResize()
     return(
         <TableContainer>
             <Table sx={{maxWidth: size[0]}} aria-label="simple table">
