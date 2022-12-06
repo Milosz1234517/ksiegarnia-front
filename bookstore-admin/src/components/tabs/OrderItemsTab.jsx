@@ -39,6 +39,7 @@ export default function OrderItemsTab({value}){
                             <TableCell align="right">Status</TableCell>
                             <TableCell align="right">Date</TableCell>
                             <TableCell align="right">Total Price(zł)</TableCell>
+                            <TableCell align="left">Description</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

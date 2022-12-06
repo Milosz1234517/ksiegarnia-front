@@ -60,6 +60,7 @@ export default function OrderTableRow(props) {
                 </TableCell>
                 <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
                 <TableCell align="right">{row.totalPrice}</TableCell>
+                <TableCell align="left">{row.description}</TableCell>
             </TableRow>
 
             <OrderItemsTableRow open={open} row={row}/>
