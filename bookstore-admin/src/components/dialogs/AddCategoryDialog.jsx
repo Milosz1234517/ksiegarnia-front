@@ -23,8 +23,10 @@ export default function AddCategoryDialog({bookChange, setOpen, open, setCategor
             })
         } else {
             setCatChange({})
-            bookChange.bookCategories = book.bookCategories
-            setCategories(bookChange.bookCategories)
+            if(data.description) {
+                bookChange.bookCategories = book.bookCategories
+                setCategories(bookChange.bookCategories)
+            }
         }
     }
 

@@ -1,14 +1,16 @@
 import {Box} from "@mui/system";
 import {FormControl, MenuItem, Select, TextField} from "@mui/material";
 import * as React from "react";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
+import Context from "../../store/context";
 
 
 export default function OrderFilters({searchParams, filterParams, status, setStatus}){
 
     const [urlSearchParams] = useSearchParams(window.location.search);
     const [statuses, setStatuses] = useState([])
+    const ctx = useContext(Context)
     const [textInput] = React.useState({
         finalizedFrom: React.useRef(null),
         finalizedTo: React.useRef(null),
@@ -80,9 +82,10 @@ export default function OrderFilters({searchParams, filterParams, status, setSta
             null,
             null
         );
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
         xHttp.send();
 
-    }, []);
+    }, [ctx.authToken]);
 
     useEffect(() => {
         getStatuses();

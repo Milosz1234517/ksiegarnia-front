@@ -8,13 +8,12 @@ const Context = React.createContext({
 
 export const ContextProvider = (props) => {
 
-    const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+    const [authToken, setAuthToken] = useState(localStorage.getItem('tokenAdmin'));
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('tokenAdmin'));
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({isError: false, message: null});
     const [success, setSuccess] = useState({isSuccess: false, message: null});
     const navigate = useNavigate();
-    let location = useLocation();
 
     const showErrorAlert = (message) => {
         setError({isError: true, message: message});
@@ -149,7 +148,7 @@ export const ContextProvider = (props) => {
     }, [authToken]);
 
     const login = async (data) => {
-        const url = 'http://localhost:8080/api/auth/login';
+        const url = 'http://localhost:8080/api/auth/loginAdmin';
         try {
             setIsLoading(true);
             const response = await fetch(`${url}`, {
@@ -166,7 +165,7 @@ export const ContextProvider = (props) => {
             if (response.ok) {
                 setIsLoggedIn(true)
                 setAuthToken(resp.accessToken);
-                localStorage.setItem('token', resp.accessToken);
+                localStorage.setItem('tokenAdmin', resp.accessToken);
                 navigate("/cockpit");
             } else {
                 showErrorAlert(resp.message);
@@ -180,7 +179,7 @@ export const ContextProvider = (props) => {
     const logout = function () {
         setIsLoggedIn(false)
         setAuthToken(null);
-        localStorage.removeItem('token');
+        localStorage.removeItem('tokenAdmin');
     }
 
     return (

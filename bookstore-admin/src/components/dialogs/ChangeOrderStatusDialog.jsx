@@ -31,7 +31,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
             return response;
 
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
     };
 
@@ -48,7 +48,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
             return response;
 
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
     };
 
@@ -65,7 +65,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
             return response;
 
         } catch (e) {
-            // showErrorAlert("Nie można było uzyskać połączenia z serwerem.");
+            ctx.showErrorAlert("Connection lost");
         }
     };
 
@@ -93,9 +93,10 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
             null,
             null
         );
+        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
         xHttp.send();
 
-    }, []);
+    }, [ctx.authToken]);
 
     useEffect(() => {
         getStatuses();

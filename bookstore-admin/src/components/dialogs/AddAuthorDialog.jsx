@@ -22,8 +22,10 @@ export default function AddAuthorDialog({bookChange, setOpen, open, setAuthors, 
             })
         }else {
             setAuthorChange({})
-            bookChange.bookAuthors = book.bookAuthors
-            setAuthors(bookChange.bookAuthors)
+            if(data.name && data.surname) {
+                bookChange.bookAuthors = book.bookAuthors
+                setAuthors(bookChange.bookAuthors)
+            }
         }
     }
 
