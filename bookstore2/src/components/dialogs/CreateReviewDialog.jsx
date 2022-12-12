@@ -29,8 +29,16 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
 
             if (response.ok) {
                 ctx.showSuccessAlert(resp.message)
+                setOpenReview(false);
+                setValue(2)
+                setBookHeaderId('')
+                setDescription('')
             }else{
                 ctx.showErrorAlert(resp.message);
+                setOpenReview(false);
+                setValue(2)
+                setBookHeaderId('')
+                setDescription('')
             }
 
         } catch (e) {
@@ -47,12 +55,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
     };
 
     function handleConfirmReview() {
-        addReview({bookHeaderId: bookHeaderId, mark: value, description: description}).then(()=>{
-            setValue(2)
-            setBookHeaderId('')
-            setDescription('')
-            setOpenReview(false);
-        })
+        addReview({bookHeaderId: bookHeaderId, mark: value, description: description}).then(()=>{})
     }
 
     function handleDescriptionChange(event) {

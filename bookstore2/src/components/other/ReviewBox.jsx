@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import {Paper, Typography} from "@mui/material";
+import {Paper, Rating, Typography} from "@mui/material";
 import {Box} from "@mui/system";
 import * as React from "react";
 import {useWindowResize} from "./WindowResizer";
@@ -41,9 +41,7 @@ export default function ReviewBox({review, title}){
                             </Typography>
                         </Grid>
                         <Grid item container>
-                            <Typography variant="body2" gutterBottom>
-                                Mark: {review.mark}/10
-                            </Typography>
+                            <Rating name="read-only" value={review.mark} max={10} readOnly />
                         </Grid>
                     </Grid>
                 </Box>
