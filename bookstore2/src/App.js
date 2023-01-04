@@ -9,13 +9,13 @@ import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
-import {green, lime, teal, yellow} from "@mui/material/colors";
+import {deepPurple, green, indigo, lime, teal, yellow} from "@mui/material/colors";
 
 export const theme = createTheme(
     {
         palette: {
-            primary: green,
-            secondary: teal,
+            primary: indigo,
+            secondary: indigo,
         },
     }
 );

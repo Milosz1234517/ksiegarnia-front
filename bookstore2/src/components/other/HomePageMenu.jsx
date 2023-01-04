@@ -26,7 +26,7 @@ const StyledRegisterButton = styled(Button)(() => ({
 }));
 
 const StyledLogo = styled(Typography)(() => ({
-    color: 'yellow',
+    color: 'white',
     textDecoration: 'none',
     minWidth: 60,
     flexGrow: 2

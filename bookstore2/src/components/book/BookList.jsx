@@ -98,7 +98,7 @@ export default function BookList({cards}) {
                         <Card key={bookHeaderId} sx={{
                             flexGrow: 1, p:4, display: "grid",
                             transition: "0.3s",
-                            backgroundColor: "#b2ebf2",
+                            backgroundColor: "#c5cae9",
                             boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
                             "&:hover": {
                                 boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
@@ -131,7 +131,7 @@ export default function BookList({cards}) {
                                                 <Typography variant="body1" gutterBottom>
                                                     {bookAuthors.map((author) => {
                                                         return (
-                                                            <StyledAuthor variant="body2"
+                                                            <StyledAuthor variant="h6"
                                                                           color="text.secondary"
                                                                           align={"left"}>
                                                                 {author.name} {author.surname}
