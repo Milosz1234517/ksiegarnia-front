@@ -112,7 +112,7 @@ export default function BookDetails() {
     }
 
     function handleEdit() {
-        setPublishingHouseCopy({name : book.publishingHouse.name})
+        setPublishingHouseCopy({name: book.publishingHouse.name})
         setBookCopy({
             bookAuthors: book.bookAuthors,
             bookTitle: book.bookTitle,
@@ -134,19 +134,25 @@ export default function BookDetails() {
     }
 
     function handleDelete(author) {
+        const deepClone = JSON.parse(JSON.stringify(book));
         book.bookAuthors = book.bookAuthors.filter((a) => a !== author)
-        ctx.changeBookDetails(book).then(function (response){
-            if(response.ok) {
+        ctx.changeBookDetails(book).then(function (response) {
+            if (response.ok) {
                 setAuthors(book.bookAuthors)
+            }else{
+                setBook(deepClone)
             }
         })
     }
 
     function handleDeleteCat(cat) {
+        const deepClone = JSON.parse(JSON.stringify(book));
         book.bookCategories = book.bookCategories.filter((c) => c !== cat)
         ctx.changeBookDetails(book).then(function (response) {
             if (response.ok) {
                 setCategories(book.bookCategories)
+            } else {
+                setBook(deepClone)
             }
         })
     }
@@ -167,7 +173,7 @@ export default function BookDetails() {
 
                 <ChangeBookDetailsDialog
                     book={book}
-                    bookCopy = {bookCopy}
+                    bookCopy={bookCopy}
                     publishingHouseCopy={publishingHouseCopy}
                     open={open}
                     onConfirm={handleConfirm}
