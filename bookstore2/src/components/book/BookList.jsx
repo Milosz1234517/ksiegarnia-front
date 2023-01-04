@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import {Button, ButtonBase, Card, Paper, Typography} from "@mui/material";
+import {Button, ButtonBase, Card, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
 import {useContext, useEffect} from "react";
