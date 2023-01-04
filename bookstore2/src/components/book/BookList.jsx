@@ -1,17 +1,17 @@
 import Grid from "@mui/material/Grid";
-import {Button, ButtonBase, Paper, Typography} from "@mui/material";
+import {Button, ButtonBase, Card, Paper, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
 import {useContext, useEffect} from "react";
 import Context from "../../store/context";
 import {Box} from "@mui/system";
+import {useWindowResize} from "../other/WindowResizer";
 
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
     maxHeight: '100%',
-    alignSelf: "center",
 });
 
 const StyledMainGrid = styled(Grid)(() => ({
@@ -25,7 +25,7 @@ const StyledMainBox = styled(Box)(() => ({
     marginBottom: 20,
     marginTop: 20,
     display: "grid",
-    width: "100%",
+    width: "80%",
 }));
 
 const StyledTitleWrap = styled(Typography)(() => ({
@@ -38,7 +38,7 @@ const StyledTitle = styled(Typography)(() => ({
     color: 'inherit',
     textDecoration: 'none',
     display: "block",
-    maxWidth: window.innerWidth * 0.7,
+    maxWidth: window.innerWidth * 0.4,
     textOverflow: "ellipsis",
     overflow: "hidden"
 }));
@@ -46,7 +46,7 @@ const StyledTitle = styled(Typography)(() => ({
 const StyledAuthor = styled(Typography)(() => ({
     marginLeft: 10,
     display: "block",
-    maxWidth: window.innerWidth * 0.7,
+    maxWidth: window.innerWidth * 0.4,
     textOverflow: "ellipsis",
     overflow: "hidden"
 }));
@@ -55,7 +55,7 @@ const StyledAvailable = styled(Typography)(() => ({
     marginLeft: 10,
     marginBottom: 50,
     display: "block",
-    maxWidth: window.innerWidth * 0.7,
+    maxWidth: window.innerWidth * 0.4,
     textOverflow: "ellipsis",
     overflow: "hidden"
 }));
@@ -64,7 +64,7 @@ const StyledPrice = styled(Typography)(() => ({
     marginLeft: 10,
     marginTop: 20,
     display: "block",
-    maxWidth: window.innerWidth * 0.7,
+    maxWidth: window.innerWidth * 0.4,
     textOverflow: "ellipsis",
     overflow: "hidden"
 }));
@@ -72,6 +72,8 @@ const StyledPrice = styled(Typography)(() => ({
 export default function BookList({cards}) {
 
     const ctx = useContext(Context)
+
+    const size = useWindowResize()
 
     useEffect(() => {
         ctx.checkTokenExpiration()
@@ -93,8 +95,12 @@ export default function BookList({cards}) {
                 return (
                     <StyledMainBox>
 
-                        <Paper key={bookHeaderId} sx={{
+                        <Card key={bookHeaderId} sx={{
                             flexGrow: 1, p:4, display: "grid",
+                            transition: "0.3s",
+                            boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                            "&:hover": {
+                                boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
                         }}>
 
                             <Box sx={{display: "grid"}}>
@@ -102,7 +108,7 @@ export default function BookList({cards}) {
                                 <Grid container spacing={2}>
 
                                     <Grid item>
-                                        <ButtonBase sx={{width: 200, height: 200}}>
+                                        <ButtonBase sx={{height: size[1] * 0.3, width: size[0] * 0.3}} >
                                             <Img alt="complex"
                                                  src={icon}/>
                                         </ButtonBase>
@@ -140,7 +146,7 @@ export default function BookList({cards}) {
                                 </Grid>
 
 
-                                <Grid item xs={6}>
+                                <Grid item xs>
 
                                     <StyledPrice align={"left"} variant="subtitle1" component="div">
                                         Price: {price}
@@ -150,12 +156,13 @@ export default function BookList({cards}) {
                                         Available: {quantity}
                                     </StyledAvailable>
 
-                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>Add to
-                                        Cart</Button>
+                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>
+                                        Add to Cart
+                                    </Button>
 
                                 </Grid>
                             </Box>
-                        </Paper>
+                        </Card>
                     </StyledMainBox>
                 );
             })}

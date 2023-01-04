@@ -77,7 +77,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 json = xHttp.responseText;
 
                 obj = JSON.parse(json);
-                setBooksPagesCount(Math.ceil(obj / 2));
+                setBooksPagesCount(Math.ceil(obj / 20));
             }
             if (this.readyState === 4 && this.status === 400) {
                 console.log("No access.");
