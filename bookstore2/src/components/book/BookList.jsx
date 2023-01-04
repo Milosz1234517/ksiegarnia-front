@@ -98,6 +98,7 @@ export default function BookList({cards}) {
                         <Card key={bookHeaderId} sx={{
                             flexGrow: 1, p:4, display: "grid",
                             transition: "0.3s",
+                            backgroundColor: "#c8e6c9",
                             boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
                             "&:hover": {
                                 boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}

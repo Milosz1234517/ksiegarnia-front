@@ -20,11 +20,13 @@ const StyledMenuBox = styled(Box)(() => ({
 }));
 
 const StyledRegisterButton = styled(Button)(() => ({
-    display: "inline-block"
+    display: "inline-block",
+    color: "black",
+    backgroundColor: "yellow"
 }));
 
 const StyledLogo = styled(Typography)(() => ({
-    color: 'inherit',
+    color: 'yellow',
     textDecoration: 'none',
     minWidth: 60,
     flexGrow: 2
@@ -83,7 +85,6 @@ export default function HomePageMenu() {
                             </IconButton>
 
                             <StyledRegisterButton
-                                color="primary"
                                 onClick={handleRegisterOpen}
                                 size="small"
                                 variant="contained">
