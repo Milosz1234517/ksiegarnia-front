@@ -21,8 +21,8 @@ const StyledMenuBox = styled(Box)(() => ({
 
 const StyledRegisterButton = styled(Button)(() => ({
     display: "inline-block",
-    color: "black",
-    backgroundColor: "yellow"
+    color: "#f4511e",
+    backgroundColor: "#5e35b1"
 }));
 
 const StyledLogo = styled(Typography)(() => ({

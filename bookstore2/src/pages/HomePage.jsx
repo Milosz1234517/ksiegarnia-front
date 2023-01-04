@@ -25,7 +25,7 @@ export default function HomePage() {
     }, [setPage, urlSearchParams]);
 
     return (
-        <Box sx={{flexGrow: 5, backgroundColor: "#84ffff"}}>
+        <Box sx={{flexGrow: 5, backgroundColor: "#b2ebf2"}}>
             <HomePageMenu/>
             <Box sx={{margin: 1}}>
                 <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>

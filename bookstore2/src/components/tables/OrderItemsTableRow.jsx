@@ -52,14 +52,14 @@ export default function OrderItemsTableRow({row, open, order}) {
                 setOpenReview={setOpenReview}
                 order={order}/>
 
-            <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
+            <TableCell style={{paddingBottom: 0, paddingTop: 0, backgroundColor: "#b2ebf2",}} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <Box sx={{margin: 1}}>
                         <Typography align="left" variant="h6" gutterBottom component="div">
                             Order Items
                         </Typography>
                         <Table size="small" aria-label="purchases">
-                            <TableHead>
+                            <TableHead sx={{backgroundColor:"#c5cae9"}}>
                                 <TableRow>
                                     <TableCell>Book Title</TableCell>
                                     <TableCell>Quantity</TableCell>
@@ -67,7 +67,7 @@ export default function OrderItemsTableRow({row, open, order}) {
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
+                            <TableBody sx={{backgroundColor:"#f0f4c3"}}>
                                 {row.orderItems.map((item) => (
                                     <TableRow key={item.itemId}>
                                         <TableCell component="th" scope="row">
