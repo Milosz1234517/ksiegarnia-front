@@ -108,7 +108,7 @@ export default function BookList({cards}) {
                                 <Grid container spacing={2}>
 
                                     <Grid item>
-                                        <ButtonBase sx={{height: size[1] * 0.3, width: size[0] * 0.3}} >
+                                        <ButtonBase sx={{height: size[1] * 0.4, width: size[0] * 0.4}} >
                                             <Img alt="complex"
                                                  src={icon}/>
                                         </ButtonBase>
@@ -120,14 +120,14 @@ export default function BookList({cards}) {
                                                 <StyledTitleWrap>
                                                     <StyledTitle
                                                         gutterBottom
-                                                        variant="h6"
+                                                        variant="h4"
                                                         component={"a"}
                                                         href={`/product/${bookHeaderId}`}>
                                                         {bookTitle}
                                                     </StyledTitle>
                                                 </StyledTitleWrap>
 
-                                                <Typography variant="body2" gutterBottom>
+                                                <Typography variant="body1" gutterBottom>
                                                     {bookAuthors.map((author) => {
                                                         return (
                                                             <StyledAuthor variant="body2"
@@ -148,11 +148,11 @@ export default function BookList({cards}) {
 
                                 <Grid item xs>
 
-                                    <StyledPrice align={"left"} variant="subtitle1" component="div">
+                                    <StyledPrice align={"left"} variant="h6" component="div">
                                         Price: {price}
                                     </StyledPrice>
 
-                                    <StyledAvailable align={"left"} variant="body2" color="text.secondary">
+                                    <StyledAvailable align={"left"} variant="body1" color="text.secondary">
                                         Available: {quantity}
                                     </StyledAvailable>
 
