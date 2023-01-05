@@ -98,7 +98,7 @@ export default function BookList({cards}) {
                         <Card key={bookHeaderId} sx={{
                             flexGrow: 1, p:4, display: "grid",
                             transition: "0.3s",
-                            backgroundColor: "#c5cae9",
+                            backgroundColor: "#e8f5e9",
                             boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
                             "&:hover": {
                                 boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
@@ -109,7 +109,7 @@ export default function BookList({cards}) {
                                 <Grid container spacing={2}>
 
                                     <Grid item>
-                                        <ButtonBase sx={{height: size[1] * 0.4, width: size[0] * 0.4}} >
+                                        <ButtonBase href={`/product/${bookHeaderId}`} sx={{height: size[1] * 0.4, width: size[0] * 0.4}} >
                                             <Img alt="complex"
                                                  src={icon}/>
                                         </ButtonBase>
@@ -157,7 +157,7 @@ export default function BookList({cards}) {
                                         Available: {quantity}
                                     </StyledAvailable>
 
-                                    <Button size="medium" variant="outlined" onClick={handleAddToCart}>
+                                    <Button sx={{backgroundColor:"#000", color:"white"}} size="medium" variant="outlined" onClick={handleAddToCart}>
                                         Add to Cart
                                     </Button>
 

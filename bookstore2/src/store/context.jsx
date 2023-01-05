@@ -51,6 +51,26 @@ export const ContextProvider = (props) => {
         setIsLoading(false);
     }
 
+    const removeAllItemsFromCart = async () => {
+        try {
+            setIsLoading(true);
+            const response = await fetch(`http://localhost:8080/api/bookstore/deleteAllItemsFromBasket`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + authToken
+                },
+            });
+
+            setIsLoading(false);
+            return response
+
+        } catch (e) {
+            showErrorAlert("Connection lost");
+        }
+        setIsLoading(false);
+    }
+
     const checkTokenExpiration = useCallback(() => {
         const xHttp = new XMLHttpRequest();
         xHttp.onreadystatechange = function () {
@@ -197,6 +217,7 @@ export const ContextProvider = (props) => {
                 addItemToCart,
                 checkTokenExpiration,
                 removeItemFromCart,
+                removeAllItemsFromCart,
                 updateItemCart,
                 login,
                 logout,

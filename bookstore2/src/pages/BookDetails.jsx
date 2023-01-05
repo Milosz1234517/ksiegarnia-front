@@ -72,7 +72,7 @@ export default function BookDetails() {
     }
 
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={{flexGrow: 1, backgroundColor: "#e8f5e9"}}>
             <HomePageMenu/>
 
             <div>
@@ -93,7 +93,7 @@ export default function BookDetails() {
 
                                     <BookParameters book={book}/>
 
-                                    <Button sx={{margin: 2}} size="medium" variant="outlined"
+                                    <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
                                             onClick={handleAddToCart}>Add to Cart</Button>
 
                                 </Grid>
@@ -115,7 +115,9 @@ export default function BookDetails() {
 
                 <BookDescriptionTab value={value} book={book}/>
 
-                <BookMoreDetailsTab value={value} book={book}/>
+                <Box sx={{backgroundColor:"white"}}>
+                    <BookMoreDetailsTab value={value} book={book}/>
+                </Box>
 
                 <BookReviewsTab value={value} book={book}/>
 

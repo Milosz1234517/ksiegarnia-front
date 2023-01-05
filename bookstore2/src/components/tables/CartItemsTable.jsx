@@ -1,4 +1,4 @@
-import {Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {Box} from "@mui/system";
 import IconButton from "@mui/material/IconButton";
@@ -8,7 +8,7 @@ import {useContext} from "react";
 import Context from "../../store/context";
 
 
-export default function CartItemsTable({cartItems, setCartItems}){
+export default function CartItemsTable({cartItems, setCartItems}) {
 
     const ctx = useContext(Context)
     const [size] = useWindowResize()
@@ -17,9 +17,9 @@ export default function CartItemsTable({cartItems, setCartItems}){
         setCartItems(cartItems.map(item => {
             if (item.itemId === obj.itemId) {
                 if (obj.quantity < obj.bookHeader.quantity) {
-                    ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp)=>{
-                        if(resp){
-                            if (resp.ok){
+                    ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp) => {
+                        if (resp) {
+                            if (resp.ok) {
                                 item.quantity = item.quantity + 1
                             }
                         }
@@ -32,7 +32,7 @@ export default function CartItemsTable({cartItems, setCartItems}){
     }
 
     const handleRemoveMore = obj => {
-        if(obj.quantity > 1) {
+        if (obj.quantity > 1) {
             setCartItems(cartItems.map(item => {
                 if (item.itemId === obj.itemId) {
                     if (item.quantity > 0) {
@@ -47,10 +47,10 @@ export default function CartItemsTable({cartItems, setCartItems}){
                 }
                 return item
             }))
-        }else{
-            ctx.removeItemFromCart(obj.itemId).then((r)=>{
-                if(r.ok){
-                    setCartItems(cartItems.filter((it)=>obj.itemId !== it.itemId))
+        } else {
+            ctx.removeItemFromCart(obj.itemId).then((r) => {
+                if (r.ok) {
+                    setCartItems(cartItems.filter((it) => obj.itemId !== it.itemId))
                 }
 
             })
@@ -58,9 +58,16 @@ export default function CartItemsTable({cartItems, setCartItems}){
         }
     }
 
-    return(
-        <TableContainer>
+    return (
+        <TableContainer component={Paper}>
             <Table sx={{maxWidth: size[0]}} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Book Title</TableCell>
+                        <TableCell>Quantity</TableCell>
+                        <TableCell>Price(zł)</TableCell>
+                    </TableRow>
+                </TableHead>
                 <TableBody>
                     {cartItems.map((row) => (
                         <TableRow

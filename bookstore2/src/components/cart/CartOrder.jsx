@@ -1,12 +1,13 @@
 import {Box} from "@mui/system";
-import {Button, TextareaAutosize} from "@mui/material";
+import {Button, TextareaAutosize, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
 import {useWindowResize} from "../other/WindowResizer";
 import Context from "../../store/context";
+import Typography from "@mui/material/Typography";
 
 
-export default function CartOrder({emptyCart, cartItems, setCartItems}){
+export default function CartOrder({emptyCart, cartItems, setCartItems}) {
 
     const size = useWindowResize()
     const ctx = useContext(Context)
@@ -27,19 +28,17 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}){
                 }),
             });
 
-           const respJson = await response.json()
+            const respJson = await response.json()
 
             if (response.ok) {
                 ctx.showSuccessAlert(respJson.message)
                 setDescription('')
-                cartItems.forEach((item) => ctx.removeItemFromCart(item.itemId).then((respItem) => {
-                    if(respItem) {
-                        if (respItem.ok) {
-                            setCartItems(cartItems.filter((it) => it.itemId !== item.itemId))
-                        }
+                ctx.removeAllItemsFromCart().then((respItem) => {
+                    if (respItem.ok) {
+                        setCartItems([])
                     }
-                }))
-            }else{
+                })
+            } else {
                 ctx.showErrorAlert(respJson.message);
             }
             ctx.setIsLoading(false)
@@ -60,14 +59,16 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}){
                 }
             }
         )
-        placeOrder({description: description, orderItems: cartOrder}).then(() =>{})
+        console.log(cartOrder)
+        placeOrder({description: description, orderItems: cartOrder}).then(() => {
+        })
     }
 
     function handleDescriptionChange(event) {
         setDescription(event.target.value)
     }
 
-    return(
+    return (
         <Box
             sx={{
                 display: "inline-block",
@@ -76,23 +77,27 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}){
             }}
             justifyContent={"left"}>
 
-            {!emptyCart && <TextareaAutosize
-                aria-label="minimum height"
-                minRows={5}
-                placeholder="Order Additional Information's"
-                onChange={handleDescriptionChange}
-                style={{
-                    width: "100%",
-                    maxWidth: size[0],
-                    margin: 15,
-
+            {!emptyCart && <TextField
+                sx={{
+                    "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                    },
+                    width: size[0] * 0.8, backgroundColor: "white", marginTop: 5, marginLeft: 2
                 }}
+                multiline
+                minRows={2}
+                id="standard-basic"
+                variant="outlined"
+                onChange={handleDescriptionChange}
+                placeholder="Order Additional Information's"
             />}
 
             {!emptyCart && <Button size="medium" variant="outlined"
                                    onClick={() => handlePlaceOrder()}
                                    sx={{
                                        margin: 2,
+                                       backgroundColor:"#000",
+                                       color: "white"
                                    }}>
                 Place order
             </Button>}

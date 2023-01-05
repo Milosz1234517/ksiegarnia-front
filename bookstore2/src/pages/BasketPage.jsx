@@ -5,7 +5,9 @@ import HomePageMenu from "../components/other/HomePageMenu";
 import CartTitle from "../components/cart/CartTitle";
 import CartItemsTable from "../components/tables/CartItemsTable";
 import CartOrder from "../components/cart/CartOrder";
-
+import {Box, width} from "@mui/system";
+import Typography from "@mui/material/Typography";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 
 export default function BasketPage() {
@@ -67,11 +69,26 @@ export default function BasketPage() {
     }, [cartItems]);
 
     return (
-        <div>
+        <Box>
             <HomePageMenu/>
             <CartTitle show={show} showEmpty={emptyCart}/>
             <CartItemsTable cartItems={cartItems} setCartItems={setCartItems}/>
             <CartOrder emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
-        </div>
+
+            <Box sx={{display: "grid", justifyContent: "center"}}>
+                {(show && emptyCart) && <Typography
+                    gutterBottom
+                    variant="h4"
+                    component="a"
+                    sx={{
+                        color: 'inherit',
+                        textDecoration: 'none',
+                        marginLeft: 4,
+                    }}>
+                    Cart is empty <SentimentVeryDissatisfiedIcon/>
+                </Typography>}
+            </Box>
+
+        </Box>
     );
 }

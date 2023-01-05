@@ -10,20 +10,8 @@ export default function CartTitle({show, showEmpty}){
                         sx={{
                             margin: 4,
                         }}>
-                Basket
+                Shopping Cart
             </Typography>
-
-            {(show && showEmpty) && <Typography
-                gutterBottom
-                variant="h4"
-                component="a"
-                sx={{
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    marginLeft: 4,
-                }}>
-                is empty!
-            </Typography>}
         </Box>
     );
 }

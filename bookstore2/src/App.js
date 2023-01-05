@@ -1,4 +1,4 @@
-import {Alert, Backdrop, CircularProgress, createTheme, Snackbar, ThemeProvider} from "@mui/material";
+import {Alert, Backdrop, CircularProgress, createTheme, CssBaseline, Snackbar, ThemeProvider} from "@mui/material";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
@@ -9,18 +9,17 @@ import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
-import {deepPurple, green, indigo, lime, teal, yellow} from "@mui/material/colors";
+import {GlobalStyles} from "@mui/joy";
 
 export const theme = createTheme(
     {
         palette: {
-            primary: indigo,
-            secondary: indigo,
+            primary: {
+                main: "#81c784"
+            }
         },
     }
 );
-
-//theme.palette.primary.main = "#000";
 
 const Loading = (props) => {
     return (
@@ -39,6 +38,12 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#c8e6c9" },
+                }}
+            />
             <Snackbar open={ctx.error.isError} autoHideDuration={6000}>
                 <Alert severity="error" sx={{ width: "100%" }}>
                     {ctx.error.message}

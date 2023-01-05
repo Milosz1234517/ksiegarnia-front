@@ -2,6 +2,7 @@ import {ButtonBase} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
+import {Box} from "@mui/system";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -14,7 +15,7 @@ const Img = styled('img')({
 export default function BookDetailsPhoto({icon, size}){
     return(
         <Grid item>
-            <ButtonBase
+            <Box
                 sx={{
                     display: "inline-block",
                     scale: "90%",
@@ -26,7 +27,7 @@ export default function BookDetailsPhoto({icon, size}){
                 }}>
                 <Img alt="complex"
                      src={icon}/>
-            </ButtonBase>
+            </Box>
         </Grid>
     );
 }

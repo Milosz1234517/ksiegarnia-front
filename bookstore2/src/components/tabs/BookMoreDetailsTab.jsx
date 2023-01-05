@@ -10,6 +10,7 @@ export default function BookMoreDetailsTab({value, book}){
     const size = useWindowResize()
 
     return(
+
         <TabPanel value={value} index={1}>
             <Box sx={{overflow: "auto", maxWidth: size[0]}}>
 

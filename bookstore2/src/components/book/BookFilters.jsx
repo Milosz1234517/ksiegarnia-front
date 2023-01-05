@@ -89,9 +89,9 @@ export default function BookFilters({searchParams, filterParams, category, setCa
             <Box sx={{display: "inline-block", margin: 1}}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
                     fullWidth
-                    variant="filled"
+                    variant="outlined"
                     id="priceDown"
                     type="number"
                     label="Price Down"
@@ -106,9 +106,9 @@ export default function BookFilters({searchParams, filterParams, category, setCa
 
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
                     fullWidth
-                    variant="filled"
+                    variant="outlined"
                     id="priceLow"
                     label="Price Up"
                     name="priceUp"
@@ -124,9 +124,9 @@ export default function BookFilters({searchParams, filterParams, category, setCa
             <Box sx={{display: "inline-block", margin: 1}}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
                     fullWidth
-                    variant="filled"
+                    variant="outlined"
                     id="authorName"
                     label="Author Name"
                     name="authorName"
@@ -141,9 +141,9 @@ export default function BookFilters({searchParams, filterParams, category, setCa
 
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
                     fullWidth
-                    variant="filled"
+                    variant="outlined"
                     id="authorSurname"
                     label="Author Surname"
                     name="authorSurname"
@@ -156,7 +156,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
             </Box>
 
             <Box sx={{display: "inline-block", margin: 1}}>
-                <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
+                <FormControl variant="standard" sx={{m: 1, minWidth: 150, backgroundColor:"#e8eaf6"}}>
                     <Select
                         labelId="status-label"
                         id="status"

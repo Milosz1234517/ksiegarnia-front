@@ -20,7 +20,7 @@ import Context from "../../store/context";
 const StyledAutocomplete = styled(Autocomplete)(() => ({
     width: "100%",
     display: "flex",
-    backgroundColor:"#c5cae9",
+    backgroundColor:"#e8eaf6",
     margin: 10,
     minWidth: 170
 }));
@@ -31,7 +31,9 @@ const StyledMainBox = styled(Box)(() => ({
 
 const StyledSearchButton = styled(Button)(() => ({
     display: "inline-block",
-    margin: 5
+    backgroundColor:"#e8eaf6",
+    color: "#000",
+    margin: 10
 }));
 
 const StyledFilterSwitch = styled(FormControlLabel)(() => ({
@@ -82,7 +84,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 json = xHttp.responseText;
 
                 obj = JSON.parse(json);
-                setBooksPagesCount(Math.ceil(obj / 2));
+                setBooksPagesCount(Math.ceil(obj / 20));
             }
             if (this.readyState === 4 && this.status === 400) {
                 console.log("No access.");
