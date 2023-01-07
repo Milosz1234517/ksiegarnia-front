@@ -8,7 +8,7 @@ export default function BookParameters({book}) {
             <Typography sx={{margin: 2}} variant="h5">
                 Authors: {book.bookAuthors?.map((author) => {
                 return (
-                    <Typography Typography variant="body2"
+                    <Typography key={author.authorId} variant="body2"
                                 color="text.secondary"
                                 align={"left"}>
                         {author.name} {author.surname}
@@ -18,7 +18,7 @@ export default function BookParameters({book}) {
 
             <Typography sx={{margin: 2}} variant="h5">
                 Publishing-house:
-                <Typography Typography variant="body2"
+                <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
                     {book.publishingHouse?.name}
@@ -27,7 +27,7 @@ export default function BookParameters({book}) {
 
             <Typography sx={{margin: 2}} variant="h5">
                 Quantity:
-                <Typography Typography variant="body2"
+                <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
                     {book.quantity}
@@ -36,7 +36,7 @@ export default function BookParameters({book}) {
 
             <Typography sx={{margin: 2}} variant="h5">
                 Price:
-                <Typography Typography variant="body2"
+                <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
                     {book.price} zł

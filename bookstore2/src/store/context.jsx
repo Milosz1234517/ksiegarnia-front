@@ -109,33 +109,9 @@ export const ContextProvider = (props) => {
 
             if (!response.ok) {
                 showErrorAlert(resp.message);
-            }else{
+            } else {
                 showSuccessAlert(resp.message)
             }
-        } catch (e) {
-            showErrorAlert("Connection lost");
-        }
-        setIsLoading(false);
-    };
-
-    const updateItemCart = async (data) => {
-        try {
-            setIsLoading(true);
-            const response = await fetch('http://localhost:8080/api/bookstore/updateItem', {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + authToken
-                },
-                body: JSON.stringify({
-                    bookHeader: data.bookHeader,
-                    quantity: data.quantity
-                }),
-            });
-
-            setIsLoading(false);
-            return response
-
         } catch (e) {
             showErrorAlert("Connection lost");
         }
@@ -177,36 +153,6 @@ export const ContextProvider = (props) => {
         localStorage.removeItem('token');
     }
 
-    const register = async (data) => {
-        const url = 'http://localhost:8080/api/auth/register';
-        try {
-            setIsLoading(true);
-            const response = await fetch(`${url}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name: data.name,
-                    password: data.password,
-                    phone: data.phone,
-                    sname: data.sname,
-                    username: data.username,
-                }),
-            });
-            const resp = await response.json();
-            resp.accessToken = undefined;
-            if (response.ok) {
-                navigate("/login");
-            } else {
-                showErrorAlert(resp.message);
-            }
-        } catch (e) {
-            showErrorAlert("Connection lost");
-        }
-        setIsLoading(false);
-    }
-
     return (
         <Context.Provider
             value={{
@@ -218,10 +164,8 @@ export const ContextProvider = (props) => {
                 checkTokenExpiration,
                 removeItemFromCart,
                 removeAllItemsFromCart,
-                updateItemCart,
                 login,
                 logout,
-                register,
                 error,
                 success,
                 showErrorAlert,

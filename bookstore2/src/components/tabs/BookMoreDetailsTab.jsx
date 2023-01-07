@@ -16,28 +16,28 @@ export default function BookMoreDetailsTab({value, book}){
 
                 <BookParameters book={book}/>
 
-                <Typography sx={{margin: 2}} Typography variant="h5">
+                <Typography sx={{margin: 2}} variant="h5">
                     Release Date:
-                    <Typography Typography variant="body2"
+                    <Typography variant="body2"
                                 color="text.secondary"
                                 align={"left"}>
                         {book.releaseDate}
                     </Typography>
                 </Typography>
 
-                <Typography sx={{margin: 2}} Typography variant="h5">
+                <Typography sx={{margin: 2}} variant="h5">
                     Edition:
-                    <Typography Typography variant="body2"
+                    <Typography variant="body2"
                                 color="text.secondary"
                                 align={"left"}>
                         {book.edition}
                     </Typography>
                 </Typography>
 
-                <Typography sx={{margin: 2}} Typography variant="h5">
+                <Typography sx={{margin: 2}} variant="h5">
                     Categories: {book.bookCategories?.map((cat) => {
                     return (
-                        <Typography Typography variant="body2"
+                        <Typography key = {cat.categoryId} variant="body2"
                                     color="text.secondary"
                                     align={"left"}>
                             {cat.description}

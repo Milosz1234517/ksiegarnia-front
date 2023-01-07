@@ -75,10 +75,6 @@ export default function BookList({cards}) {
 
     const size = useWindowResize()
 
-    useEffect(() => {
-        ctx.checkTokenExpiration()
-    });
-
     return (
         <StyledMainGrid container>
 
@@ -86,6 +82,7 @@ export default function BookList({cards}) {
                 const {bookAuthors, bookHeaderId, icon, bookTitle, price, quantity} = cards;
 
                 function handleAddToCart() {
+                    ctx.checkTokenExpiration()
                     if(ctx.isLoggedIn)
                         ctx.addItemToCart(bookHeaderId).then(() => {})
                     else
@@ -93,9 +90,9 @@ export default function BookList({cards}) {
                 }
 
                 return (
-                    <StyledMainBox>
+                    <StyledMainBox key={bookHeaderId}>
 
-                        <Card key={bookHeaderId} sx={{
+                        <Card sx={{
                             flexGrow: 1, p:4, display: "grid",
                             transition: "0.3s",
                             backgroundColor: "#e8f5e9",
@@ -118,20 +115,20 @@ export default function BookList({cards}) {
                                     <Grid item xs sm container>
                                         <Grid item xs container direction="column" spacing={2}>
                                             <Grid item xs>
-                                                <StyledTitleWrap>
+                                                <StyledTitleWrap component={'span'}>
                                                     <StyledTitle
-                                                        gutterBottom
-                                                        variant="h4"
-                                                        component={"a"}
-                                                        href={`/product/${bookHeaderId}`}>
+                                                                 gutterBottom
+                                                                 variant="h4"
+                                                                 component={"a"}
+                                                                 href={`/product/${bookHeaderId}`}>
                                                         {bookTitle}
                                                     </StyledTitle>
                                                 </StyledTitleWrap>
 
-                                                <Typography variant="body1" gutterBottom>
+                                                <Typography component={'span'} variant="body1" gutterBottom>
                                                     {bookAuthors.map((author) => {
                                                         return (
-                                                            <StyledAuthor variant="h6"
+                                                            <StyledAuthor key={"author" + author.authorId} variant="h6"
                                                                           color="text.secondary"
                                                                           align={"left"}>
                                                                 {author.name} {author.surname}
@@ -149,11 +146,11 @@ export default function BookList({cards}) {
 
                                 <Grid item xs>
 
-                                    <StyledPrice align={"left"} variant="h6" component="div">
+                                    <StyledPrice align={"left"} variant="h6" component="span">
                                         Price: {price}
                                     </StyledPrice>
 
-                                    <StyledAvailable align={"left"} variant="body1" color="text.secondary">
+                                    <StyledAvailable component={'span'} align={"left"} variant="body1" color="text.secondary">
                                         Available: {quantity}
                                     </StyledAvailable>
 

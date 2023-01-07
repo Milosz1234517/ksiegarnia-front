@@ -41,8 +41,10 @@ export default function BookReviewsTab({value, book}) {
     }, [book.bookHeaderId]);
 
     useEffect(() => {
-        getBookCount();
-    }, [getBookCount]);
+        if (book.bookHeaderId !== undefined) {
+            getBookCount();
+        }
+    }, [book.bookHeaderId, getBookCount]);
 
     const getReviewsForBook = useCallback(() => {
         const xHttp = new XMLHttpRequest();
@@ -74,8 +76,10 @@ export default function BookReviewsTab({value, book}) {
     }, [book.bookHeaderId, page]);
 
     useEffect(() => {
-        getReviewsForBook();
-    }, [getReviewsForBook]);
+        if (book.bookHeaderId !== undefined) {
+            getReviewsForBook();
+        }
+    }, [book.bookHeaderId, getReviewsForBook]);
 
     const handleChangePage = (event, value) => {
         setPage(value);
@@ -87,9 +91,8 @@ export default function BookReviewsTab({value, book}) {
             <CustomPagination page={page} maxPage={count} handleChange={handleChangePage}/>
 
             {marks.map((review) => {
-
                 return (
-                    <ReviewBox review={review} title={false}/>
+                    <ReviewBox key={review.reviewId} review={review} title={false}/>
                 );
             })}
         </TabPanel>

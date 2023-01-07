@@ -11,6 +11,7 @@ import Context from "../../store/context";
 export default function OrderItemsTableRow({row, open, order}) {
 
     const [openReview, setOpenReview] = useState(false);
+    const [value, setValue] = React.useState(2);
     const [bookHeaderId, setBookHeaderId] = useState('')
     const ctx = useContext(Context)
 
@@ -27,6 +28,7 @@ export default function OrderItemsTableRow({row, open, order}) {
             if (response.ok) {
                 if (!resp) {
                     setOpenReview(true)
+                    setValue(2)
                     setBookHeaderId(data)
                 }else{
                     ctx.showErrorAlert("Can't create review for this book because it's already has been created or order is not completed yet");
@@ -50,16 +52,18 @@ export default function OrderItemsTableRow({row, open, order}) {
                 openReview={openReview}
                 setBookHeaderId={setBookHeaderId}
                 setOpenReview={setOpenReview}
+                setValue={setValue}
+                value={value}
                 order={order}/>
 
-            <TableCell style={{paddingBottom: 0, paddingTop: 0, backgroundColor: "#b2ebf2",}} colSpan={6}>
+            <TableCell style={{paddingBottom: 0, paddingTop: 0, backgroundColor: "#e8f5e9",}} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <Box sx={{margin: 1}}>
                         <Typography align="left" variant="h6" gutterBottom component="div">
                             Order Items
                         </Typography>
                         <Table size="small" aria-label="purchases">
-                            <TableHead sx={{backgroundColor:"#c5cae9"}}>
+                            <TableHead sx={{backgroundColor:"#e8f5e9"}}>
                                 <TableRow>
                                     <TableCell>Book Title</TableCell>
                                     <TableCell>Quantity</TableCell>
@@ -67,14 +71,14 @@ export default function OrderItemsTableRow({row, open, order}) {
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
-                            <TableBody sx={{backgroundColor:"#f0f4c3"}}>
+                            <TableBody sx={{backgroundColor:"#e8f5e9"}}>
                                 {row.orderItems.map((item) => (
-                                    <TableRow key={item.itemId}>
+                                    <TableRow key={item.orderId}>
                                         <TableCell component="th" scope="row">
                                             {item.bookHeader.bookTitle}
                                         </TableCell>
                                         <TableCell>{item.quantity}</TableCell>
-                                        <TableCell align="right">{item.price}</TableCell>
+                                        <TableCell align="right">{item.price.toFixed(2)}</TableCell>
                                         <TableCell align="left">
                                             <Button
                                                 onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}><RateReviewIcon/></Button>

@@ -1,14 +1,18 @@
 import TabPanel from "./TabPanel";
 import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
+import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
 import ChangeDetailsDialog from "../dialogs/ChangeDetailsDialog";
 import ChangePasswordDialog from "../dialogs/ChangePasswordDialog";
+import {Box} from "@mui/system";
+import IconButton from "@mui/material/IconButton";
+import {PaperWithShadow} from "../../App";
+import AccountDetailsTableRow from "../tables/AccountDetailsTableRow";
 
 
-export default function AccountDetailsTab({value}){
+export default function AccountDetailsTab({value}) {
 
     const [openPass, setOpenPass] = React.useState(false);
     const [user, setUser] = useState({})
@@ -62,30 +66,25 @@ export default function AccountDetailsTab({value}){
         setOpenPass(true);
     }
 
-    return(
+    return (
         <TabPanel value={value} index={0}>
+            <TableContainer component={PaperWithShadow}>
+                <Table aria-label="simple table">
+                    <TableBody>
+                        <AccountDetailsTableRow text={"Username: "} value={user.login}/>
+                        <AccountDetailsTableRow text={"Name: "} value={user.name}/>
+                        <AccountDetailsTableRow text={"Surname: "} value={user.surname}/>
+                        <AccountDetailsTableRow text={"Phone: "} value={user.phoneNumber}/>
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
-            <Typography sx={{margin: 3}} Typography variant="h5">
-                Username: {user.login}
-            </Typography>
 
-            <Typography sx={{margin: 3}} Typography variant="h5">
-                Name: {user.name}
-            </Typography>
-
-            <Typography sx={{margin: 3}} Typography variant="h5">
-                Surname: {user.surname}
-            </Typography>
-
-            <Typography sx={{margin: 3}} Typography variant="h5">
-                Phone: {user.phoneNumber}
-            </Typography>
-
-            <Button variant="outlined" sx={{margin: 3}} onClick={handleClickOpen}>
+            <Button variant="outlined" sx={{ marginTop: 3, marginRight: 3, color: "white", backgroundColor: "#000"}} onClick={handleClickOpen}>
                 Modify Profile Data
             </Button>
 
-            <Button variant="outlined" sx={{margin: 3}} onClick={handleClickOpenPass}>
+            <Button variant="outlined" sx={{marginTop: 3, color: "white", backgroundColor: "#000"}} onClick={handleClickOpenPass}>
                 Change Password
             </Button>
 

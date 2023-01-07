@@ -132,7 +132,7 @@ export default function UserReviewsTab({value}) {
                     <TableBody>
                         {marks.map((row) => (
                             <TableRow
-                                key={row.name}
+                                key={row.reviewId}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <TableCell align="left"><ReviewBox review={row} title={true}/></TableCell>

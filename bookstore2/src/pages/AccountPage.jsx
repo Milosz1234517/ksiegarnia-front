@@ -6,6 +6,9 @@ import {Tab, Tabs,} from "@mui/material";
 import AccountDetailsTab from "../components/tabs/AccountDetailsTab";
 import OrderItemsTab from "../components/tabs/OrderItemsTab";
 import UserReviewsTab from "../components/tabs/UserReviewsTab";
+import PageTitle from "../components/cart/PageTitle";
+import {useContext, useEffect} from "react";
+import Context from "../store/context";
 
 function a11yProps(index) {
     return {
@@ -21,16 +24,12 @@ export default function AccountPage() {
         setValue(newValue);
     };
 
+    const ctx = useContext(Context)
+
     return (
         <div>
             <HomePageMenu/>
-            <Typography variant="h2"
-                        component="a"
-                        sx={{
-                            margin: 4,
-                        }}>
-                Account
-            </Typography>
+            <PageTitle title="Account"/>
 
             <Box sx={{width: '100%'}}>
 

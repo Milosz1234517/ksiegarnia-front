@@ -33,11 +33,7 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}) {
             if (response.ok) {
                 ctx.showSuccessAlert(respJson.message)
                 setDescription('')
-                ctx.removeAllItemsFromCart().then((respItem) => {
-                    if (respItem.ok) {
-                        setCartItems([])
-                    }
-                })
+                setCartItems([])
             } else {
                 ctx.showErrorAlert(respJson.message);
             }

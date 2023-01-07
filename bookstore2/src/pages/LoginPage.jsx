@@ -39,7 +39,7 @@ const Login = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    height: "80vh",
+                    marginTop: 10
                 }}>
 
                 <CssBaseline/>

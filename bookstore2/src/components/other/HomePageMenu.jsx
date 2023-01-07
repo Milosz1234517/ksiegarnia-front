@@ -15,7 +15,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useWindowResize} from "./WindowResizer";
 import Grid from "@mui/material/Grid";
-import logo from '../../logo/logo.svg';
 import {Menu, Tooltip} from "@mui/joy";
 
 const StyledMenuBox = styled(Box)(() => ({
@@ -25,7 +24,7 @@ const StyledMenuBox = styled(Box)(() => ({
 
 const StyledRegisterButton = styled(Button)(() => ({
     display: "inline-block",
-    color: "#81c784",
+    color: "white",
     margin: 10,
     backgroundColor: "#000000"
 }));
@@ -73,18 +72,8 @@ export default function HomePageMenu() {
         alignSelf: "center",
     });
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{backgroundColor: "#81c784"}}>
             <Toolbar sx={{flexDirection:"column"}}>
 
                 <StyledLogo
@@ -102,13 +91,13 @@ export default function HomePageMenu() {
                                 overflow: "auto"
                             }}>
                             <Img alt="complex"
-                                 src={logo}/>
+                                 src={"https://i.imgur.com/XaC69PJ.png"}/>
                         </ButtonBase>
                     </Grid>
                 </StyledLogo>
 
             </Toolbar>
-            <Toolbar sx={{flexDirection:"column", alignItems: "flex-end"}}>
+            <Toolbar sx={{flexDirection:"column", marginTop: 5}}>
 
                 {!ctx.isLoggedIn && (
                     <Box>
@@ -133,6 +122,7 @@ export default function HomePageMenu() {
                 {ctx.isLoggedIn && (
                     <Box>
                         <IconButton
+                            sx={{margin: 1}}
                             size="large"
                             edge="end"
                             aria-label="account of current user"
@@ -143,6 +133,7 @@ export default function HomePageMenu() {
                         </IconButton>
 
                         <IconButton
+                            sx={{margin: 1}}
                             size="large"
                             edge="end"
                             aria-label="account of current user"
@@ -153,6 +144,7 @@ export default function HomePageMenu() {
                         </IconButton>
 
                         <IconButton
+                            sx={{margin: 1}}
                             size="large"
                             edge="end"
                             aria-label="account of current user"

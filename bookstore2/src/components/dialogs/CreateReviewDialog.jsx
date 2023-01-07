@@ -1,13 +1,22 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextareaAutosize} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Rating,
+    TextareaAutosize,
+    TextField
+} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
 import Context from "../../store/context";
+import {Box, Stack} from "@mui/system";
 
 
-export default function CreateReviewDialog({openReview, bookHeaderId, setBookHeaderId, setOpenReview, order}){
+export default function CreateReviewDialog({openReview, bookHeaderId, setBookHeaderId, setOpenReview, order, value, setValue}){
 
     const ctx = useContext(Context)
-    const [value, setValue] = React.useState(2);
     const [description, setDescription] = useState('')
 
     const addReview = async (data) => {
@@ -48,7 +57,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
     };
 
     const handleCloseReview = () => {
-        setValue(2)
+
         setBookHeaderId('')
         setDescription('')
         setOpenReview(false);
@@ -66,6 +75,9 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
         <Dialog open={openReview} onClose={handleCloseReview}>
             <DialogTitle>Review</DialogTitle>
             <DialogContent>
+                <Stack spacing={2} sx={{
+                    marginBottom: 2
+                }}>
                 <Rating
                     name="simple-controlled"
                     value={value}
@@ -74,17 +86,15 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
                         setValue(newValue);
                     }}/>
 
-                <TextareaAutosize
-                    aria-label="minimum height"
-                    minRows={3}
-                    placeholder="Description"
+                <TextField
+                    sx={{}}
+                    multiline
+                    minRows={2}
+                    id="standard-basic"
+                    variant="outlined"
                     onChange={handleDescriptionChange}
-                    style={{
-                        width: 400,
-                        maxWidth: 400,
-                        margin: 25,
-
-                    }}/>
+                    placeholder="Review Text"/>
+                </Stack>
 
             </DialogContent>
             <DialogActions>

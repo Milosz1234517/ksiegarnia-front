@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import {Paper, Rating, Typography} from "@mui/material";
+import {Paper, Rating, TextField, Typography} from "@mui/material";
 import {Box} from "@mui/system";
 import * as React from "react";
 import {useWindowResize} from "./WindowResizer";
@@ -20,6 +20,10 @@ export default function ReviewBox({review, title}){
                     gridGap: "8px",
                     height: "100%",
                     flexGrow: 1,
+                    transition: "0.3s",
+                    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+                    "&:hover": {
+                        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
                 }}>
                 <Box sx={{overflow: "auto", maxWidth: size[0], marginBottom: 5}}>
                     <Grid container spacing={2}>
@@ -32,7 +36,7 @@ export default function ReviewBox({review, title}){
                                     color: 'inherit',
                                     textDecoration: 'none',
                                 }}>
-                                {title ? review.bookHeader.bookTitle  : ""}
+                                {title ? review.bookHeader.bookTitle  : review.user.name}
                             </Typography>
                         </Grid>
                         <Grid item container>

@@ -1,4 +1,13 @@
-import {Alert, Backdrop, CircularProgress, createTheme, CssBaseline, Snackbar, ThemeProvider} from "@mui/material";
+import {
+    Alert,
+    Backdrop,
+    CircularProgress,
+    createTheme,
+    CssBaseline, Paper,
+    Snackbar,
+    ThemeProvider,
+    Typography
+} from "@mui/material";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
@@ -10,16 +19,24 @@ import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
 import {GlobalStyles} from "@mui/joy";
+import {styled} from "@mui/material/styles";
 
 export const theme = createTheme(
     {
         palette: {
             primary: {
-                main: "#81c784"
+                main: "#43a047"
             }
         },
     }
 );
+
+export const PaperWithShadow = styled(Paper)(() => ({
+    transition: "0.3s",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
+}));
 
 const Loading = (props) => {
     return (

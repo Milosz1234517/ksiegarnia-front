@@ -72,7 +72,7 @@ export default function ChangeDetailsDialog({user, userChange, setUserChange, se
 
     return(
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Subscribe</DialogTitle>
+            <DialogTitle>Profile</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus

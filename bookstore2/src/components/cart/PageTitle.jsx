@@ -2,7 +2,8 @@ import Typography from "@mui/material/Typography";
 import {Box} from "@mui/system";
 import * as React from "react";
 
-export default function CartTitle({show, showEmpty}){
+export default function PageTitle({title}){
+
     return(
         <Box sx={{display: "grid"}}>
             <Typography variant="h2"
@@ -10,7 +11,7 @@ export default function CartTitle({show, showEmpty}){
                         sx={{
                             margin: 4,
                         }}>
-                Shopping Cart
+                {title}
             </Typography>
         </Box>
     );

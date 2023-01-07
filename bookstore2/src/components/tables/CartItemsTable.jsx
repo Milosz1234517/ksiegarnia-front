@@ -4,27 +4,48 @@ import {Box} from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
 import {useWindowResize} from "../other/WindowResizer";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
+import {PaperWithShadow} from "../../App";
 
 
-export default function CartItemsTable({cartItems, setCartItems}) {
+export default function CartItemsTable({cartItems, setCartItems, totalPrice, setTotalPrice}) {
 
     const ctx = useContext(Context)
     const [size] = useWindowResize()
+
+    const updateItemCart = async (data) => {
+        try {
+            ctx.setIsLoading(true);
+            const response = await fetch('http://localhost:8080/api/bookstore/updateItem', {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + ctx.authToken
+                },
+                body: JSON.stringify({
+                    bookHeader: data.bookHeader,
+                    quantity: data.quantity
+                }),
+            });
+
+            ctx.setIsLoading(false);
+            return response.json()
+
+        } catch (e) {
+            ctx.showErrorAlert("Connection lost");
+        }
+        ctx.setIsLoading(false);
+    };
 
     const handleAddMore = obj => {
         setCartItems(cartItems.map(item => {
             if (item.itemId === obj.itemId) {
                 if (obj.quantity < obj.bookHeader.quantity) {
-                    ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp) => {
-                        if (resp) {
-                            if (resp.ok) {
-                                item.quantity = item.quantity + 1
-                            }
-                        }
+                    updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp) => {
+                        setCartItems(resp.basket)
+                        setTotalPrice(resp.totalPrice)
                     })
-
                 }
             }
             return item
@@ -32,30 +53,19 @@ export default function CartItemsTable({cartItems, setCartItems}) {
     }
 
     const handleRemoveMore = obj => {
-        if (obj.quantity > 1) {
-            setCartItems(cartItems.map(item => {
-                if (item.itemId === obj.itemId) {
-                    if (item.quantity > 0) {
-                        const quantity = item.quantity - 1
-                        if (quantity > 0) {
-                            ctx.updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then((resp) => {
-                                if (resp.ok)
-                                    item.quantity = quantity
-                            })
-                        }
-                    }
-                }
-                return item
-            }))
-        } else {
-            ctx.removeItemFromCart(obj.itemId).then((r) => {
-                if (r.ok) {
-                    setCartItems(cartItems.filter((it) => obj.itemId !== it.itemId))
-                }
+        setCartItems(cartItems.map(item => {
+            if (item.itemId === obj.itemId) {
+                if (item.quantity > 0) {
+                    const quantity = item.quantity - 1
+                    updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then((resp) => {
+                        setCartItems(resp.basket)
+                        setTotalPrice(resp.totalPrice)
+                    })
 
-            })
-
-        }
+                }
+            }
+            return item
+        }))
     }
 
     return (
@@ -122,12 +132,39 @@ export default function CartItemsTable({cartItems, setCartItems}) {
                                     gutterBottom
                                     variant="h6"
                                     component="a">
-                                    {(row.quantity * row.bookHeader.price).toFixed(2)}zł
+                                    {row.price}zł
                                 </Typography>
                             </TableCell>
 
                         </TableRow>
                     ))}
+                    <TableRow
+                        key={-1}
+                        sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+
+                        <TableCell align="left">
+
+                        </TableCell>
+
+                        <TableCell align="left">
+                            <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="a">
+                                Total:
+                            </Typography>
+                        </TableCell>
+
+                        <TableCell align="left">
+                            <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="a">
+                                {(totalPrice).toFixed(2)}zł
+                            </Typography>
+                        </TableCell>
+
+                    </TableRow>
                 </TableBody>
             </Table>
         </TableContainer>

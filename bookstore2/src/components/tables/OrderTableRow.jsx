@@ -15,7 +15,7 @@ export default function OrderTableRow(props) {
     return (
         <React.Fragment>
 
-            <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+            <TableRow sx={{backgroundColor: "white"}}>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -24,12 +24,10 @@ export default function OrderTableRow(props) {
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.orderId}
-                </TableCell>
+                <TableCell>{row.orderId}</TableCell>
                 <TableCell align="right">{row.orderStatus.description}</TableCell>
                 <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
-                <TableCell align="right">{row.totalPrice}</TableCell>
+                <TableCell align="right">{row.totalPrice.toFixed(2)}</TableCell>
             </TableRow>
 
             <OrderItemsTableRow open={open} row={row} order={row.orderId}/>
@@ -41,23 +39,21 @@ export default function OrderTableRow(props) {
 OrderTableRow.propTypes = {
     row: PropTypes.shape({
         orderId: PropTypes.number.isRequired,
-        orderStatus: PropTypes.arrayOf(
+        orderStatus:
             PropTypes.shape({
                 description: PropTypes.string.isRequired,
             }),
-        ).isRequired,
         orderDate: PropTypes.string.isRequired,
         totalPrice: PropTypes.number.isRequired,
         orderItems: PropTypes.arrayOf(
             PropTypes.shape({
-                itemId: PropTypes.number.isRequired,
-                bookHeader: PropTypes.arrayOf(
+                itemId: PropTypes.number,
+                bookHeader:
                     PropTypes.shape({
-                        bookTitle: PropTypes.string.isRequired,
+                        bookTitle: PropTypes.string,
                     }),
-                ).isRequired,
-                quantity: PropTypes.number.isRequired,
-                price: PropTypes.number.isRequired,
+                quantity: PropTypes.number,
+                price: PropTypes.number,
             }),
         ).isRequired
     }).isRequired

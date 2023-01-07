@@ -68,7 +68,12 @@ export default function BookDetails() {
     };
 
     function handleAddToCart() {
-        ctx.addItemToCart(bookHeaderId).then(()=>{})
+        ctx.checkTokenExpiration()
+        if (ctx.isLoggedIn)
+            ctx.addItemToCart(bookHeaderId).then(() => {
+            })
+        else
+            ctx.showErrorAlert("Login or Register to proceed this action")
     }
 
     return (
@@ -93,7 +98,8 @@ export default function BookDetails() {
 
                                     <BookParameters book={book}/>
 
-                                    <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                                    <Button sx={{margin: 2, backgroundColor: "#000", color: "white"}} size="medium"
+                                            variant="outlined"
                                             onClick={handleAddToCart}>Add to Cart</Button>
 
                                 </Grid>
@@ -115,7 +121,7 @@ export default function BookDetails() {
 
                 <BookDescriptionTab value={value} book={book}/>
 
-                <Box sx={{backgroundColor:"white"}}>
+                <Box sx={{backgroundColor: "white"}}>
                     <BookMoreDetailsTab value={value} book={book}/>
                 </Box>
 

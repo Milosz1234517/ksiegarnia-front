@@ -2,7 +2,7 @@ import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
 import HomePageMenu from "../components/other/HomePageMenu";
-import CartTitle from "../components/cart/CartTitle";
+import PageTitle from "../components/cart/PageTitle";
 import CartItemsTable from "../components/tables/CartItemsTable";
 import CartOrder from "../components/cart/CartOrder";
 import {Box, width} from "@mui/system";
@@ -14,6 +14,7 @@ export default function BasketPage() {
 
     const ctx = useContext(Context);
     const [cartItems, setCartItems] = useState([])
+    let [totalPrice, setTotalPrice] = useState(0)
     const [emptyCart, setEmptyCart] = useState(true)
     const [show, setShow] = useState(false)
 
@@ -31,17 +32,20 @@ export default function BasketPage() {
                 json = xHttp.responseText;
 
                 obj = JSON.parse(json);
-                setCartItems(obj)
+                setCartItems(obj.basket)
+                setTotalPrice(obj.totalPrice)
 
                 setShow(true)
 
-                if (obj.length !== 0)
+                if (obj.basket.length !== 0) {
                     setEmptyCart(false)
+                }
 
             }
             if (this.readyState === 4 && this.status === 400) {
                 console.log("No access.");
             }
+
         };
 
         xHttp.open(
@@ -71,8 +75,8 @@ export default function BasketPage() {
     return (
         <Box>
             <HomePageMenu/>
-            <CartTitle show={show} showEmpty={emptyCart}/>
-            <CartItemsTable cartItems={cartItems} setCartItems={setCartItems}/>
+            <PageTitle title={"Shopping Cart"}/>
+            <CartItemsTable totalPrice = {totalPrice} setTotalPrice = {setTotalPrice} cartItems={cartItems} setCartItems={setCartItems}/>
             <CartOrder emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
 
             <Box sx={{display: "grid", justifyContent: "center"}}>

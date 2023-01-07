@@ -5,6 +5,7 @@ import * as React from "react";
 import CustomPagination from "../other/CustomPagination";
 import {useCallback, useContext, useEffect} from "react";
 import Context from "../../store/context";
+import {PaperWithShadow} from "../../App";
 
 
 export default function OrderItemsTab({value}){
@@ -83,10 +84,10 @@ export default function OrderItemsTab({value}){
 
             <CustomPagination handleChange={handleChangePage} maxPage={count} page={page}/>
 
-            <TableContainer component={Paper}>
+            <TableContainer component={PaperWithShadow}>
                 <Table aria-label="collapsible table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow sx={{backgroundColor: "white"}}>
                             <TableCell/>
                             <TableCell>Order Number</TableCell>
                             <TableCell align="right">Status</TableCell>
@@ -96,7 +97,7 @@ export default function OrderItemsTab({value}){
                     </TableHead>
                     <TableBody>
                         {orders.map((row) => (
-                            <OrderTableRow key={row.name} row={row}/>
+                            <OrderTableRow key={row.orderId} row={row}/>
                         ))}
                     </TableBody>
                 </Table>
