@@ -14,6 +14,7 @@ import {styled} from "@mui/material/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useWindowResize} from "./WindowResizer";
 import Grid from "@mui/material/Grid";
+import {config} from "../config";
 
 
 export default function HomePageMenu() {
@@ -99,7 +100,7 @@ export default function HomePageMenu() {
                         <ButtonBase
                             sx={StyledButtonBase}>
                             <Img alt="complex"
-                                 src={"https://i.imgur.com/XaC69PJ.png"}/>
+                                 src={config.logo}/>
                         </ButtonBase>
                     </Grid>
                 </StyledLogo>
