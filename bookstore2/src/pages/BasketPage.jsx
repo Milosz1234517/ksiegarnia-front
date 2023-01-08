@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
-import Context from "../store/context";
+import Context from "../context/context";
 import HomePageMenu from "../components/HomePageMenu";
 import PageTitle from "../components/PageTitle";
 import CartItemsTable from "../components/cart/CartItemsTable";
@@ -8,6 +8,7 @@ import CartCommentBox from "../components/cart/CartCommentBox";
 import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import {config} from "../config";
 
 
 export default function BasketPage() {
@@ -50,7 +51,7 @@ export default function BasketPage() {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBasket`,
+            `${config.serverAddress}/api/bookstore/getBasket`,
             true,
             null,
             null

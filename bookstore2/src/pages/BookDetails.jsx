@@ -5,13 +5,14 @@ import {Box} from "@mui/system";
 import {useCallback, useContext, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import Context from "../store/context";
+import Context from "../context/context";
 import BookDescriptionTab from "../components/book/BookDescriptionTab";
 import BookMoreDetailsTab from "../components/book/BookMoreDetailsTab";
 import BookReviewsTab from "../components/book/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
 import BookParameters from "../components/book/BookParameters";
 import {useWindowResize} from "../components/WindowResizer";
+import {config} from "../config";
 
 function a11yProps(index) {
     return {
@@ -50,7 +51,7 @@ export default function BookDetails() {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
+            `${config.serverAddress}/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
             true,
             null,
             null

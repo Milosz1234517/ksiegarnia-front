@@ -3,6 +3,7 @@ import {FormControl, MenuItem, Select, TextField} from "@mui/material";
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
+import {config} from "../../config";
 
 
 export default function BookFilters({searchParams, filterParams, category, setCategory}){
@@ -35,7 +36,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getCategories`,
+            `${config.serverAddress}/api/bookstore/getCategories`,
             true,
             null,
             null

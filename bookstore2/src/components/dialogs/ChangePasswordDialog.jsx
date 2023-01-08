@@ -1,7 +1,8 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
+import {config} from "../../config";
 
 
 export default function ChangePasswordDialog({openPass, setOpenPass}){
@@ -35,7 +36,7 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
     const changePassword = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch(`http://localhost:8080/api/bookstore/changePassword?newPass=${data.newPass}&oldPass=${data.oldPass}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/changePassword?newPass=${data.newPass}&oldPass=${data.oldPass}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import TabPanel from "../TabPanel";
 import CustomPagination from "../CustomPagination";
 import {useCallback, useEffect} from "react";
 import ReviewBox from "../ReviewBox";
+import {config} from "../../config";
 
 
 export default function BookReviewsTab({value, book}) {
@@ -31,7 +32,7 @@ export default function BookReviewsTab({value, book}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForBookCount?bookHeaderId=${book.bookHeaderId}`,
+            `${config.serverAddress}/api/bookstore/getReviewsForBookCount?bookHeaderId=${book.bookHeaderId}`,
             true,
             null,
             null
@@ -66,7 +67,7 @@ export default function BookReviewsTab({value, book}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
+            `${config.serverAddress}/api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
             true,
             null,
             null

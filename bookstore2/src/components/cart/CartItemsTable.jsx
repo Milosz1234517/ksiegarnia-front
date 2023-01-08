@@ -5,8 +5,9 @@ import IconButton from "@mui/material/IconButton";
 import * as React from "react";
 import {useWindowResize} from "../WindowResizer";
 import {useContext} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
 import {TableRowStyle} from "../../App";
+import {config} from "../../config";
 
 
 export default function CartItemsTable({cartItems, setCartItems, totalPrice, setTotalPrice}) {
@@ -17,7 +18,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
     const updateItemCart = async (data) => {
         try {
             ctx.setIsLoading(true);
-            const response = await fetch('http://localhost:8080/api/bookstore/updateItem', {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/updateItem`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

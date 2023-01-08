@@ -15,7 +15,8 @@ import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom
 import {useCallback, useContext, useEffect, useState} from "react";
 import BookFilters from "./BookFilters";
 import {styled} from "@mui/material/styles";
-import Context from "../../store/context";
+import Context from "../../context/context";
+import {config} from "../../config";
 
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
@@ -64,7 +65,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBooksFilterCount?category=${searchParams.category}&title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
+            `${config.serverAddress}/api/bookstore/getBooksFilterCount?category=${searchParams.category}&title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
             true,
             null,
             null
@@ -101,7 +102,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
             xHttp.open(
                 "GET",
-                `http://localhost:8080/api/bookstore/getBooksFilter?category=${searchParams.category}&title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
+                `${config.serverAddress}/api/bookstore/getBooksFilter?category=${searchParams.category}&title=${searchParams.title}&&name=${searchParams.name}&&surname=${searchParams.surname}&&priceHigh=${searchParams.priceUp}&&priceLow=${searchParams.priceDown}&&available=${searchParams.availableOnly}&&page=${page}`,
                 true,
                 null,
                 null
@@ -162,7 +163,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBooksByTitle?title=${searchInput}&page=1`,
+            `${config.serverAddress}/api/bookstore/getBooksByTitle?title=${searchInput}&page=1`,
             true,
             null,
             null

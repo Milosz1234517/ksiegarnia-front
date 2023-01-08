@@ -3,7 +3,7 @@ import {Button, ButtonBase, Card, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
 import {useContext} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
 import {Box} from "@mui/system";
 import {useWindowResize} from "../WindowResizer";
 import {BlackButton} from "../../App";

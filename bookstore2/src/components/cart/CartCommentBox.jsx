@@ -3,7 +3,8 @@ import {Button, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
 import {useWindowResize} from "../WindowResizer";
-import Context from "../../store/context";
+import Context from "../../context/context";
+import {config} from "../../config";
 
 
 export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
@@ -15,7 +16,7 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
     const placeOrder = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch(`http://localhost:8080/api/bookstore/placeOrder`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/placeOrder`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

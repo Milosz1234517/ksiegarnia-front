@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {config} from "../config";
 
 const Context = React.createContext({
     authToken: null,
@@ -34,7 +35,7 @@ export const ContextProvider = (props) => {
     const removeItemFromCart = async (data) => {
         try {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:8080/api/bookstore/deleteItemFromBasket?itemId=${data}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/deleteItemFromBasket?itemId=${data}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export const ContextProvider = (props) => {
     const removeAllItemsFromCart = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:8080/api/bookstore/deleteAllItemsFromBasket`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/deleteAllItemsFromBasket`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -81,7 +82,7 @@ export const ContextProvider = (props) => {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/connection/user`,
+            `${config.serverAddress}/api/connection/user`,
             true,
             null,
             null
@@ -95,7 +96,7 @@ export const ContextProvider = (props) => {
     const addItemToCart = async (data) => {
         try {
             setIsLoading(true);
-            const response = await fetch('http://localhost:8080/api/bookstore/addItemToBasket', {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/addItemToBasket`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -119,7 +120,7 @@ export const ContextProvider = (props) => {
     };
 
     const login = async (data) => {
-        const url = 'http://localhost:8080/api/auth/login';
+        const url = `${config.serverAddress}/api/auth/login`;
         try {
             setIsLoading(true);
             const response = await fetch(`${url}`, {

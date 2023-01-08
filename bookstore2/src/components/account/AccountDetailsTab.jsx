@@ -2,11 +2,12 @@ import TabPanel from "../TabPanel";
 import {Button, Table, TableBody, TableContainer} from "@mui/material";
 import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
 import ChangeDetailsDialog from "../dialogs/ChangeDetailsDialog";
 import ChangePasswordDialog from "../dialogs/ChangePasswordDialog";
 import {PaperWithShadow} from "../../App";
 import AccountDetailsTableRow from "./AccountDetailsTableRow";
+import {config} from "../../config";
 
 
 export default function AccountDetailsTab({value}) {
@@ -41,7 +42,7 @@ export default function AccountDetailsTab({value}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getUserDetails`,
+            `${config.serverAddress}/api/bookstore/getUserDetails`,
             true,
             null,
             null

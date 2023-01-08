@@ -5,13 +5,13 @@ import {
     DialogContent,
     DialogTitle,
     Rating,
-    TextareaAutosize,
     TextField
 } from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
-import Context from "../../store/context";
-import {Box, Stack} from "@mui/system";
+import Context from "../../context/context";
+import {Stack} from "@mui/system";
+import {config} from "../../config";
 
 
 export default function CreateReviewDialog({openReview, bookHeaderId, setBookHeaderId, setOpenReview, order, value, setValue}){
@@ -22,7 +22,7 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
     const addReview = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch(`http://localhost:8080/api/bookstore/reviewBook?orderId=${order}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/reviewBook?orderId=${order}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

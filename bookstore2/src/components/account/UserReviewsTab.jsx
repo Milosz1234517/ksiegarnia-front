@@ -1,12 +1,13 @@
 import TabPanel from "../TabPanel";
 import * as React from "react";
 import {useCallback, useContext, useEffect} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
 import ReviewBox from "../ReviewBox";
 import CustomPagination from "../CustomPagination";
 import {Button, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TableRowStyle} from "../../App";
+import {config} from "../../config";
 
 
 export default function UserReviewsTab({value}) {
@@ -44,7 +45,7 @@ export default function UserReviewsTab({value}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForUserCount`,
+            `${config.serverAddress}/api/bookstore/getReviewsForUserCount`,
             true,
             null,
             null
@@ -78,7 +79,7 @@ export default function UserReviewsTab({value}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForUser?page=${pageReview}`,
+            `${config.serverAddress}/api/bookstore/getReviewsForUser?page=${pageReview}`,
             true,
             null,
             null
@@ -95,7 +96,7 @@ export default function UserReviewsTab({value}) {
     const deleteReview = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch(`http://localhost:8080/api/bookstore/deleteReview?reviewId=${data}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/deleteReview?reviewId=${data}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

@@ -10,8 +10,9 @@ import {
 import { Box } from "@mui/system";
 import {useContext, useState} from "react";
 import {ContainerStyle} from "../App";
-import Context from "../store/context";
+import Context from "../context/context";
 import HomePageMenu from "../components/HomePageMenu";
+import {config} from "../config";
 
 
 const Register = () => {
@@ -20,7 +21,7 @@ const Register = () => {
     const [phoneDigits, setPhoneDigits] = useState(9)
 
     const register = async (data) => {
-        const url = 'http://localhost:8080/api/auth/register';
+        const url = `${config.serverAddress}/api/auth/register`;
         try {
             ctx.setIsLoading(true);
             const response = await fetch(`${url}`, {

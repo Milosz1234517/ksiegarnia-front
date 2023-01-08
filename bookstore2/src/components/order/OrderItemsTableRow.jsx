@@ -5,7 +5,8 @@ import RateReviewIcon from "@mui/icons-material/RateReview";
 import * as React from "react";
 import CreateReviewDialog from "../dialogs/CreateReviewDialog";
 import {useContext, useState} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
+import {config} from "../../config";
 
 
 export default function OrderItemsTableRow({row, open, order}) {
@@ -17,7 +18,7 @@ export default function OrderItemsTableRow({row, open, order}) {
 
     const checkReview = async (data) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/checkReviewPossibility?bookHeaderId=${data}&orderId=${order}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/checkReviewPossibility?bookHeaderId=${data}&orderId=${order}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

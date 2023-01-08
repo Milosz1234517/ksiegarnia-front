@@ -15,7 +15,7 @@ import RegisterPage from "./pages/RegisterPage";
 import BasketPage from "./pages/BasketPage";
 import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
-import Context from "./store/context";
+import Context from "./context/context";
 import AccountPage from "./pages/AccountPage";
 import {GlobalStyles} from "@mui/joy";
 import {styled} from "@mui/material/styles";

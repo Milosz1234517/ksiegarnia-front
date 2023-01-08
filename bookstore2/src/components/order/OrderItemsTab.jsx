@@ -4,8 +4,9 @@ import OrderTableRow from "./OrderTableRow";
 import * as React from "react";
 import CustomPagination from "../CustomPagination";
 import {useCallback, useContext, useEffect} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
 import {PaperWithShadow} from "../../App";
+import {config} from "../../config";
 
 
 export default function OrderItemsTab({value}){
@@ -33,7 +34,7 @@ export default function OrderItemsTab({value}){
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterUser?page=${page}`,
+            `${config.serverAddress}/api/bookstore/getOrdersFilterUser?page=${page}`,
             true,
             null,
             null
@@ -57,7 +58,7 @@ export default function OrderItemsTab({value}){
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterUserCount?page=${page}`,
+            `${config.serverAddress}/api/bookstore/getOrdersFilterUserCount?page=${page}`,
             true,
             null,
             null

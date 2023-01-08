@@ -1,7 +1,8 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext} from "react";
-import Context from "../../store/context";
+import Context from "../../context/context";
+import {config} from "../../config";
 
 
 export default function ChangeDetailsDialog({user, userChange, setUserChange, setOpen, open}){
@@ -11,7 +12,7 @@ export default function ChangeDetailsDialog({user, userChange, setUserChange, se
     const changeUserDetails = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch('http://localhost:8080/api/bookstore/changeUserDetails', {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/changeUserDetails`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

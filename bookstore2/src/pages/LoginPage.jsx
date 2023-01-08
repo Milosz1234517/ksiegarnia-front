@@ -10,7 +10,7 @@ import {
 import {Box, ThemeProvider} from "@mui/system";
 import {useContext} from "react";
 import {ContainerStyle, theme} from "../App";
-import Context from "../store/context";
+import Context from "../context/context";
 import * as React from "react";
 import HomePageMenu from "../components/HomePageMenu";
 
