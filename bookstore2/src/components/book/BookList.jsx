@@ -7,11 +7,13 @@ import Context from "../../context/context";
 import {Box} from "@mui/system";
 import {useWindowResize} from "../WindowResizer";
 import {BlackButton} from "../../App";
+import {useNavigate} from "react-router-dom";
 
 export default function BookList({cards}) {
 
     const ctx = useContext(Context)
     const size = useWindowResize()
+    const navigate = useNavigate()
 
     const Img = styled('img')({
         margin: 'auto',
@@ -34,14 +36,9 @@ export default function BookList({cards}) {
         width: "80%",
     }));
 
-    const StyledTitleWrap = styled(Typography)(() => ({
-        color: 'inherit',
-        textDecoration: 'none',
-        marginLeft: 10,
-    }));
-
     const StyledTitle = styled(Typography)(() => ({
         color: 'inherit',
+        marginLeft: 10,
         textDecoration: 'none',
         display: "block",
         maxWidth: window.innerWidth * 0.4,
@@ -76,12 +73,13 @@ export default function BookList({cards}) {
     }));
 
     const CardStyle = {
-        flexGrow: 1, p:4, display: "grid",
+        flexGrow: 1, p: 4, display: "grid",
         transition: "0.3s",
         backgroundColor: "#e8f5e9",
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
         "&:hover": {
-            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
+            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+        }
     }
 
     const CardBoxStyle = {
@@ -101,8 +99,9 @@ export default function BookList({cards}) {
 
                 function handleAddToCart() {
                     ctx.checkTokenExpiration()
-                    if(ctx.isLoggedIn)
-                        ctx.addItemToCart(bookHeaderId).then(() => {})
+                    if (ctx.isLoggedIn)
+                        ctx.addItemToCart(bookHeaderId).then(() => {
+                        })
                     else
                         ctx.showErrorAlert("Login or Register to proceed this action")
                 }
@@ -117,7 +116,9 @@ export default function BookList({cards}) {
                                 <Grid container spacing={2}>
 
                                     <Grid item>
-                                        <ButtonBase href={`/product/${bookHeaderId}`}
+                                        <ButtonBase onClick={() => {
+                                            navigate(`/product/${bookHeaderId}`)
+                                        }}
                                                     sx={ButtonBaseStyle}>
                                             <Img alt="complex"
                                                  src={icon}/>
@@ -127,15 +128,16 @@ export default function BookList({cards}) {
                                     <Grid item xs sm container>
                                         <Grid item xs container direction="column" spacing={2}>
                                             <Grid item xs>
-                                                <StyledTitleWrap component={'span'}>
+                                                <ButtonBase onClick={() => {
+                                                    navigate(`/product/${bookHeaderId}`)
+                                                }}>
                                                     <StyledTitle
-                                                                 gutterBottom
-                                                                 variant="h4"
-                                                                 component={"a"}
-                                                                 href={`/product/${bookHeaderId}`}>
+                                                        gutterBottom
+                                                        variant="h4"
+                                                        component={"a"}>
                                                         {bookTitle}
                                                     </StyledTitle>
-                                                </StyledTitleWrap>
+                                                </ButtonBase>
 
                                                 <Typography component={'span'} variant="body1" gutterBottom>
                                                     {bookAuthors.map((author) => {
@@ -159,7 +161,8 @@ export default function BookList({cards}) {
                                         Price: {price}
                                     </StyledPrice>
 
-                                    <StyledAvailable component={'span'} align={"left"} variant="body1" color="text.secondary">
+                                    <StyledAvailable component={'span'} align={"left"} variant="body1"
+                                                     color="text.secondary">
                                         Available: {quantity}
                                     </StyledAvailable>
 

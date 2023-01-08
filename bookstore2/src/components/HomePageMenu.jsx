@@ -94,10 +94,12 @@ export default function HomePageMenu() {
                 <StyledLogo
                     variant="h4"
                     noWrap
-                    component="a"
-                    href="/">
+                    component="a">
                     <Grid item>
                         <ButtonBase
+                            onClick={()=>{
+                                navigate("/")
+                            }}
                             sx={StyledButtonBase}>
                             <Img alt="complex"
                                  src={config.logo}/>
