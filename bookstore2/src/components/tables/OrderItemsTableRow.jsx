@@ -45,6 +45,20 @@ export default function OrderItemsTableRow({row, open, order}) {
         checkReview(bookHeaderId).then(()=>{})
     }
 
+    const TableCellStyle = {
+        paddingBottom: 0,
+        paddingTop: 0,
+        backgroundColor: "#e8f5e9"
+    }
+
+    const BoxStyle = {
+        margin: 1
+    }
+
+    const TableHeadStyle = {
+        backgroundColor:"#e8f5e9"
+    }
+
     return (
         <TableRow>
             <CreateReviewDialog
@@ -56,9 +70,9 @@ export default function OrderItemsTableRow({row, open, order}) {
                 value={value}
                 order={order}/>
 
-            <TableCell style={{paddingBottom: 0, paddingTop: 0, backgroundColor: "#e8f5e9",}} colSpan={6}>
+            <TableCell style={TableCellStyle} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                    <Box sx={{margin: 1}}>
+                    <Box sx={BoxStyle}>
                         <Typography align="left" variant="h6" gutterBottom component="div">
                             Order Items
                         </Typography>
@@ -71,7 +85,7 @@ export default function OrderItemsTableRow({row, open, order}) {
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
-                            <TableBody sx={{backgroundColor:"#e8f5e9"}}>
+                            <TableBody sx={TableHeadStyle}>
                                 {row.orderItems.map((item) => (
                                     <TableRow key={item.orderId}>
                                         <TableCell component="th" scope="row">
@@ -81,7 +95,9 @@ export default function OrderItemsTableRow({row, open, order}) {
                                         <TableCell align="right">{item.price.toFixed(2)}</TableCell>
                                         <TableCell align="left">
                                             <Button
-                                                onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}><RateReviewIcon/></Button>
+                                                onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}>
+                                                <RateReviewIcon/>
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}

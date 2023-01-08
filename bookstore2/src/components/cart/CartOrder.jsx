@@ -1,10 +1,9 @@
 import {Box} from "@mui/system";
-import {Button, TextareaAutosize, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
 import {useWindowResize} from "../other/WindowResizer";
 import Context from "../../store/context";
-import Typography from "@mui/material/Typography";
 
 
 export default function CartOrder({emptyCart, cartItems, setCartItems}) {
@@ -64,22 +63,33 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}) {
         setDescription(event.target.value)
     }
 
+    const BoxStyle = {
+        display: "inline-block",
+        width: "80%",
+        maxWidth: size[0],
+    }
+
+    const TextFieldStyle = {
+        "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+        },
+        width: size[0] * 0.8,
+        backgroundColor: "white",
+        marginTop: 5,
+        marginLeft: 2
+    }
+
+    const ButtonStyle = {
+        margin: 2,
+        backgroundColor:"#000",
+        color: "white"
+    }
+
     return (
-        <Box
-            sx={{
-                display: "inline-block",
-                width: "80%",
-                maxWidth: size[0],
-            }}
-            justifyContent={"left"}>
+        <Box sx={BoxStyle} justifyContent={"left"}>
 
             {!emptyCart && <TextField
-                sx={{
-                    "& .MuiInputBase-input.Mui-disabled": {
-                        WebkitTextFillColor: "#000000",
-                    },
-                    width: size[0] * 0.8, backgroundColor: "white", marginTop: 5, marginLeft: 2
-                }}
+                sx={TextFieldStyle}
                 multiline
                 minRows={2}
                 id="standard-basic"
@@ -90,11 +100,7 @@ export default function CartOrder({emptyCart, cartItems, setCartItems}) {
 
             {!emptyCart && <Button size="medium" variant="outlined"
                                    onClick={() => handlePlaceOrder()}
-                                   sx={{
-                                       margin: 2,
-                                       backgroundColor:"#000",
-                                       color: "white"
-                                   }}>
+                                   sx={ButtonStyle}>
                 Place order
             </Button>}
         </Box>

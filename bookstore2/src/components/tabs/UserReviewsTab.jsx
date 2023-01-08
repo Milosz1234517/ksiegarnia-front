@@ -6,6 +6,7 @@ import ReviewBox from "../other/ReviewBox";
 import CustomPagination from "../other/CustomPagination";
 import {Button, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {TableRowStyle} from "../../App";
 
 
 export default function UserReviewsTab({value}) {
@@ -124,16 +125,20 @@ export default function UserReviewsTab({value}) {
         })
     }
 
+    const TableStyle = {
+        minWidth: 650
+    }
+
     return (
         <TabPanel value={value} index={2}>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
             <TableContainer>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
+                <Table sx={TableStyle} aria-label="simple table">
                     <TableBody>
                         {marks.map((row) => (
                             <TableRow
                                 key={row.reviewId}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                sx={TableRowStyle}
                             >
                                 <TableCell align="left"><ReviewBox review={row} title={true}/></TableCell>
                                 <TableCell align="left"><Button

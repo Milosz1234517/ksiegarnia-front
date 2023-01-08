@@ -1,5 +1,5 @@
 import {Box} from "@mui/system";
-import {TextField, Typography} from "@mui/material";
+import {TextField} from "@mui/material";
 import * as React from "react";
 import TabPanel from "./TabPanel";
 import {useWindowResize} from "../other/WindowResizer";
@@ -7,16 +7,25 @@ import {useWindowResize} from "../other/WindowResizer";
 export default function BookDescriptionTab({value, book}) {
     const size = useWindowResize()
 
+    const BoxStyle = {
+        overflow: "auto",
+        maxWidth: size[0],
+        marginBottom: 10
+    }
+
+    const TextFieldStyle = {
+        "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+        },
+        width: size[0] * 0.8,
+        backgroundColor: "white"
+    }
+
     return (
         <TabPanel component={"span"} value={value} index={0}>
-            <Box sx={{overflow: "auto", maxWidth: size[0], marginBottom: 10}}>
+            <Box sx={BoxStyle}>
                 <TextField
-                    sx={{
-                        "& .MuiInputBase-input.Mui-disabled": {
-                            WebkitTextFillColor: "#000000",
-                        },
-                        width: size[0] * 0.8, backgroundColor: "white"
-                    }}
+                    sx={TextFieldStyle}
                     multiline
                     disabled
                     id="standard-basic"

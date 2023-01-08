@@ -1,5 +1,4 @@
 import HomePageMenu from "../components/other/HomePageMenu";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
 import {Box} from "@mui/system";
 import {Tab, Tabs,} from "@mui/material";
@@ -7,8 +6,6 @@ import AccountDetailsTab from "../components/tabs/AccountDetailsTab";
 import OrderItemsTab from "../components/tabs/OrderItemsTab";
 import UserReviewsTab from "../components/tabs/UserReviewsTab";
 import PageTitle from "../components/cart/PageTitle";
-import {useContext, useEffect} from "react";
-import Context from "../store/context";
 
 function a11yProps(index) {
     return {
@@ -24,16 +21,22 @@ export default function AccountPage() {
         setValue(newValue);
     };
 
-    const ctx = useContext(Context)
+    const MainBoxStyle = {
+        width: '100%'
+    }
+
+    const BoxStyle = {
+        borderBottom: 1, borderColor: 'divider'
+    }
 
     return (
         <div>
             <HomePageMenu/>
             <PageTitle title="Account"/>
 
-            <Box sx={{width: '100%'}}>
+            <Box sx={MainBoxStyle}>
 
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                <Box sx={BoxStyle}>
                     <Tabs value={value} onChange={handleChange} scrollButtons="auto" variant="scrollable" aria-label="basic tabs example">
                         <Tab label="Account Details" {...a11yProps(0)} />
                         <Tab label="Orders" {...a11yProps(1)} />

@@ -4,9 +4,9 @@ import {Box} from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
 import {useWindowResize} from "../other/WindowResizer";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import Context from "../../store/context";
-import {PaperWithShadow} from "../../App";
+import {TableRowStyle} from "../../App";
 
 
 export default function CartItemsTable({cartItems, setCartItems, totalPrice, setTotalPrice}) {
@@ -68,9 +68,23 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
         }))
     }
 
+    const TableStyle = {
+        maxWidth: size[0]
+    }
+
+    const TableCellStyle = {
+        maxWidth: size[0],
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+    }
+
+    const BoxStyle= {
+        display: "flex"
+    }
+
     return (
         <TableContainer component={Paper}>
-            <Table sx={{maxWidth: size[0]}} aria-label="simple table">
+            <Table sx={TableStyle} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Book Title</TableCell>
@@ -82,10 +96,10 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                     {cartItems.map((row) => (
                         <TableRow
                             key={row.itemId}
-                            sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                            sx={TableRowStyle}>
 
                             <TableCell align="left"
-                                       sx={{maxWidth: size[0], overflow: "hidden", textOverflow: "ellipsis"}}>
+                                       sx={TableCellStyle}>
                                 <Typography
                                     gutterBottom
                                     variant="h6"
@@ -95,7 +109,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                             </TableCell>
 
                             <TableCell align="left">
-                                <Box sx={{display: "flex"}}>
+                                <Box sx={BoxStyle}>
                                     <IconButton
                                         size="medium"
                                         variant="outlined"
@@ -140,7 +154,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                     ))}
                     <TableRow
                         key={-1}
-                        sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                        sx={TableRowStyle}>
 
                         <TableCell align="left">
 

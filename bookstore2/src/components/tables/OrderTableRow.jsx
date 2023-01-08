@@ -4,7 +4,6 @@ import {TableCell, TableRow} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import PropTypes from "prop-types";
 import OrderItemsTableRow from "./OrderItemsTableRow";
 
 
@@ -12,10 +11,14 @@ export default function OrderTableRow(props) {
     const {row} = props;
     const [open, setOpen] = useState(false);
 
+    const TableRowStyle = {
+        backgroundColor: "white"
+    }
+
     return (
         <React.Fragment>
 
-            <TableRow sx={{backgroundColor: "white"}}>
+            <TableRow sx={TableRowStyle}>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -34,27 +37,4 @@ export default function OrderTableRow(props) {
 
         </React.Fragment>
     );
-}
-
-OrderTableRow.propTypes = {
-    row: PropTypes.shape({
-        orderId: PropTypes.number.isRequired,
-        orderStatus:
-            PropTypes.shape({
-                description: PropTypes.string.isRequired,
-            }),
-        orderDate: PropTypes.string.isRequired,
-        totalPrice: PropTypes.number.isRequired,
-        orderItems: PropTypes.arrayOf(
-            PropTypes.shape({
-                itemId: PropTypes.number,
-                bookHeader:
-                    PropTypes.shape({
-                        bookTitle: PropTypes.string,
-                    }),
-                quantity: PropTypes.number,
-                price: PropTypes.number,
-            }),
-        ).isRequired
-    }).isRequired
 }

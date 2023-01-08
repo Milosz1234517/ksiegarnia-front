@@ -1,13 +1,10 @@
 import TabPanel from "./TabPanel";
-import Typography from "@mui/material/Typography";
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Button, Table, TableBody, TableContainer} from "@mui/material";
 import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
 import ChangeDetailsDialog from "../dialogs/ChangeDetailsDialog";
 import ChangePasswordDialog from "../dialogs/ChangePasswordDialog";
-import {Box} from "@mui/system";
-import IconButton from "@mui/material/IconButton";
 import {PaperWithShadow} from "../../App";
 import AccountDetailsTableRow from "../tables/AccountDetailsTableRow";
 
@@ -66,6 +63,13 @@ export default function AccountDetailsTab({value}) {
         setOpenPass(true);
     }
 
+    const ButtonStyle = {
+        marginTop: 3,
+        marginRight: 3,
+        color: "white",
+        backgroundColor: "#000"
+    }
+
     return (
         <TabPanel value={value} index={0}>
             <TableContainer component={PaperWithShadow}>
@@ -80,11 +84,11 @@ export default function AccountDetailsTab({value}) {
             </TableContainer>
 
 
-            <Button variant="outlined" sx={{ marginTop: 3, marginRight: 3, color: "white", backgroundColor: "#000"}} onClick={handleClickOpen}>
+            <Button variant="outlined" sx={ButtonStyle} onClick={handleClickOpen}>
                 Modify Profile Data
             </Button>
 
-            <Button variant="outlined" sx={{marginTop: 3, color: "white", backgroundColor: "#000"}} onClick={handleClickOpenPass}>
+            <Button variant="outlined" sx={ButtonStyle} onClick={handleClickOpenPass}>
                 Change Password
             </Button>
 

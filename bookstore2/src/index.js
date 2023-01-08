@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { ContextProvider } from "./store/context";
-import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,5 +16,3 @@ root.render(
         </BrowserRouter>
     </React.StrictMode>,
 );
-
-reportWebVitals();

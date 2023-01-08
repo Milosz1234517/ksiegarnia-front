@@ -24,10 +24,18 @@ export default function HomePage() {
         setPage(parseInt(urlSearchParams.get('page')) || 1)
     }, [setPage, urlSearchParams]);
 
+    const MainBoxStyle = {
+        flexGrow: 5
+    }
+
+    const BoxStyle = {
+        margin: 1
+    }
+
     return (
-        <Box sx={{flexGrow: 5}}>
+        <Box sx={MainBoxStyle}>
             <HomePageMenu/>
-            <Box sx={{margin: 1}}>
+            <Box sx={BoxStyle}>
                 <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
                 <BookList cards={books}/>
                 <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>

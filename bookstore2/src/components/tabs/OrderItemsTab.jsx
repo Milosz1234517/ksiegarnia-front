@@ -1,5 +1,5 @@
 import TabPanel from "./TabPanel";
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import OrderTableRow from "../tables/OrderTableRow";
 import * as React from "react";
 import CustomPagination from "../other/CustomPagination";
@@ -79,6 +79,10 @@ export default function OrderItemsTab({value}){
         setPage(value);
     }
 
+    const TableRowStyle = {
+        backgroundColor: "white"
+    }
+
     return(
         <TabPanel value={value} index={1}>
 
@@ -87,7 +91,7 @@ export default function OrderItemsTab({value}){
             <TableContainer component={PaperWithShadow}>
                 <Table aria-label="collapsible table">
                     <TableHead>
-                        <TableRow sx={{backgroundColor: "white"}}>
+                        <TableRow sx={TableRowStyle}>
                             <TableCell/>
                             <TableCell>Order Number</TableCell>
                             <TableCell align="right">Status</TableCell>

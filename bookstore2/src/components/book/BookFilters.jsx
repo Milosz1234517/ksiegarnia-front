@@ -84,12 +84,28 @@ export default function BookFilters({searchParams, filterParams, category, setCa
         filterParams.category = event.target.value
     }
 
+    const BoxStyle = {
+        display: "inline-block",
+        margin: 1
+    }
+
+    const TextFieldStyle = {
+        margin: 1,
+        backgroundColor:"#e8eaf6",
+    }
+
+    const FormControlStyle = {
+        m: 1,
+        minWidth: 150,
+        backgroundColor:"#e8eaf6"
+    }
+
     return(
         <Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
+            <Box sx={BoxStyle}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
+                    sx={TextFieldStyle}
                     fullWidth
                     variant="outlined"
                     id="priceDown"
@@ -102,11 +118,10 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     onChange={handleChangePriceDown}
                     autoFocus/>
             </Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
-
+            <Box sx={BoxStyle}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
+                    sx={TextFieldStyle}
                     fullWidth
                     variant="outlined"
                     id="priceLow"
@@ -118,13 +133,12 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     defaultValue={searchParams.priceUp}
                     onChange={handleChangePriceUp}
                     autoFocus/>
-
             </Box>
 
-            <Box sx={{display: "inline-block", margin: 1}}>
+            <Box sx={BoxStyle}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
+                    sx={TextFieldStyle}
                     fullWidth
                     variant="outlined"
                     id="authorName"
@@ -137,11 +151,11 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     autoFocus/>
 
             </Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
 
+            <Box sx={BoxStyle}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1, backgroundColor:"#e8eaf6",}}
+                    sx={TextFieldStyle}
                     fullWidth
                     variant="outlined"
                     id="authorSurname"
@@ -152,27 +166,28 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     defaultValue={searchParams.surname}
                     onChange={handleChangeSurname}
                     autoFocus/>
-
             </Box>
 
-            <Box sx={{display: "inline-block", margin: 1}}>
-                <FormControl variant="standard" sx={{m: 1, minWidth: 150, backgroundColor:"#e8eaf6"}}>
+            <Box sx={BoxStyle}>
+                <FormControl variant="standard" sx={FormControlStyle}>
                     <Select
                         labelId="status-label"
                         id="status"
                         variant="outlined"
                         value={category}
                         displayEmpty
-                        onChange={handleChangeCategory}
-                    >
+                        onChange={handleChangeCategory}>
+
                         <MenuItem value="">
                             <em>All Categories</em>
                         </MenuItem>
+
                         {categories.map((option) => (
                             <MenuItem key={option.categoryId} value={option.description}>
                                 {option.description}
                             </MenuItem>
                         ))}
+
                     </Select>
                 </FormControl>
             </Box>

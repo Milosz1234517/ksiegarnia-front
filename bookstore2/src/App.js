@@ -6,7 +6,6 @@ import {
     CssBaseline, Paper,
     Snackbar,
     ThemeProvider,
-    Typography
 } from "@mui/material";
 import {Navigate, Route, Routes} from "react-router-dom";
 
@@ -37,6 +36,22 @@ export const PaperWithShadow = styled(Paper)(() => ({
     "&:hover": {
         boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
 }));
+
+export const BlackButton = {
+    backgroundColor:"#000",
+    color:"white"
+}
+
+export const TableRowStyle = {
+    '&:last-child td, &:last-child th': {border: 0}
+}
+
+export const ContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    marginTop: 10
+}
 
 const Loading = (props) => {
     return (

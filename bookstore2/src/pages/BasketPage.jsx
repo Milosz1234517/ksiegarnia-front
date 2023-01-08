@@ -5,7 +5,7 @@ import HomePageMenu from "../components/other/HomePageMenu";
 import PageTitle from "../components/cart/PageTitle";
 import CartItemsTable from "../components/tables/CartItemsTable";
 import CartOrder from "../components/cart/CartOrder";
-import {Box, width} from "@mui/system";
+import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
@@ -72,6 +72,17 @@ export default function BasketPage() {
         }
     }, [cartItems]);
 
+    const BoxStyle = {
+        display: "grid",
+        justifyContent: "center"
+    }
+
+    const TypographyStyle = {
+        color: 'inherit',
+        textDecoration: 'none',
+        marginLeft: 4,
+    }
+
     return (
         <Box>
             <HomePageMenu/>
@@ -79,20 +90,15 @@ export default function BasketPage() {
             <CartItemsTable totalPrice = {totalPrice} setTotalPrice = {setTotalPrice} cartItems={cartItems} setCartItems={setCartItems}/>
             <CartOrder emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
 
-            <Box sx={{display: "grid", justifyContent: "center"}}>
+            <Box sx={BoxStyle}>
                 {(show && emptyCart) && <Typography
                     gutterBottom
                     variant="h4"
                     component="a"
-                    sx={{
-                        color: 'inherit',
-                        textDecoration: 'none',
-                        marginLeft: 4,
-                    }}>
+                    sx={TypographyStyle}>
                     Cart is empty <SentimentVeryDissatisfiedIcon/>
                 </Typography>}
             </Box>
-
         </Box>
     );
 }

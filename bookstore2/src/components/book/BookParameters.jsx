@@ -3,9 +3,13 @@ import * as React from "react";
 
 export default function BookParameters({book}) {
 
+    const TypographyStyle = {
+        margin: 2
+    }
+
     return (
         <div>
-            <Typography sx={{margin: 2}} variant="h5">
+            <Typography sx={TypographyStyle} variant="h5">
                 Authors: {book.bookAuthors?.map((author) => {
                 return (
                     <Typography key={author.authorId} variant="body2"
@@ -16,7 +20,7 @@ export default function BookParameters({book}) {
             })}
             </Typography>
 
-            <Typography sx={{margin: 2}} variant="h5">
+            <Typography sx={TypographyStyle} variant="h5">
                 Publishing-house:
                 <Typography variant="body2"
                             color="text.secondary"
@@ -25,7 +29,7 @@ export default function BookParameters({book}) {
                 </Typography>
             </Typography>
 
-            <Typography sx={{margin: 2}} variant="h5">
+            <Typography sx={TypographyStyle} variant="h5">
                 Quantity:
                 <Typography variant="body2"
                             color="text.secondary"
@@ -34,7 +38,7 @@ export default function BookParameters({book}) {
                 </Typography>
             </Typography>
 
-            <Typography sx={{margin: 2}} variant="h5">
+            <Typography sx={TypographyStyle} variant="h5">
                 Price:
                 <Typography variant="body2"
                             color="text.secondary"

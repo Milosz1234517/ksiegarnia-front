@@ -17,35 +17,6 @@ import BookFilters from "../book/BookFilters";
 import {styled} from "@mui/material/styles";
 import Context from "../../store/context";
 
-const StyledAutocomplete = styled(Autocomplete)(() => ({
-    width: "100%",
-    display: "flex",
-    backgroundColor:"#e8eaf6",
-    margin: 10,
-    minWidth: 170
-}));
-
-const StyledMainBox = styled(Box)(() => ({
-    display: "grid"
-}));
-
-const StyledSearchButton = styled(Button)(() => ({
-    display: "inline-block",
-    backgroundColor:"#e8eaf6",
-    color: "#000",
-    margin: 10
-}));
-
-const StyledFilterSwitch = styled(FormControlLabel)(() => ({
-    display: "inline-block",
-    margin: 10
-}));
-
-const StyledSearchResultLabel = styled(Typography)(() => ({
-    display: "inline-block"
-}));
-
-
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     const navigate = useNavigate();
@@ -229,11 +200,50 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         setAvailable(event.target.value)
     }
 
+    const StyledAutocomplete = styled(Autocomplete)(() => ({
+        width: "100%",
+        display: "flex",
+        backgroundColor:"#e8eaf6",
+        margin: 10,
+        minWidth: 170
+    }));
+
+    const StyledMainBox = styled(Box)(() => ({
+        display: "grid"
+    }));
+
+    const StyledSearchButton = styled(Button)(() => ({
+        display: "inline-block",
+        backgroundColor:"#e8eaf6",
+        color: "#000",
+        margin: 10
+    }));
+
+    const StyledFilterSwitch = styled(FormControlLabel)(() => ({
+        display: "inline-block",
+        margin: 10
+    }));
+
+    const StyledSearchResultLabel = {
+        display: "inline-block",
+        marginLeft: 2,
+        marginTop: 5
+    }
+
+    const StyledBox = {
+        display: "flex"
+    }
+
+    const StyledFormControl = {
+        m: 2,
+        minWidth: 150
+    }
+
     return (
         <Box>
             <StyledMainBox>
 
-                <Box sx={{display: "flex"}}>
+                <Box sx={StyledBox}>
                     <StyledAutocomplete
                         freeSolo
                         onInputChange={(e, v) => {
@@ -249,7 +259,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 </Box>
             </StyledMainBox>
 
-            <FormControl variant="filled" sx={{ m: 2, minWidth: 150}}>
+            <FormControl variant="filled" sx={StyledFormControl}>
                 <Select
                     labelId="status-label"
                     id="status"
@@ -283,9 +293,9 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                     <BookFilters category={category} setCategory={setCategory} filterParams={filterParams} searchParams={searchParams}/>}
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
-                    <StyledSearchResultLabel sx={{marginLeft: 2, marginTop: 5}}>
+                    <Typography sx={StyledSearchResultLabel}>
                         Search Results for "{searchParams.title}"
-                    </StyledSearchResultLabel>}
+                    </Typography>}
             </Box>
 
         </Box>

@@ -9,14 +9,23 @@ import {useWindowResize} from "../other/WindowResizer";
 export default function BookMoreDetailsTab({value, book}){
     const size = useWindowResize()
 
+    const BoxStyle = {
+        overflow: "auto",
+        maxWidth: size[0]
+    }
+
+    const TypographyStyle = {
+        margin: 2
+    }
+
     return(
 
         <TabPanel value={value} index={1}>
-            <Box sx={{overflow: "auto", maxWidth: size[0]}}>
+            <Box sx={BoxStyle}>
 
                 <BookParameters book={book}/>
 
-                <Typography sx={{margin: 2}} variant="h5">
+                <Typography sx={TypographyStyle} variant="h5">
                     Release Date:
                     <Typography variant="body2"
                                 color="text.secondary"
@@ -25,7 +34,7 @@ export default function BookMoreDetailsTab({value, book}){
                     </Typography>
                 </Typography>
 
-                <Typography sx={{margin: 2}} variant="h5">
+                <Typography sx={TypographyStyle} variant="h5">
                     Edition:
                     <Typography variant="body2"
                                 color="text.secondary"
@@ -34,7 +43,7 @@ export default function BookMoreDetailsTab({value, book}){
                     </Typography>
                 </Typography>
 
-                <Typography sx={{margin: 2}} variant="h5">
+                <Typography sx={TypographyStyle} variant="h5">
                     Categories: {book.bookCategories?.map((cat) => {
                     return (
                         <Typography key = {cat.categoryId} variant="body2"

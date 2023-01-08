@@ -76,13 +76,41 @@ export default function BookDetails() {
             ctx.showErrorAlert("Login or Register to proceed this action")
     }
 
+    const MainBoxStyle = {
+        flexGrow: 1,
+        backgroundColor: "#e8f5e9"
+    }
+
+    const BoxStyle = {
+        display: "grid"
+    }
+
+    const TypographyStyle  = {
+        margin: 2,
+        marginTop: 4
+    }
+
+    const ButtonStyle = {
+        margin: 2,
+        backgroundColor: "#000",
+        color: "white"
+    }
+
+    const TabBoxStyle = {
+        borderBottom: 1,
+        borderColor: 'divider'
+    }
+    const MoreDetailsBoxStyle = {
+        backgroundColor: "white"
+    }
+
     return (
-        <Box sx={{flexGrow: 1, backgroundColor: "#e8f5e9"}}>
+        <Box sx={MainBoxStyle}>
             <HomePageMenu/>
 
             <div>
 
-                <Box sx={{display: "grid"}}>
+                <Box sx={BoxStyle}>
 
                     <Grid container spacing={2}>
 
@@ -92,13 +120,13 @@ export default function BookDetails() {
                             <Grid item xs container direction="column" spacing={2}>
                                 <Grid item xs>
 
-                                    <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
+                                    <Typography sx={TypographyStyle} variant="h2">
                                         {book.bookTitle}
                                     </Typography>
 
                                     <BookParameters book={book}/>
 
-                                    <Button sx={{margin: 2, backgroundColor: "#000", color: "white"}} size="medium"
+                                    <Button sx={ButtonStyle} size="medium"
                                             variant="outlined"
                                             onClick={handleAddToCart}>Add to Cart</Button>
 
@@ -110,7 +138,7 @@ export default function BookDetails() {
                 </Box>
 
 
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                <Box sx={TabBoxStyle}>
                     <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
                           aria-label="basic tabs example">
                         <Tab label="Description" {...a11yProps(0)} />
@@ -121,7 +149,7 @@ export default function BookDetails() {
 
                 <BookDescriptionTab value={value} book={book}/>
 
-                <Box sx={{backgroundColor: "white"}}>
+                <Box sx={MoreDetailsBoxStyle}>
                     <BookMoreDetailsTab value={value} book={book}/>
                 </Box>
 

@@ -7,9 +7,9 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { Box, ThemeProvider } from "@mui/system";
+import { Box } from "@mui/system";
 import {useContext, useState} from "react";
-import { theme } from "../App";
+import {ContainerStyle} from "../App";
 import Context from "../store/context";
 import HomePageMenu from "../components/other/HomePageMenu";
 
@@ -68,6 +68,22 @@ const Register = () => {
         ).then(() => {});
     };
 
+    const BoxStyle = {
+        display: "flex",
+        alignItems: "right",
+        textAlign: "center",
+    }
+
+    const AvatarStyle = {
+        m: 1,
+        color: "primary.main"
+    }
+
+    const ButtonStyle = {
+        mt: 3,
+        mb: 2
+    }
+
     return (
         <Box>
             <HomePageMenu/>
@@ -77,21 +93,12 @@ const Register = () => {
             <Container
                 component="main"
                 maxWidth="xs"
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    marginTop: 10
-                }}>
+                sx={ContainerStyle}>
 
                 <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "right",
-                        textAlign: "center",
-                    }}>
+                    sx={BoxStyle}>
 
-                    <Avatar sx={{ m: 1, color: "primary.main" }}>
+                    <Avatar sx={AvatarStyle}>
                         <LockOutlined />
                     </Avatar>
 
@@ -166,7 +173,7 @@ const Register = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}>
+                        sx={ButtonStyle}>
                         Register
                     </Button>
 

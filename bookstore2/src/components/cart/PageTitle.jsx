@@ -4,13 +4,19 @@ import * as React from "react";
 
 export default function PageTitle({title}){
 
+    const BoxStyle = {
+        display: "grid"
+    }
+
+    const TypographyStyle = {
+        margin: 4,
+    }
+
     return(
-        <Box sx={{display: "grid"}}>
+        <Box sx={BoxStyle}>
             <Typography variant="h2"
                         component="a"
-                        sx={{
-                            margin: 4,
-                        }}>
+                        sx={TypographyStyle}>
                 {title}
             </Typography>
         </Box>
