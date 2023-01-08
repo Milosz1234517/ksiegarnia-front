@@ -1,8 +1,8 @@
 import * as React from "react";
-import TabPanel from "./TabPanel";
-import CustomPagination from "../other/CustomPagination";
+import TabPanel from "../TabPanel";
+import CustomPagination from "../CustomPagination";
 import {useCallback, useEffect} from "react";
-import ReviewBox from "../other/ReviewBox";
+import ReviewBox from "../ReviewBox";
 
 
 export default function BookReviewsTab({value, book}) {

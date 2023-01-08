@@ -1,8 +1,8 @@
-import TabPanel from "./TabPanel";
+import TabPanel from "../TabPanel";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import OrderTableRow from "../tables/OrderTableRow";
+import OrderTableRow from "./OrderTableRow";
 import * as React from "react";
-import CustomPagination from "../other/CustomPagination";
+import CustomPagination from "../CustomPagination";
 import {useCallback, useContext, useEffect} from "react";
 import Context from "../../store/context";
 import {PaperWithShadow} from "../../App";

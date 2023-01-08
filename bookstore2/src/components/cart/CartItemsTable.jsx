@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import {Box} from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
-import {useWindowResize} from "../other/WindowResizer";
+import {useWindowResize} from "../WindowResizer";
 import {useContext} from "react";
 import Context from "../../store/context";
 import {TableRowStyle} from "../../App";

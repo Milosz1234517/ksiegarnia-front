@@ -1,10 +1,10 @@
 import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
-import HomePageMenu from "../components/other/HomePageMenu";
-import PageTitle from "../components/cart/PageTitle";
-import CartItemsTable from "../components/tables/CartItemsTable";
-import CartOrder from "../components/cart/CartOrder";
+import HomePageMenu from "../components/HomePageMenu";
+import PageTitle from "../components/PageTitle";
+import CartItemsTable from "../components/cart/CartItemsTable";
+import CartCommentBox from "../components/cart/CartCommentBox";
 import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -88,7 +88,7 @@ export default function BasketPage() {
             <HomePageMenu/>
             <PageTitle title={"Shopping Cart"}/>
             <CartItemsTable totalPrice = {totalPrice} setTotalPrice = {setTotalPrice} cartItems={cartItems} setCartItems={setCartItems}/>
-            <CartOrder emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
+            <CartCommentBox emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
 
             <Box sx={BoxStyle}>
                 {(show && emptyCart) && <Typography

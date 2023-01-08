@@ -1,17 +1,17 @@
 import {Button, Tab, Tabs, Typography} from "@mui/material";
 import * as React from "react";
-import HomePageMenu from "../components/other/HomePageMenu";
+import HomePageMenu from "../components/HomePageMenu";
 import {Box} from "@mui/system";
 import {useCallback, useContext, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Context from "../store/context";
-import BookDescriptionTab from "../components/tabs/BookDescriptionTab";
-import BookMoreDetailsTab from "../components/tabs/BookMoreDetailsTab";
-import BookReviewsTab from "../components/tabs/BookReviewsTab";
+import BookDescriptionTab from "../components/book/BookDescriptionTab";
+import BookMoreDetailsTab from "../components/book/BookMoreDetailsTab";
+import BookReviewsTab from "../components/book/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
 import BookParameters from "../components/book/BookParameters";
-import {useWindowResize} from "../components/other/WindowResizer";
+import {useWindowResize} from "../components/WindowResizer";
 
 function a11yProps(index) {
     return {

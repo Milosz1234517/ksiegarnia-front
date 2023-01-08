@@ -5,7 +5,7 @@ import {styled} from "@mui/material/styles";
 import {useContext} from "react";
 import Context from "../../store/context";
 import {Box} from "@mui/system";
-import {useWindowResize} from "../other/WindowResizer";
+import {useWindowResize} from "../WindowResizer";
 import {BlackButton} from "../../App";
 
 export default function BookList({cards}) {

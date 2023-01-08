@@ -8,7 +8,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import {ShoppingBasket} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
-import Context from "../../store/context";
+import Context from "../store/context";
 import {Button, ButtonBase} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import LogoutIcon from '@mui/icons-material/Logout';

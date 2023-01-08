@@ -1,11 +1,11 @@
-import HomePageMenu from "../components/other/HomePageMenu";
+import HomePageMenu from "../components/HomePageMenu";
 import * as React from "react";
 import {Box} from "@mui/system";
 import {Tab, Tabs,} from "@mui/material";
-import AccountDetailsTab from "../components/tabs/AccountDetailsTab";
-import OrderItemsTab from "../components/tabs/OrderItemsTab";
-import UserReviewsTab from "../components/tabs/UserReviewsTab";
-import PageTitle from "../components/cart/PageTitle";
+import AccountDetailsTab from "../components/account/AccountDetailsTab";
+import OrderItemsTab from "../components/order/OrderItemsTab";
+import UserReviewsTab from "../components/account/UserReviewsTab";
+import PageTitle from "../components/PageTitle";
 
 function a11yProps(index) {
     return {

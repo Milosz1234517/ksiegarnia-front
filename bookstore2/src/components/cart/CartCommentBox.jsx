@@ -2,11 +2,11 @@ import {Box} from "@mui/system";
 import {Button, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
-import {useWindowResize} from "../other/WindowResizer";
+import {useWindowResize} from "../WindowResizer";
 import Context from "../../store/context";
 
 
-export default function CartOrder({emptyCart, cartItems, setCartItems}) {
+export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
 
     const size = useWindowResize()
     const ctx = useContext(Context)

@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import {useContext, useState} from "react";
 import {ContainerStyle} from "../App";
 import Context from "../store/context";
-import HomePageMenu from "../components/other/HomePageMenu";
+import HomePageMenu from "../components/HomePageMenu";
 
 
 const Register = () => {

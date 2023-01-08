@@ -12,7 +12,7 @@ import {useContext} from "react";
 import {ContainerStyle, theme} from "../App";
 import Context from "../store/context";
 import * as React from "react";
-import HomePageMenu from "../components/other/HomePageMenu";
+import HomePageMenu from "../components/HomePageMenu";
 
 
 const Login = () => {

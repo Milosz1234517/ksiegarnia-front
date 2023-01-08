@@ -1,9 +1,9 @@
-import TabPanel from "./TabPanel";
+import TabPanel from "../TabPanel";
 import * as React from "react";
 import {useCallback, useContext, useEffect} from "react";
 import Context from "../../store/context";
-import ReviewBox from "../other/ReviewBox";
-import CustomPagination from "../other/CustomPagination";
+import ReviewBox from "../ReviewBox";
+import CustomPagination from "../CustomPagination";
 import {Button, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {TableRowStyle} from "../../App";

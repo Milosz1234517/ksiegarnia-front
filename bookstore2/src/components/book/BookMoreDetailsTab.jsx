@@ -1,9 +1,9 @@
 import {Box} from "@mui/system";
 import {Typography} from "@mui/material";
 import * as React from "react";
-import TabPanel from "./TabPanel";
-import BookParameters from "../book/BookParameters";
-import {useWindowResize} from "../other/WindowResizer";
+import TabPanel from "../TabPanel";
+import BookParameters from "./BookParameters";
+import {useWindowResize} from "../WindowResizer";
 
 
 export default function BookMoreDetailsTab({value, book}){

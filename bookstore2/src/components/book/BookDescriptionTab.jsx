@@ -1,8 +1,8 @@
 import {Box} from "@mui/system";
 import {TextField} from "@mui/material";
 import * as React from "react";
-import TabPanel from "./TabPanel";
-import {useWindowResize} from "../other/WindowResizer";
+import TabPanel from "../TabPanel";
+import {useWindowResize} from "../WindowResizer";
 
 export default function BookDescriptionTab({value, book}) {
     const size = useWindowResize()

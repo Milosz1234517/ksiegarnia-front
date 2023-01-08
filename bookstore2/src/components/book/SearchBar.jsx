@@ -13,7 +13,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import * as React from "react";
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useContext, useEffect, useState} from "react";
-import BookFilters from "../book/BookFilters";
+import BookFilters from "./BookFilters";
 import {styled} from "@mui/material/styles";
 import Context from "../../store/context";
 
