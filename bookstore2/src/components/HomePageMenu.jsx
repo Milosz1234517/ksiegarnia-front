@@ -52,12 +52,13 @@ export default function HomePageMenu() {
         maxHeight: '100%',
     });
 
-    const StyledButton = styled(Button)(() => ({
+    const StyledButton = {
         display: "inline-block",
         color: "white",
-        margin: 10,
+        margin: 1,
+        width: 100,
         backgroundColor: "#000"
-    }));
+    }
 
     const StyledLogo = styled(Typography)(() => ({
         color: 'white',
@@ -111,19 +112,21 @@ export default function HomePageMenu() {
                 {!ctx.isLoggedIn && (
                     <Box>
 
-                        <StyledButton
+                        <Button
+                            sx={StyledButton}
                             onClick={handleLoginOpen}
                             size="small"
                             variant="contained">
                             Login
-                        </StyledButton>
+                        </Button>
 
-                        <StyledButton
+                        <Button
+                            sx={StyledButton}
                             onClick={handleRegisterOpen}
                             size="small"
                             variant="contained">
                             Register
-                        </StyledButton>
+                        </Button>
 
                     </Box>
                 )}
