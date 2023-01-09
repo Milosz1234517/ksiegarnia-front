@@ -1,4 +1,4 @@
-import {Button, Tab, Tabs, Typography} from "@mui/material";
+import {Button, Container, Tab, Tabs, Typography} from "@mui/material";
 import * as React from "react";
 import HomePageMenu from "../components/HomePageMenu";
 import {Box} from "@mui/system";
@@ -83,10 +83,11 @@ export default function BookDetails() {
     }
 
     const BoxStyle = {
-        display: "grid"
+        display: "grid",
+        marginTop: 15
     }
 
-    const TypographyStyle  = {
+    const TypographyStyle = {
         margin: 2,
         marginTop: 4
     }
@@ -109,7 +110,7 @@ export default function BookDetails() {
         <Box sx={MainBoxStyle}>
             <HomePageMenu/>
 
-            <div>
+            <Container>
 
                 <Box sx={BoxStyle}>
 
@@ -156,7 +157,7 @@ export default function BookDetails() {
 
                 <BookReviewsTab value={value} book={book}/>
 
-            </div>
+            </Container>
         </Box>
     );
 

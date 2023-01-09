@@ -206,7 +206,6 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         display: "flex",
         backgroundColor:"#e8eaf6",
         margin: 10,
-        minWidth: 170
     }));
 
     const StyledMainBox = styled(Box)(() => ({
@@ -241,7 +240,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     }
 
     return (
-        <Box>
+        <Box sx={{marginTop: 5}}>
             <StyledMainBox>
 
                 <Box sx={StyledBox}>

@@ -6,6 +6,8 @@ import BookList from "../components/book/BookList";
 import SearchBar from "../components/book/SearchBar";
 import CustomPagination from "../components/CustomPagination";
 import {useEffect} from "react";
+import StoreInfoMenu from "../components/StoreInfoMenu";
+import {Container} from "@mui/material";
 
 export default function HomePage() {
 
@@ -34,12 +36,16 @@ export default function HomePage() {
 
     return (
         <Box sx={MainBoxStyle}>
+
             <HomePageMenu/>
-            <Box sx={BoxStyle}>
-                <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
-                <BookList cards={books}/>
-                <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
-            </Box>
+            <Container>
+                <Box sx={BoxStyle}>
+                    <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
+                    <BookList cards={books}/>
+                    <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
+                </Box>
+            </Container>
+            <StoreInfoMenu/>
         </Box>
     );
 }

@@ -1,24 +1,27 @@
-import { LockOutlined } from "@mui/icons-material";
+import {LockOutlined} from "@mui/icons-material";
 import {
     Avatar,
-    Button,
+    Button, ButtonBase,
     Container,
-    CssBaseline,
+    CssBaseline, FormControlLabel,
     TextField,
     Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
+import {Box} from "@mui/system";
 import {useContext, useState} from "react";
 import {ContainerStyle} from "../App";
 import Context from "../context/context";
 import HomePageMenu from "../components/HomePageMenu";
 import {config} from "../config";
+import Checkbox from '@mui/material/Checkbox';
+import {useNavigate} from "react-router-dom";
 
 
 const Register = () => {
     const ctx = useContext(Context);
-    const [error, setError] = useState(false)
     const [phoneDigits, setPhoneDigits] = useState(9)
+    const [change, setChange] = useState(false)
+    const navigate = useNavigate()
 
     const register = async (data) => {
         const url = `${config.serverAddress}/api/auth/register`;
@@ -38,10 +41,9 @@ const Register = () => {
                 }),
             });
             const resp = await response.json();
-            resp.accessToken = undefined;
+            console.log(response)
             if (response.ok) {
-                setError(false)
-                ctx.navigate("/login");
+                navigate("/login");
             } else {
                 ctx.showErrorAlert("Registration problems: " + resp.message);
             }
@@ -58,16 +60,26 @@ const Register = () => {
     const onSubmit = (event) => {
         event.preventDefault(true);
 
-        register(
-            {
-                username: event.target[0].value,
-                password: event.target[2].value,
-                name: event.target[4].value,
-                sname: event.target[6].value,
-                phone: event.target[8].value,
-            },
-        ).then(() => {});
+        if (change === true) {
+
+            register(
+                {
+                    username: event.target[0].value,
+                    password: event.target[2].value,
+                    name: event.target[4].value,
+                    sname: event.target[6].value,
+                    phone: event.target[8].value,
+                },
+            ).then(() => {
+            });
+        } else {
+            ctx.showErrorAlert("You must accept Store Policies")
+        }
     };
+
+    function handleChange() {
+        setChange(!change)
+    }
 
     const BoxStyle = {
         display: "flex",
@@ -89,7 +101,7 @@ const Register = () => {
         <Box>
             <HomePageMenu/>
 
-            <CssBaseline />
+            <CssBaseline/>
 
             <Container
                 component="main"
@@ -100,7 +112,7 @@ const Register = () => {
                     sx={BoxStyle}>
 
                     <Avatar sx={AvatarStyle}>
-                        <LockOutlined />
+                        <LockOutlined/>
                     </Avatar>
 
                     <Typography component="h1" variant="h4" alignSelf="center">
@@ -111,13 +123,12 @@ const Register = () => {
 
                 <Box
                     component="form"
-                    sx={{ mt: 1 }}
+                    sx={{mt: 1}}
                     onSubmit={onSubmit}>
 
                     <TextField
                         margin="normal"
                         required
-                        error={error}
                         fullWidth
                         id="email"
                         label="Email"
@@ -129,7 +140,6 @@ const Register = () => {
                         margin="normal"
                         required
                         fullWidth
-                        error={error}
                         name="password"
                         label="Password"
                         type="password"
@@ -162,13 +172,26 @@ const Register = () => {
                         margin="normal"
                         required
                         fullWidth
-                        error={error}
                         name="phone"
                         label="Phone"
                         id="phone"
                         onChange={onChangePhone}
-                        helperText = {phoneDigits > 0 ? "Digits left: " + phoneDigits : ''}
+                        helperText={phoneDigits > 0 ? "Digits left: " + phoneDigits : ''}
                         autoComplete="phone"/>
+
+                    <FormControlLabel
+                        label={""}
+                        control={
+                            <Box sx={BoxStyle}>
+                                <Checkbox checked={change} onChange={handleChange}/>
+                                <Typography m={1}>
+                                    I accept the terms of the
+                                </Typography>
+                                <ButtonBase onClick={() => {navigate("/policies")}}>
+                                    Store Policies
+                                </ButtonBase>
+                            </Box>
+                        }/>
 
                     <Button
                         type="submit"

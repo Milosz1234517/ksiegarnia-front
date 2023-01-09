@@ -52,7 +52,7 @@ export default function OrderItemsTab({value}){
             if (this.readyState === 4 && this.status === 200) {
                 json = xHttp.responseText;
                 obj = JSON.parse(json);
-                setCount(Math.ceil(obj / 2));
+                setCount(Math.ceil(obj / 20));
             }
         };
 

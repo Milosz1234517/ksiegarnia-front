@@ -2,10 +2,16 @@ import Typography from "@mui/material/Typography";
 import {Box} from "@mui/system";
 import * as React from "react";
 
-export default function PageTitle({title}){
+export default function PageTitle({title, center}){
 
-    const BoxStyle = {
-        display: "grid"
+    const BoxStyleCenter = {
+        display: "grid",
+        justifyContent: "center"
+    }
+
+    const BoxStyleLeft = {
+        display: "grid",
+        justifyContent: "left"
     }
 
     const TypographyStyle = {
@@ -13,7 +19,7 @@ export default function PageTitle({title}){
     }
 
     return(
-        <Box sx={BoxStyle}>
+        <Box sx={center ? BoxStyleCenter : BoxStyleLeft}>
             <Typography variant="h2"
                         component="a"
                         sx={TypographyStyle}>

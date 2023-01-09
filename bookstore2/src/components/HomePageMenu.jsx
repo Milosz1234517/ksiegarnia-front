@@ -57,7 +57,7 @@ export default function HomePageMenu() {
         display: "inline-block",
         color: "white",
         margin: 10,
-        backgroundColor: "#000000"
+        backgroundColor: "#000"
     }));
 
     const StyledLogo = styled(Typography)(() => ({
@@ -108,7 +108,7 @@ export default function HomePageMenu() {
                 </StyledLogo>
             </StyledToolBar>
 
-            <StyledToolBar sx={{marginTop: 5}}>
+            <StyledToolBar sx={{marginTop: 1}}>
                 {!ctx.isLoggedIn && (
                     <Box>
 

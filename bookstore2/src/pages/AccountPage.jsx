@@ -1,7 +1,7 @@
 import HomePageMenu from "../components/HomePageMenu";
 import * as React from "react";
 import {Box} from "@mui/system";
-import {Tab, Tabs,} from "@mui/material";
+import {Container, Tab, Tabs,} from "@mui/material";
 import AccountDetailsTab from "../components/account/AccountDetailsTab";
 import OrderItemsTab from "../components/order/OrderItemsTab";
 import UserReviewsTab from "../components/account/UserReviewsTab";
@@ -32,23 +32,26 @@ export default function AccountPage() {
     return (
         <div>
             <HomePageMenu/>
-            <PageTitle title="Account"/>
+            <Container>
+                <PageTitle title="Account" center={false}/>
 
-            <Box sx={MainBoxStyle}>
+                <Box sx={MainBoxStyle}>
 
-                <Box sx={BoxStyle}>
-                    <Tabs value={value} onChange={handleChange} scrollButtons="auto" variant="scrollable" aria-label="basic tabs example">
-                        <Tab label="Account Details" {...a11yProps(0)} />
-                        <Tab label="Orders" {...a11yProps(1)} />
-                        <Tab label="Reviews" {...a11yProps(2)} />
-                    </Tabs>
+                    <Box sx={BoxStyle}>
+                        <Tabs value={value} onChange={handleChange} scrollButtons="auto" variant="scrollable"
+                              aria-label="basic tabs example">
+                            <Tab label="Account Details" {...a11yProps(0)} />
+                            <Tab label="Orders" {...a11yProps(1)} />
+                            <Tab label="Reviews" {...a11yProps(2)} />
+                        </Tabs>
+                    </Box>
+
+                    <AccountDetailsTab value={value}/>
+                    <OrderItemsTab value={value}/>
+                    <UserReviewsTab value={value}/>
+
                 </Box>
-
-                <AccountDetailsTab value={value}/>
-                <OrderItemsTab value={value}/>
-                <UserReviewsTab value={value}/>
-
-            </Box>
+            </Container>
         </div>
     );
 }

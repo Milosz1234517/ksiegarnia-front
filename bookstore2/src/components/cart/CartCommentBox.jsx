@@ -77,11 +77,10 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
         width: size[0] * 0.8,
         backgroundColor: "white",
         marginTop: 5,
-        marginLeft: 2
     }
 
     const ButtonStyle = {
-        margin: 2,
+        marginTop: 2,
         backgroundColor:"#000",
         color: "white"
     }

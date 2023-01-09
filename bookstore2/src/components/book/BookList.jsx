@@ -33,12 +33,13 @@ export default function BookList({cards}) {
         marginBottom: 20,
         marginTop: 20,
         display: "grid",
-        width: "80%",
+        width: "100%",
     }));
 
     const StyledTitle = styled(Typography)(() => ({
         color: 'inherit',
         marginLeft: 10,
+        justifyContent:"left",
         textDecoration: 'none',
         display: "block",
         maxWidth: window.innerWidth * 0.4,
@@ -126,18 +127,16 @@ export default function BookList({cards}) {
                                     </Grid>
 
                                     <Grid item xs sm container>
-                                        <Grid item xs container direction="column" spacing={2}>
+                                        <Grid item xs sx={{flexDirection: "row-reverse", alignContent: "center"}} container spacing={2}>
                                             <Grid item xs>
-                                                <ButtonBase onClick={() => {
-                                                    navigate(`/product/${bookHeaderId}`)
-                                                }}>
+                                                <Box>
                                                     <StyledTitle
                                                         gutterBottom
                                                         variant="h4"
                                                         component={"a"}>
                                                         {bookTitle}
                                                     </StyledTitle>
-                                                </ButtonBase>
+                                                </Box>
 
                                                 <Typography component={'span'} variant="body1" gutterBottom>
                                                     {bookAuthors.map((author) => {

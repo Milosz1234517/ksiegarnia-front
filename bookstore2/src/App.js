@@ -2,11 +2,11 @@ import {
     Alert,
     Backdrop,
     CircularProgress,
-    createTheme,
     CssBaseline, Paper,
     Snackbar,
     ThemeProvider,
 } from "@mui/material";
+import { createTheme } from '@mui/material/styles';
 import {Navigate, Route, Routes} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
@@ -19,16 +19,14 @@ import Context from "./context/context";
 import AccountPage from "./pages/AccountPage";
 import {GlobalStyles} from "@mui/joy";
 import {styled} from "@mui/material/styles";
+import DescriptionPage from "./pages/DescriptionPage";
+import {config} from "./config";
+import ContactPage from "./pages/ContactPage";
+import * as React from "react";
 
-export const theme = createTheme(
-    {
-        palette: {
-            primary: {
-                main: "#43a047"
-            }
-        },
-    }
-);
+export const theme = createTheme();
+
+theme.palette.primary.main = "#43a047";
 
 export const PaperWithShadow = styled(Paper)(() => ({
     transition: "0.3s",
@@ -113,8 +111,19 @@ function App() {
                     path="search/"
                     element={<HomePage/>}
                 />
+                <Route
+                    path="about/"
+                    element={<DescriptionPage desc={config.aboutUs} title={"About Us"}/>}
+                />
+                <Route
+                    path="policies/"
+                    element={<DescriptionPage desc={config.policies} title={"Policies And Rules"}/>}
+                />
+                <Route
+                    path="contact/"
+                    element={<ContactPage/>}
+                />
             </Routes>
-
         </ThemeProvider>
     );
 }

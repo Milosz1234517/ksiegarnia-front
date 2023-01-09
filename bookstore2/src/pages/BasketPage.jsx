@@ -9,6 +9,7 @@ import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import {config} from "../config";
+import {Container} from "@mui/material";
 
 
 export default function BasketPage() {
@@ -87,19 +88,22 @@ export default function BasketPage() {
     return (
         <Box>
             <HomePageMenu/>
-            <PageTitle title={"Shopping Cart"}/>
-            <CartItemsTable totalPrice = {totalPrice} setTotalPrice = {setTotalPrice} cartItems={cartItems} setCartItems={setCartItems}/>
-            <CartCommentBox emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
+            <Container>
+                <PageTitle title={"Shopping Cart"} center={false}/>
+                <CartItemsTable totalPrice={totalPrice} setTotalPrice={setTotalPrice} cartItems={cartItems}
+                                setCartItems={setCartItems}/>
+                <CartCommentBox emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
 
-            <Box sx={BoxStyle}>
-                {(show && emptyCart) && <Typography
-                    gutterBottom
-                    variant="h4"
-                    component="a"
-                    sx={TypographyStyle}>
-                    Cart is empty <SentimentVeryDissatisfiedIcon/>
-                </Typography>}
-            </Box>
+                <Box sx={BoxStyle}>
+                    {(show && emptyCart) && <Typography
+                        gutterBottom
+                        variant="h4"
+                        component="a"
+                        sx={TypographyStyle}>
+                        Cart is empty <SentimentVeryDissatisfiedIcon/>
+                    </Typography>}
+                </Box>
+            </Container>
         </Box>
     );
 }

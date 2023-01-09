@@ -17,7 +17,7 @@ export default function BookDescriptionTab({value, book}) {
         "& .MuiInputBase-input.Mui-disabled": {
             WebkitTextFillColor: "#000000",
         },
-        width: size[0] * 0.8,
+        width: size[0] * 0.7,
         backgroundColor: "white"
     }
 
