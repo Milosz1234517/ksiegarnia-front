@@ -7,27 +7,34 @@ import {useCallback, useContext, useEffect, useState} from "react";
 import {styled} from "@mui/material/styles";
 import Context from "../../store/context";
 import OrderFilters from "./OrderFilters";
+import Grid from "@mui/material/Grid";
 
-export const StyledAutocomplete = styled(Autocomplete)(() => ({
+const StyledAutocomplete = styled(Autocomplete)(() => ({
     width: "100%",
     display: "flex",
     margin: 10,
-    minWidth: 170
+    backgroundColor: "#e8f5e9",
 }));
 
-export const StyledMainBox = styled(Box)(() => ({
-    display: "grid"
-}));
-
-export const StyledSearchButton = styled(Button)(() => ({
-    display: "inline-block",
-    margin: 5
-}));
-
-export const StyledFilterSwitch = styled(FormControlLabel)(() => ({
+const StyledFilterSwitch = styled(FormControlLabel)(() => ({
     display: "inline-block",
     margin: 10
 }));
+
+const StyledGrid = {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "nowrap"
+}
+
+const StyledSearchButton = styled(Button)(() => ({
+    backgroundColor: "#000",
+    color: "white",
+}));
+
+const StyledIcon = {
+    margin: 1
+}
 
 
 export default function OrderSearchBar({page, setCount, setOrders}) {
@@ -90,7 +97,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
             if (this.readyState === 4 && this.status === 200) {
                 json = xHttp.responseText;
                 obj = JSON.parse(json);
-                setCount(Math.ceil(obj / 2));
+                setCount(Math.ceil(obj / 20));
             }
         };
 
@@ -156,21 +163,21 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
     return (
         <Box>
-            <StyledMainBox>
-                <Box sx={{display: "flex"}}>
-                    <StyledAutocomplete
-                        freeSolo
-                        onInputChange={(e, v) => {
-                            setSearchInput(v)
-                        }}
-                        inputValue={searchInput}
-                        options={[]}
-                        renderInput={(params) =>
-                            <TextField {...params} label="Search Order"/>}/>
+            <Grid container sx={StyledGrid}>
+                <StyledAutocomplete
+                    freeSolo
+                    onInputChange={(e, v) => {
+                        setSearchInput(v)
+                    }}
+                    inputValue={searchInput}
+                    options={[]}
+                    renderInput={(params) =>
+                        <TextField {...params} label="Search Order"/>}/>
 
-                    <StyledSearchButton onClick={handleSearchBooks}><SearchIcon/></StyledSearchButton>
-                </Box>
-            </StyledMainBox>
+                <StyledSearchButton onClick={handleSearchBooks}>
+                    <SearchIcon sx={StyledIcon}/>
+                </StyledSearchButton>
+            </Grid>
 
             <StyledFilterSwitch
                 control={

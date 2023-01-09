@@ -9,20 +9,11 @@ import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import Context from "../../store/context";
 import {styled} from "@mui/material/styles";
-import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-
-const StyledMenuBox = styled(Box)(() => ({
-    display: "grid",
-
-}));
-
-const StyledLogo = styled(Typography)(() => ({
-    color: 'inherit',
-    textDecoration: 'none',
-    minWidth: 60,
-    flexGrow: 2
-}));
+import {ButtonBase} from "@mui/material";
+import {config} from "../../config";
+import Grid from "@mui/material/Grid";
+import {useWindowResize} from "./WindowResizer";
 
 export default function HomePageMenu() {
 
@@ -34,69 +25,97 @@ export default function HomePageMenu() {
         navigate("/profile")
     };
 
-    const handleLoginOpen = () => {
-        navigate("/")
-    };
-
     function handleLogoutOpen() {
         ctx.logout()
     }
 
+    const size = useWindowResize()
+
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    });
+
+    const StyledLogo = styled(Typography)(() => ({
+        color: 'white',
+        textDecoration: 'none',
+        minWidth: 60,
+        flexGrow: 2
+    }));
+
+    const StyledAppBar = {
+        backgroundColor: "#81c784"
+    }
+
+    const StyledToolBar = styled(Toolbar)(() => ({
+        flexDirection:"column"
+    }));
+
+    const StyledButtonBase = {
+        display: "inline-block",
+        scale: "90%",
+        width: size[0] * 0.4,
+        height: size[1] * 0.15,
+        overflow: "auto"
+    }
+
+    const StyledIconButton = {
+        margin: 1
+    }
+
     return (
-        <StyledMenuBox>
-            <AppBar position="static">
-                <Toolbar>
+        <AppBar position="static" sx={StyledAppBar}>
 
-                    <StyledLogo
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/cockpit">
-                        Books Admin
-                    </StyledLogo>
+            <StyledToolBar>
+                <StyledLogo
+                    variant="h4"
+                    noWrap
+                    component="a">
+                    <Grid item>
+                        <ButtonBase
+                            onClick={()=>{
+                                navigate("/")
+                            }}
+                            sx={StyledButtonBase}>
+                            <Img alt="complex"
+                                 src={config.logo}/>
+                        </ButtonBase>
+                    </Grid>
+                </StyledLogo>
+            </StyledToolBar>
 
-                    {!ctx.isLoggedIn && (
-                        <Box>
+            <StyledToolBar sx={{marginTop: 1}}>
 
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-haspopup="true"
-                                onClick={handleLoginOpen}
-                                color="inherit">
-                                <LoginIcon/>
-                            </IconButton>
+                {ctx.isLoggedIn && (
+                    <Box>
+                        <IconButton
+                            sx={StyledIconButton}
+                            size="large"
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-haspopup="true"
+                            onClick={handleProfileOpen}
+                            color="inherit">
+                            <AccountCircle/>
+                        </IconButton>
 
-                        </Box>
-                    )}
+                        <IconButton
+                            sx={StyledIconButton}
+                            size="large"
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-haspopup="true"
+                            onClick={handleLogoutOpen}
+                            color="inherit">
+                            <LogoutIcon/>
+                        </IconButton>
+                    </Box>
+                )}
+            </StyledToolBar>
 
-                    {ctx.isLoggedIn && (
-                        <Box>
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-haspopup="true"
-                                onClick={handleProfileOpen}
-                                color="inherit">
-                                <AccountCircle/>
-                            </IconButton>
+        </AppBar>
 
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-haspopup="true"
-                                onClick={handleLogoutOpen}
-                                color="inherit">
-                                <LogoutIcon/>
-                            </IconButton>
-                        </Box>
-                    )}
-
-                </Toolbar>
-            </AppBar>
-        </StyledMenuBox>
     );
 }

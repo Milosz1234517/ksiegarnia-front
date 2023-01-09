@@ -6,7 +6,7 @@ import BookList from "../components/book/BookList";
 import SearchBar from "../components/other/SearchBar";
 import CustomPagination from "../components/other/CustomPagination";
 import {useContext, useEffect} from "react";
-import {Button, Tab, Tabs} from "@mui/material";
+import {Button, Container, Tab, Tabs} from "@mui/material";
 import TabPanel from "../components/tabs/TabPanel";
 import OrderItemsTab from "../components/tabs/OrderItemsTab";
 import Context from "../store/context";
@@ -56,38 +56,39 @@ export default function HomePage({tab}) {
     return (
         <Box sx={{flexGrow: 1}}>
             <HomePageMenu/>
+            <Container>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
+                          aria-label="basic tabs example">
+                        <Tab label="Orders" {...a11yProps(0)} onClick={() => navigation("/orders")}/>
+                        <Tab label="Books" {...a11yProps(1)} onClick={() => navigation("/books")}/>
+                        <Tab label="Clients" {...a11yProps(2)} onClick={() => navigation("/clients")}/>
+                        <Tab label="Reviews" {...a11yProps(3)} onClick={() => navigation("/reviews")}/>
+                    </Tabs>
+                </Box>
 
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
-                      aria-label="basic tabs example">
-                    <Tab label="Orders" {...a11yProps(0)} onClick={()=>navigation("/orders")}/>
-                    <Tab label="Books" {...a11yProps(1)} onClick={()=>navigation("/books")}/>
-                    <Tab label="Clients" {...a11yProps(2)} onClick={()=>navigation("/clients")}/>
-                    <Tab label="Reviews" {...a11yProps(3)} onClick={()=>navigation("/reviews")}/>
-                </Tabs>
-            </Box>
+                <OrderItemsTab value={value}/>
 
-            <OrderItemsTab value={value}/>
+                <TabPanel value={value} index={1}>
+                    <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
 
-            <TabPanel value={value} index={1}>
-                <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
+                    <Stack spacing={2} sx={{
+                        marginBottom: 2
+                    }}>
+                        <Button onClick={handleAddBook}
+                                sx={{backgroundColor:"#000", color: "white", alignSelf: "center", margin: 2, display: "grid", width: "50%"}}>
+                            Create Book
+                        </Button>
+                    </Stack>
 
-                <Stack spacing={2} sx={{
-                    marginBottom: 2
-                }}>
-                    <Button onClick={handleAddBook}
-                            sx={{alignSelf: "center", margin: 2, display: "grid", width: "50%"}}>
-                        Create Book
-                    </Button>
-                </Stack>
+                    <BookList cards={books}/>
+                    <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
+                </TabPanel>
 
-                <BookList cards={books}/>
-                <CustomPagination page={page} maxPage={booksPagesCount} handleChange={handleChangePage}/>
-            </TabPanel>
+                <ClientsTab value={value}/>
 
-            <ClientsTab value={value}/>
-
-            <UserReviewsTab value={value}/>
+                <UserReviewsTab value={value}/>
+            </Container>
         </Box>
     );
 }

@@ -4,11 +4,11 @@ import {TableCell, TableRow} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import PropTypes from "prop-types";
 import OrderItemsTableRow from "./OrderItemsTableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import ChangeOrderStatusDialog from "../dialogs/ChangeOrderStatusDialog";
 import Context from "../../store/context";
+import {config} from "../../config";
 
 
 export default function OrderTableRow(props) {
@@ -30,6 +30,10 @@ export default function OrderTableRow(props) {
         ctx.checkTokenExpiration()
     });
 
+    const TableRowStyle = {
+        backgroundColor: "white"
+    }
+
     return (
         <React.Fragment>
 
@@ -39,7 +43,7 @@ export default function OrderTableRow(props) {
                 setOpen={setOpenStatus}
                 setStatus={setStatus}/>
 
-            <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
+            <TableRow sx={TableRowStyle}>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -48,48 +52,21 @@ export default function OrderTableRow(props) {
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.orderId}
-                </TableCell>
-                <TableCell align="right">
+                <TableCell align={"center"}>{row.orderId}</TableCell>
+                <TableCell align="center">
                     {status?.description}
                     <IconButton
                         size="small">
                         <EditIcon onClick={handleStatusChange}/>
                     </IconButton>
                 </TableCell>
-                <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
-                <TableCell align="right">{row.totalPrice}</TableCell>
-                <TableCell align="left">{row.description}</TableCell>
+                <TableCell align="center">{new Date(row.orderDate).toDateString()}</TableCell>
+                <TableCell align="center">{row.totalPrice.toFixed(2)}{config.currency}</TableCell>
+                <TableCell align="center">{row.description}</TableCell>
             </TableRow>
 
-            <OrderItemsTableRow open={open} row={row}/>
+            <OrderItemsTableRow open={open} row={row} order={row.orderId}/>
 
         </React.Fragment>
     );
-}
-
-OrderTableRow.propTypes = {
-    row: PropTypes.shape({
-        orderId: PropTypes.number.isRequired,
-        orderStatus: PropTypes.arrayOf(
-            PropTypes.shape({
-                description: PropTypes.string.isRequired,
-            }),
-        ).isRequired,
-        orderDate: PropTypes.string.isRequired,
-        totalPrice: PropTypes.number.isRequired,
-        orderItems: PropTypes.arrayOf(
-            PropTypes.shape({
-                itemId: PropTypes.number.isRequired,
-                bookHeader: PropTypes.arrayOf(
-                    PropTypes.shape({
-                        bookTitle: PropTypes.string.isRequired,
-                    }),
-                ).isRequired,
-                quantity: PropTypes.number.isRequired,
-                price: PropTypes.number.isRequired,
-            }),
-        ).isRequired
-    }).isRequired
 }

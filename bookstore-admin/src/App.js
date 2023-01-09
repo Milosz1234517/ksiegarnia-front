@@ -1,4 +1,4 @@
-import {Alert, Backdrop, CircularProgress, createTheme, Snackbar, ThemeProvider} from "@mui/material";
+import {Alert, Backdrop, CircularProgress, createTheme, Paper, Snackbar, ThemeProvider} from "@mui/material";
 import {Navigate, Route, Routes} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
@@ -13,10 +13,35 @@ import HomePageOrders from "./pages/HomePageOrders";
 import HomePageBooks from "./pages/HomePageBooks";
 import HomePageClients from "./pages/HomePageClients";
 import HomePageReviews from "./pages/HomePageReviews";
+import {styled} from "@mui/material/styles";
+import {GlobalStyles} from "@mui/system";
 
 export const theme = createTheme();
 
-theme.palette.primary.main = "#000";
+theme.palette.primary.main = "#43a047";
+
+export const PaperWithShadow = styled(Paper)(() => ({
+    transition: "0.3s",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
+}));
+
+export const BlackButton = {
+    backgroundColor:"#000",
+    color:"white"
+}
+
+export const TableRowStyle = {
+    '&:last-child td, &:last-child th': {border: 0}
+}
+
+export const ContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    marginTop: 10
+}
 
 const Loading = (props) => {
     return (
@@ -39,6 +64,11 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#c8e6c9" },
+                }}
+            />
             <Snackbar open={ctx.error.isError} autoHideDuration={6000}>
                 <Alert severity="error" sx={{ width: "100%" }}>
                     {ctx.error.message}

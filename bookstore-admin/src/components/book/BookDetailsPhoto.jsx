@@ -1,32 +1,26 @@
-import {ButtonBase} from "@mui/material";
-import Grid from "@mui/material/Grid";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
+import {Box} from "@mui/system";
 
-const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-    alignSelf: "center",
-});
+export default function BookDetailsPhoto({icon}) {
 
-export default function BookDetailsPhoto({icon, size}){
-    return(
-        <Grid item>
-            <ButtonBase
-                sx={{
-                    display: "inline-block",
-                    scale: "90%",
-                    width: size[0],
-                    height: size[1],
-                    maxWidth: 700,
-                    maxHeight: 700,
-                    overflow: "auto",
-                }}>
-                <Img alt="complex"
-                     src={icon}/>
-            </ButtonBase>
-        </Grid>
+    const Img = styled('img')({
+        maxWidth: '100%',
+        maxHeight: '100%',
+    });
+
+    const BoxStyle = {
+        scale: "90%",
+        maxWidth: 700,
+        maxHeight: 1200,
+        overflow: "auto"
+    }
+
+    return (
+        <Box
+            sx={BoxStyle}>
+            <Img alt="complex"
+                 src={icon}/>
+        </Box>
     );
 }

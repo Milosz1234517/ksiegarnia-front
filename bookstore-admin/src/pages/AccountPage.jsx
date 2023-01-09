@@ -1,12 +1,14 @@
-import HomePageMenu from "../components/other/HomePageMenu";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
-import {Box} from "@mui/system";
-import {Button} from "@mui/material";
+import {Button, Container, Table, TableBody, TableContainer} from "@mui/material";
 import ChangeDetailsDialog from "../components/dialogs/ChangeDetailsDialog";
 import ChangePasswordDialog from "../components/dialogs/ChangePasswordDialog";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
+import AccountDetailsTableRow from "../components/other/AccountDetailsTableRow";
+import {PaperWithShadow} from "../App";
+import {Box} from "@mui/system";
+import HomePageMenu from "../components/other/HomePageMenu";
+import PageTitle from "../components/other/PageTitle";
 
 
 export default function AccountPage() {
@@ -62,40 +64,35 @@ export default function AccountPage() {
         ctx.checkTokenExpiration()
     });
 
+    const ButtonStyle = {
+        marginTop: 3,
+        marginRight: 3,
+        color: "white",
+        backgroundColor: "#000"
+    }
+
     return (
-        <div>
+        <Box>
             <HomePageMenu/>
-            <Typography variant="h2"
-                        component="a"
-                        sx={{
-                            margin: 4,
-                        }}>
-                Account
-            </Typography>
+            <Container>
+                <PageTitle title="Account" center={false}/>
+                <TableContainer component={PaperWithShadow}>
+                    <Table aria-label="simple table">
+                        <TableBody>
+                            <AccountDetailsTableRow text={"Username: "} value={user.login}/>
+                            <AccountDetailsTableRow text={"Name: "} value={user.name}/>
+                            <AccountDetailsTableRow text={"Surname: "} value={user.surname}/>
+                            <AccountDetailsTableRow text={"Phone: "} value={user.phoneNumber}/>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-            <Box sx={{width: '100%'}}>
 
-                <Typography sx={{margin: 3}} Typography variant="h5">
-                    Username: {user.login}
-                </Typography>
-
-                <Typography sx={{margin: 3}} Typography variant="h5">
-                    Name: {user.name}
-                </Typography>
-
-                <Typography sx={{margin: 3}} Typography variant="h5">
-                    Surname: {user.surname}
-                </Typography>
-
-                <Typography sx={{margin: 3}} Typography variant="h5">
-                    Phone: {user.phoneNumber}
-                </Typography>
-
-                <Button variant="outlined" sx={{margin: 3}} onClick={handleClickOpen}>
+                <Button variant="outlined" sx={ButtonStyle} onClick={handleClickOpen}>
                     Modify Profile Data
                 </Button>
 
-                <Button variant="outlined" sx={{margin: 3}} onClick={handleClickOpenPass}>
+                <Button variant="outlined" sx={ButtonStyle} onClick={handleClickOpenPass}>
                     Change Password
                 </Button>
 
@@ -103,12 +100,11 @@ export default function AccountPage() {
                     open={open} user={user}
                     userChange={userChange}
                     setOpen={setOpen}
-                    setUser={setUser}
                     setUserChange={setUserChange}/>
 
                 <ChangePasswordDialog openPass={openPass} setOpenPass={setOpenPass}/>
 
-            </Box>
-        </div>
+            </Container>
+        </Box>
     );
 }

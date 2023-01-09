@@ -3,7 +3,7 @@ export const config = {
     logo: "https://i.imgur.com/XaC69PJ.png",
     city: "Wroclaw 24a",
     street: "Street",
-    phone: "+48 123 456 789",
+    phone: "123456789",
     email: "bookstore@book.pl",
     currency: "zł",
 

@@ -1,5 +1,5 @@
 import {
-    Button,
+    Button, Container,
     Tab,
     Table,
     TableBody,
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import HomePageMenu from "../components/other/HomePageMenu";
-import {Box} from "@mui/system";
+import {Box, GlobalStyles} from "@mui/system";
 import {useCallback, useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Grid from "@mui/material/Grid";
@@ -20,7 +20,6 @@ import BookDescriptionTab from "../components/tabs/BookDescriptionTab";
 import BookMoreDetailsTab from "../components/tabs/BookMoreDetailsTab";
 import BookReviewsTab from "../components/tabs/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
-import {useWindowResize} from "../components/other/WindowResizer";
 import ChangeBookDetailsDialog from "../components/dialogs/ChangeBookDetailsDialog";
 import AddAuthorDialog from "../components/dialogs/AddAuthorDialog";
 import IconButton from "@mui/material/IconButton";
@@ -48,7 +47,6 @@ export default function BookDetails() {
     const [open, setOpen] = React.useState(false);
     const [openAuthor, setOpenAuthor] = useState(false)
     const [openCategories, setOpenCategories] = useState(false)
-    const [size] = useWindowResize();
 
     const getBooksSearch = useCallback(() => {
         const xHttp = new XMLHttpRequest();
@@ -139,7 +137,7 @@ export default function BookDetails() {
         ctx.changeBookDetails(book).then(function (response) {
             if (response.ok) {
                 setAuthors(book.bookAuthors)
-            }else{
+            } else {
                 setBook(deepClone)
             }
         })
@@ -165,143 +163,161 @@ export default function BookDetails() {
         ctx.checkTokenExpiration()
     });
 
+    const MainBoxStyle = {
+        flexGrow: 1,
+    }
+
+    const BoxStyle = {
+        display: "grid",
+        marginTop: 15
+    }
+
+    const TypographyStyle = {
+        margin: 2,
+        marginTop: 4
+    }
+
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={MainBoxStyle}>
             <HomePageMenu/>
 
-            <div>
+            <ChangeBookDetailsDialog
+                book={book}
+                bookCopy={bookCopy}
+                publishingHouseCopy={publishingHouseCopy}
+                open={open}
+                onConfirm={handleConfirm}
+                setBook={setBook}
+                setOpen={setOpen}/>
 
-                <ChangeBookDetailsDialog
-                    book={book}
-                    bookCopy={bookCopy}
-                    publishingHouseCopy={publishingHouseCopy}
-                    open={open}
-                    onConfirm={handleConfirm}
-                    setBook={setBook}
-                    setOpen={setOpen}/>
+            <AddAuthorDialog
+                bookChange={book}
+                open={openAuthor}
+                setOpen={setOpenAuthor}
+                setAuthors={setAuthors}
+                handeChange={ctx.changeBookDetails}/>
 
-                <AddAuthorDialog
-                    bookChange={book}
-                    open={openAuthor}
-                    setOpen={setOpenAuthor}
-                    setAuthors={setAuthors}
-                    handeChange={ctx.changeBookDetails}/>
+            <AddCategoryDialog
+                bookChange={book}
+                open={openCategories}
+                setOpen={setOpenCategories}
+                setCategories={setCategories}
+                handeChange={ctx.changeBookDetails}/>
 
-                <AddCategoryDialog
-                    bookChange={book}
-                    open={openCategories}
-                    setOpen={setOpenCategories}
-                    setCategories={setCategories}
-                    handeChange={ctx.changeBookDetails}/>
+            <GlobalStyles
+                styles={{
+                    body: {backgroundColor: "#e8f5e9"},
+                }}
+            />
 
-                <Box sx={{display: "grid"}}>
+            <Container>
 
-                    <Grid container spacing={2} alignItems={"center"}>
+            <Box sx={BoxStyle}>
 
-                        <BookDetailsPhoto size={size} icon={book.icon}/>
+                <Grid container sx={{alignItems: "center", justifyContent: "space-around"}} spacing={2}>
 
-                        <Grid item xs sm container>
-                            <Grid item xs container direction="column" spacing={2}>
-                                <Grid item xs>
+                    <BookDetailsPhoto icon={book.icon}/>
 
-                                    <Typography sx={{margin: 2, marginTop: 4}} variant="h2">
-                                        {book.bookTitle}
-                                    </Typography>
+                    <Grid item>
 
-                                    <Typography sx={{margin: 2}} variant="h5">
-                                        Authors:
-                                        <TableContainer>
-                                            <Table aria-label="simple table">
-                                                <TableBody>
-                                                    {authors?.map((author) => (
-                                                        <TableRow
-                                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                        <Typography sx={TypographyStyle} variant="h2">
+                            {book.bookTitle}
+                        </Typography>
 
-                                                            <TableCell align="left">
-                                                                <Typography Typography variant="body2"
-                                                                            color="text.secondary"
-                                                                            align={"left"}>
-                                                                    {author.name} {author.surname}
-                                                                </Typography>
-                                                            </TableCell>
+                        <Typography sx={{margin: 2}} variant="h5">
+                            Authors:
+                            <TableContainer>
+                                <Table aria-label="simple table">
+                                    <TableBody>
+                                        {authors?.map((author) => (
+                                            <TableRow
+                                                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
 
-                                                            <TableCell align="left">
-                                                                <IconButton onClick={() => handleDelete(author)}>
-                                                                    <DeleteIcon/>
-                                                                </IconButton>
-                                                            </TableCell>
+                                                <TableCell align="left">
+                                                    <Typography Typography variant="body2"
+                                                                color="text.secondary"
+                                                                align={"left"}>
+                                                        {author.name} {author.surname}
+                                                    </Typography>
+                                                </TableCell>
 
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </Typography>
+                                                <TableCell align="left">
+                                                    <IconButton onClick={() => handleDelete(author)}>
+                                                        <DeleteIcon/>
+                                                    </IconButton>
+                                                </TableCell>
 
-                                    <Typography sx={{margin: 2}} variant="h5">
-                                        Categories:
-                                        <TableContainer>
-                                            <Table aria-label="simple table">
-                                                <TableBody>
-                                                    {categories?.map((cat) => (
-                                                        <TableRow
-                                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Typography>
 
-                                                            <TableCell align="left">
-                                                                <Typography Typography variant="body2"
-                                                                            color="text.secondary"
-                                                                            align={"left"}>
-                                                                    {cat.description}
-                                                                </Typography>
-                                                            </TableCell>
+                        <Typography sx={{margin: 2}} variant="h5">
+                            Categories:
+                            <TableContainer>
+                                <Table aria-label="simple table">
+                                    <TableBody>
+                                        {categories?.map((cat) => (
+                                            <TableRow
+                                                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
 
-                                                            <TableCell align="left">
-                                                                <IconButton onClick={() => handleDeleteCat(cat)}>
-                                                                    <DeleteIcon/>
-                                                                </IconButton>
-                                                            </TableCell>
+                                                <TableCell align="left">
+                                                    <Typography Typography variant="body2"
+                                                                color="text.secondary"
+                                                                align={"left"}>
+                                                        {cat.description}
+                                                    </Typography>
+                                                </TableCell>
 
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </Typography>
+                                                <TableCell align="left">
+                                                    <IconButton onClick={() => handleDeleteCat(cat)}>
+                                                        <DeleteIcon/>
+                                                    </IconButton>
+                                                </TableCell>
 
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Typography>
 
                     </Grid>
-                </Box>
-                <Box sx={{display: "grid"}}>
-                    <Button sx={{margin: 2}} size="medium" variant="outlined"
-                            onClick={handleEdit}>Edit</Button>
+                </Grid>
 
-                    <Button sx={{margin: 2}} size="medium" variant="outlined"
-                            onClick={handleAddAuthor}>Add Author</Button>
+            </Box>
 
-                    <Button sx={{margin: 2}} size="medium" variant="outlined"
-                            onClick={handleAddCat}>Add Category</Button>
-                </Box>
+            <Box sx={{display: "grid"}}>
+                <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                        onClick={handleEdit}>Edit</Button>
+
+                <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                        onClick={handleAddAuthor}>Add Author</Button>
+
+                <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                        onClick={handleAddCat}>Add Category</Button>
+            </Box>
 
 
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                    <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
-                          aria-label="basic tabs example">
-                        <Tab label="Description" {...a11yProps(0)} />
-                        <Tab label="Details" {...a11yProps(1)} />
-                        <Tab label="Marks" {...a11yProps(2)} />
-                    </Tabs>
-                </Box>
+            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
+                      aria-label="basic tabs example">
+                    <Tab label="Description" {...a11yProps(0)} />
+                    <Tab label="Details" {...a11yProps(1)} />
+                    <Tab label="Marks" {...a11yProps(2)} />
+                </Tabs>
+            </Box>
 
-                <BookDescriptionTab value={value} book={book}/>
+            <BookDescriptionTab value={value} book={book}/>
 
-                <BookMoreDetailsTab value={value} book={book}/>
+            <BookMoreDetailsTab value={value} book={book}/>
 
-                <BookReviewsTab value={value} book={book}/>
+            <BookReviewsTab value={value} book={book}/>
 
-            </div>
+            </Container>
+
         </Box>
     );
 

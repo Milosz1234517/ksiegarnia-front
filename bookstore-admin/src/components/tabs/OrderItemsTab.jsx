@@ -6,6 +6,7 @@ import CustomPagination from "../other/CustomPagination";
 import {useEffect} from "react";
 import OrderSearchBar from "../other/OrderSearchBar";
 import {useSearchParams} from "react-router-dom";
+import {PaperWithShadow, TableRowStyle} from "../../App";
 
 
 export default function OrderItemsTab({value}){
@@ -30,21 +31,21 @@ export default function OrderItemsTab({value}){
 
             <OrderSearchBar page={page} setOrders={setOrders} setCount={setCount} />
 
-            <TableContainer component={Paper}>
+            <TableContainer component={PaperWithShadow}>
                 <Table aria-label="collapsible table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow sx={TableRowStyle}>
                             <TableCell/>
-                            <TableCell>Order Number</TableCell>
-                            <TableCell align="right">Status</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">Total Price(zł)</TableCell>
-                            <TableCell align="left">Description</TableCell>
+                            <TableCell align={"center"}>Order Number</TableCell>
+                            <TableCell align="center">Status</TableCell>
+                            <TableCell align="center">Date</TableCell>
+                            <TableCell align="center">Total Price</TableCell>
+                            <TableCell align="center">Description</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {orders.map((row) => (
-                            <OrderTableRow key={row.name} row={row}/>
+                            <OrderTableRow key={row.orderId} row={row}/>
                         ))}
                     </TableBody>
                 </Table>

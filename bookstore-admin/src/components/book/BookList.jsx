@@ -1,83 +1,106 @@
 import Grid from "@mui/material/Grid";
-import {ButtonBase, Card, Typography} from "@mui/material";
 import * as React from "react";
 import {styled} from "@mui/material/styles";
-import {useContext, useEffect} from "react";
-import Context from "../../store/context";
 import {Box} from "@mui/system";
+import {useNavigate} from "react-router-dom";
+import {config} from "../../config";
 import {useWindowResize} from "../other/WindowResizer";
-
-const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-});
-
-const StyledMainGrid = styled(Grid)(() => ({
-    display: "grid",
-    margin: "auto",
-    spacing: [1],
-}));
-
-const StyledMainBox = styled(Box)(() => ({
-    margin: "auto",
-    marginBottom: 20,
-    marginTop: 20,
-    display: "grid",
-    width: "80%",
-}));
-
-const StyledTitleWrap = styled(Typography)(() => ({
-    color: 'inherit',
-    textDecoration: 'none',
-    marginLeft: 10,
-}));
-
-const StyledTitle = styled(Typography)(() => ({
-    color: 'inherit',
-    textDecoration: 'none',
-    display: "block",
-    maxWidth: window.innerWidth * 0.4,
-    textOverflow: "ellipsis",
-    overflow: "hidden"
-}));
-
-const StyledAuthor = styled(Typography)(() => ({
-    marginLeft: 10,
-    display: "block",
-    maxWidth: window.innerWidth * 0.4,
-    textOverflow: "ellipsis",
-    overflow: "hidden"
-}));
-
-const StyledAvailable = styled(Typography)(() => ({
-    marginLeft: 10,
-    marginBottom: 50,
-    display: "block",
-    maxWidth: window.innerWidth * 0.4,
-    textOverflow: "ellipsis",
-    overflow: "hidden"
-}));
-
-const StyledPrice = styled(Typography)(() => ({
-    marginLeft: 10,
-    marginTop: 20,
-    display: "block",
-    maxWidth: window.innerWidth * 0.4,
-    textOverflow: "ellipsis",
-    overflow: "hidden"
-}));
-
+import {ButtonBase, Card, Typography} from "@mui/material";
 export default function BookList({cards}) {
 
-    const ctx = useContext(Context)
-
     const size = useWindowResize()
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        ctx.checkTokenExpiration()
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
     });
+
+    const StyledMainGrid = styled(Grid)(() => ({
+        display: "grid",
+        margin: "auto",
+        spacing: [1],
+    }));
+
+    const StyledMainBox = styled(Box)(() => ({
+        margin: "auto",
+        marginBottom: 20,
+        marginTop: 20,
+        display: "grid",
+        width: "100%",
+    }));
+
+    const StyledTitle = styled(Typography)(() => ({
+        color: 'inherit',
+        marginLeft: 10,
+        justifyContent: "left",
+        textDecoration: 'none',
+        display: "block",
+        maxWidth: window.innerWidth * 0.4,
+        textOverflow: "ellipsis",
+        overflow: "hidden"
+    }));
+
+    const StyledAuthor = styled(Typography)(() => ({
+        marginLeft: 10,
+        display: "block",
+        maxWidth: window.innerWidth * 0.4,
+        textOverflow: "ellipsis",
+        overflow: "hidden"
+    }));
+
+    const StyledAvailable = styled(Typography)(() => ({
+        marginLeft: 10,
+        marginBottom: 50,
+        display: "block",
+        maxWidth: window.innerWidth * 0.4,
+        textOverflow: "ellipsis",
+        overflow: "hidden"
+    }));
+
+    const StyledPrice = styled(Typography)(() => ({
+        marginLeft: 10,
+        marginTop: 20,
+        display: "block",
+        maxWidth: window.innerWidth * 0.4,
+        textOverflow: "ellipsis",
+        overflow: "hidden"
+    }));
+
+    const CardStyle = {
+        flexGrow: 1, p: 4, display: "grid",
+        transition: "0.3s",
+        backgroundColor: "#e8f5e9",
+        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        "&:hover": {
+            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+        }
+    }
+
+    const ButtonBaseStyle = {
+        height: size[1] * 0.4,
+        width: size[0] * 0.4,
+        maxWidth: 500,
+        maxHeight: 500
+    }
+
+    const GridStyle = {
+        margin: 1,
+        flexDirection: "column",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "flex-start"
+    }
+
+    const GridStyleSketch = {
+        margin: 1,
+        flexDirection: "column",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "sketch"
+    }
 
     return (
         <StyledMainGrid container>
@@ -86,71 +109,56 @@ export default function BookList({cards}) {
                 const {bookAuthors, bookHeaderId, icon, bookTitle, price, quantity} = cards;
 
                 return (
-                    <StyledMainBox>
+                    <StyledMainBox key={bookHeaderId}>
 
-                        <Card key={bookHeaderId} sx={{
-                            flexGrow: 1, p:4, display: "grid",
-                            transition: "0.3s",
-                            boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-                            "&:hover": {
-                                boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"}
-                        }}>
+                        <Card sx={CardStyle}>
 
-                            <Box sx={{display: "grid"}}>
+                            <Grid container spacing={2}>
 
-                                <Grid container spacing={2}>
+                                <Grid item xs sx={GridStyle} container spacing={2}>
 
-                                    <Grid item>
-                                        <ButtonBase sx={{height: size[1] * 0.4, width: size[0] * 0.4}} >
-                                            <Img alt="complex"
-                                                 src={icon}/>
-                                        </ButtonBase>
-                                    </Grid>
-
-                                    <Grid item xs sm container>
-                                        <Grid item xs container direction="column" spacing={2}>
-                                            <Grid item xs>
-                                                <StyledTitleWrap>
-                                                    <StyledTitle
-                                                        gutterBottom
-                                                        variant="h4"
-                                                        component={"a"}
-                                                        href={`/product/${bookHeaderId}`}>
-                                                        {bookTitle}
-                                                    </StyledTitle>
-                                                </StyledTitleWrap>
-
-                                                <Typography variant="body2" gutterBottom>
-                                                    {bookAuthors.map((author) => {
-                                                        return (
-                                                            <StyledAuthor variant="body1"
-                                                                          color="text.secondary"
-                                                                          align={"left"}>
-                                                                {author.name} {author.surname}
-                                                            </StyledAuthor>
-                                                        )
-                                                    })}
-                                                </Typography>
-
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-
+                                    <ButtonBase onClick={() => {
+                                        navigate(`/product/${bookHeaderId}`)
+                                    }}
+                                                sx={ButtonBaseStyle}>
+                                        <Img alt="complex"
+                                             src={icon}/>
+                                    </ButtonBase>
                                 </Grid>
 
+                                <Grid item xs sx={GridStyleSketch} container spacing={2}>
+                                    <StyledTitle
+                                        gutterBottom
+                                        variant="h4"
+                                        component={"a"}>
+                                        {bookTitle}
+                                    </StyledTitle>
 
-                                <Grid item xs>
+                                    <Typography component={'span'} variant="body1" gutterBottom>
+                                        {bookAuthors.map((author) => {
+                                            return (
+                                                <StyledAuthor key={"author" + author.authorId} variant="h6"
+                                                              color="text.secondary"
+                                                              align={"left"}>
+                                                    {author.name} {author.surname}
+                                                </StyledAuthor>
+                                            )
+                                        })}
+                                    </Typography>
 
-                                    <StyledPrice align={"left"} variant="h6" component="div">
-                                        Price: {price}
+                                    <StyledPrice align={"left"} variant="h6" component="span">
+                                        Price: {price.toFixed(2)}{config.currency}
                                     </StyledPrice>
 
-                                    <StyledAvailable align={"left"} variant="body1" color="text.secondary">
+                                    <StyledAvailable component={'span'} align={"left"} variant="body1"
+                                                     color="text.secondary">
                                         Available: {quantity}
                                     </StyledAvailable>
 
                                 </Grid>
-                            </Box>
+
+                            </Grid>
+
                         </Card>
                     </StyledMainBox>
                 );
