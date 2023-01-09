@@ -77,6 +77,7 @@ export default function BasketPage() {
 
     const BoxStyle = {
         display: "grid",
+        marginTop: 5,
         justifyContent: "center"
     }
 
