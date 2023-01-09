@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import {config} from "../config";
 import {Container} from "@mui/material";
+import {GlobalStyles} from "@mui/joy";
 
 
 export default function BasketPage() {
@@ -87,6 +88,11 @@ export default function BasketPage() {
 
     return (
         <Box>
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#c8e6c9" },
+                }}
+            />
             <HomePageMenu/>
             <Container>
                 <PageTitle title={"Shopping Cart"} center={false}/>

@@ -50,7 +50,6 @@ export default function HomePageMenu() {
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
-        alignSelf: "center",
     });
 
     const StyledButton = styled(Button)(() => ({

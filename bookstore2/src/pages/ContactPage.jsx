@@ -5,12 +5,18 @@ import {config} from "../config";
 import {Box} from "@mui/system";
 import HomePageMenu from "../components/HomePageMenu";
 import PageTitle from "../components/PageTitle";
+import {GlobalStyles} from "@mui/joy";
 
 
 export default function ContactPage() {
 
     return (
         <Box>
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#c8e6c9" },
+                }}
+            />
             <HomePageMenu/>
             <Container>
                 <PageTitle title={"Contact"} center={false}/>

@@ -8,6 +8,7 @@ import {Box} from "@mui/system";
 import {useWindowResize} from "../WindowResizer";
 import {BlackButton} from "../../App";
 import {useNavigate} from "react-router-dom";
+import {config} from "../../config";
 
 export default function BookList({cards}) {
 
@@ -39,7 +40,7 @@ export default function BookList({cards}) {
     const StyledTitle = styled(Typography)(() => ({
         color: 'inherit',
         marginLeft: 10,
-        justifyContent:"left",
+        justifyContent: "left",
         textDecoration: 'none',
         display: "block",
         maxWidth: window.innerWidth * 0.4,
@@ -83,15 +84,27 @@ export default function BookList({cards}) {
         }
     }
 
-    const CardBoxStyle = {
-        display: "grid"
-    }
-
     const ButtonBaseStyle = {
         height: size[1] * 0.4,
         width: size[0] * 0.4,
-        maxWidth: 800,
-        maxHeight: 600,
+        maxWidth: 500,
+        maxHeight: 500
+    }
+
+    const GridStyle = {
+        margin: 1,
+        flexDirection: "column",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "flex-start"
+    }
+
+    const GridStyleSketch = {
+        margin: 1,
+        flexDirection: "column",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "sketch"
     }
 
     return (
@@ -114,52 +127,41 @@ export default function BookList({cards}) {
 
                         <Card sx={CardStyle}>
 
-                            <Box sx={CardBoxStyle}>
+                            <Grid container spacing={2}>
 
-                                <Grid container spacing={2}>
+                                <Grid item xs sx={GridStyle} container spacing={2}>
 
-                                    <Grid item>
-                                        <ButtonBase onClick={() => {
-                                            navigate(`/product/${bookHeaderId}`)
-                                        }}
-                                                    sx={ButtonBaseStyle}>
-                                            <Img alt="complex"
-                                                 src={icon}/>
-                                        </ButtonBase>
-                                    </Grid>
-
-                                    <Grid item xs sm container>
-                                        <Grid item xs sx={{flexDirection: "row-reverse", alignContent: "center"}} container spacing={2}>
-                                            <Grid item xs>
-                                                <Box>
-                                                    <StyledTitle
-                                                        gutterBottom
-                                                        variant="h4"
-                                                        component={"a"}>
-                                                        {bookTitle}
-                                                    </StyledTitle>
-                                                </Box>
-
-                                                <Typography component={'span'} variant="body1" gutterBottom>
-                                                    {bookAuthors.map((author) => {
-                                                        return (
-                                                            <StyledAuthor key={"author" + author.authorId} variant="h6"
-                                                                          color="text.secondary"
-                                                                          align={"left"}>
-                                                                {author.name} {author.surname}
-                                                            </StyledAuthor>
-                                                        )
-                                                    })}
-                                                </Typography>
-
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
+                                <ButtonBase onClick={() => {
+                                    navigate(`/product/${bookHeaderId}`)
+                                }}
+                                            sx={ButtonBaseStyle}>
+                                    <Img alt="complex"
+                                         src={icon}/>
+                                </ButtonBase>
                                 </Grid>
 
-                                <Grid item xs>
+                                <Grid item xs sx={GridStyleSketch} container spacing={2}>
+                                    <StyledTitle
+                                        gutterBottom
+                                        variant="h4"
+                                        component={"a"}>
+                                        {bookTitle}
+                                    </StyledTitle>
+
+                                    <Typography component={'span'} variant="body1" gutterBottom>
+                                        {bookAuthors.map((author) => {
+                                            return (
+                                                <StyledAuthor key={"author" + author.authorId} variant="h6"
+                                                              color="text.secondary"
+                                                              align={"left"}>
+                                                    {author.name} {author.surname}
+                                                </StyledAuthor>
+                                            )
+                                        })}
+                                    </Typography>
+
                                     <StyledPrice align={"left"} variant="h6" component="span">
-                                        Price: {price}
+                                        Price: {price.toFixed(2)}{config.currency}
                                     </StyledPrice>
 
                                     <StyledAvailable component={'span'} align={"left"} variant="body1"
@@ -170,9 +172,11 @@ export default function BookList({cards}) {
                                     <Button sx={BlackButton} size="medium" variant="outlined" onClick={handleAddToCart}>
                                         Add to Cart
                                     </Button>
+
                                 </Grid>
 
-                            </Box>
+                            </Grid>
+
                         </Card>
                     </StyledMainBox>
                 );

@@ -2,14 +2,12 @@ import {Box} from "@mui/system";
 import {Button, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext, useState} from "react";
-import {useWindowResize} from "../WindowResizer";
 import Context from "../../context/context";
 import {config} from "../../config";
 
 
 export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
 
-    const size = useWindowResize()
     const ctx = useContext(Context)
     const [description, setDescription] = useState('')
 
@@ -64,17 +62,8 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
         setDescription(event.target.value)
     }
 
-    const BoxStyle = {
-        display: "inline-block",
-        width: "80%",
-        maxWidth: size[0],
-    }
-
     const TextFieldStyle = {
-        "& .MuiInputBase-input.Mui-disabled": {
-            WebkitTextFillColor: "#000000",
-        },
-        width: size[0] * 0.8,
+        width: "100%",
         backgroundColor: "white",
         marginTop: 5,
     }
@@ -86,7 +75,7 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
     }
 
     return (
-        <Box sx={BoxStyle} justifyContent={"left"}>
+        <Box>
 
             {!emptyCart && <TextField
                 sx={TextFieldStyle}

@@ -11,8 +11,8 @@ import BookMoreDetailsTab from "../components/book/BookMoreDetailsTab";
 import BookReviewsTab from "../components/book/BookReviewsTab";
 import BookDetailsPhoto from "../components/book/BookDetailsPhoto";
 import BookParameters from "../components/book/BookParameters";
-import {useWindowResize} from "../components/WindowResizer";
 import {config} from "../config";
+import {GlobalStyles} from "@mui/joy";
 
 function a11yProps(index) {
     return {
@@ -27,7 +27,6 @@ export default function BookDetails() {
 
     const [value, setValue] = React.useState(0);
     const [book, setBook] = React.useState([]);
-    const [size] = useWindowResize();
 
     const ctx = useContext(Context);
 
@@ -79,7 +78,6 @@ export default function BookDetails() {
 
     const MainBoxStyle = {
         flexGrow: 1,
-        backgroundColor: "#e8f5e9"
     }
 
     const BoxStyle = {
@@ -102,41 +100,41 @@ export default function BookDetails() {
         borderBottom: 1,
         borderColor: 'divider'
     }
-    const MoreDetailsBoxStyle = {
-        backgroundColor: "white"
-    }
 
     return (
         <Box sx={MainBoxStyle}>
+
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#e8f5e9" },
+                }}
+            />
+
             <HomePageMenu/>
 
             <Container>
 
                 <Box sx={BoxStyle}>
 
-                    <Grid container spacing={2}>
+                    <Grid container sx={{alignItems: "center", justifyContent: "space-around"}} spacing={2}>
 
-                        <BookDetailsPhoto size={size} icon={book.icon}/>
+                        <BookDetailsPhoto icon={book.icon}/>
 
-                        <Grid item xs sm container>
-                            <Grid item xs container direction="column" spacing={2}>
-                                <Grid item xs>
+                        <Grid item>
 
-                                    <Typography sx={TypographyStyle} variant="h2">
-                                        {book.bookTitle}
-                                    </Typography>
+                            <Typography sx={TypographyStyle} variant="h2">
+                                {book.bookTitle}
+                            </Typography>
 
-                                    <BookParameters book={book}/>
+                            <BookParameters book={book}/>
 
-                                    <Button sx={ButtonStyle} size="medium"
-                                            variant="outlined"
-                                            onClick={handleAddToCart}>Add to Cart</Button>
+                            <Button sx={ButtonStyle} size="medium"
+                                    variant="outlined"
+                                    onClick={handleAddToCart}>Add to Cart</Button>
 
-                                </Grid>
-                            </Grid>
                         </Grid>
-
                     </Grid>
+
                 </Box>
 
 
@@ -151,9 +149,7 @@ export default function BookDetails() {
 
                 <BookDescriptionTab value={value} book={book}/>
 
-                <Box sx={MoreDetailsBoxStyle}>
-                    <BookMoreDetailsTab value={value} book={book}/>
-                </Box>
+                <BookMoreDetailsTab value={value} book={book}/>
 
                 <BookReviewsTab value={value} book={book}/>
 

@@ -17,7 +17,6 @@ import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./context/context";
 import AccountPage from "./pages/AccountPage";
-import {GlobalStyles} from "@mui/joy";
 import {styled} from "@mui/material/styles";
 import DescriptionPage from "./pages/DescriptionPage";
 import {config} from "./config";
@@ -69,11 +68,6 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <GlobalStyles
-                styles={{
-                    body: { backgroundColor: "#c8e6c9" },
-                }}
-            />
             <Snackbar open={ctx.error.isError} autoHideDuration={6000}>
                 <Alert severity="error" sx={{ width: "100%" }}>
                     {ctx.error.message}

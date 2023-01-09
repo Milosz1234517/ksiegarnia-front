@@ -1,5 +1,7 @@
 import {Typography} from "@mui/material";
 import * as React from "react";
+import {Box} from "@mui/system";
+import {config} from "../../config";
 
 export default function BookParameters({book}) {
 
@@ -8,7 +10,7 @@ export default function BookParameters({book}) {
     }
 
     return (
-        <div>
+        <Box>
             <Typography sx={TypographyStyle} variant="h5">
                 Authors: {book.bookAuthors?.map((author) => {
                 return (
@@ -43,9 +45,9 @@ export default function BookParameters({book}) {
                 <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
-                    {book.price} zł
+                    {book.price}{config.currency}
                 </Typography>
             </Typography>
-        </div>
+        </Box>
     );
 }

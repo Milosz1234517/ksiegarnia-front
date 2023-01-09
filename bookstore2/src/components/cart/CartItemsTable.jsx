@@ -8,6 +8,8 @@ import {useContext} from "react";
 import Context from "../../context/context";
 import {TableRowStyle} from "../../App";
 import {config} from "../../config";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
 export default function CartItemsTable({cartItems, setCartItems, totalPrice, setTotalPrice}) {
@@ -69,10 +71,6 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
         }))
     }
 
-    const TableStyle = {
-        maxWidth: size[0]
-    }
-
     const TableCellStyle = {
         maxWidth: size[0],
         overflow: "hidden",
@@ -85,22 +83,24 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
 
     return (
         <TableContainer component={Paper}>
-            <Table sx={TableStyle} aria-label="simple table">
+
+            <Table>
+
                 <TableHead>
                     <TableRow>
-                        <TableCell>Book Title</TableCell>
-                        <TableCell>Quantity</TableCell>
-                        <TableCell>Price(zł)</TableCell>
+                        <TableCell>Book Title:</TableCell>
+                        <TableCell>Quantity:</TableCell>
+                        <TableCell>Price:</TableCell>
                     </TableRow>
                 </TableHead>
+
                 <TableBody>
                     {cartItems.map((row) => (
                         <TableRow
                             key={row.itemId}
                             sx={TableRowStyle}>
 
-                            <TableCell align="left"
-                                       sx={TableCellStyle}>
+                            <TableCell align="left" sx={TableCellStyle}>
                                 <Typography
                                     gutterBottom
                                     variant="h6"
@@ -111,6 +111,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
 
                             <TableCell align="left">
                                 <Box sx={BoxStyle}>
+
                                     <IconButton
                                         size="medium"
                                         variant="outlined"
@@ -119,7 +120,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                                             bookHeader: row.bookHeader,
                                             quantity: row.quantity
                                         })}>
-                                        -
+                                        <RemoveCircleIcon/>
                                     </IconButton>
 
                                     <IconButton
@@ -137,7 +138,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                                                 quantity: row.quantity
                                             })
                                         }>
-                                        +
+                                        <AddCircleIcon/>
                                     </IconButton>
                                 </Box>
                             </TableCell>
@@ -147,21 +148,17 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                                     gutterBottom
                                     variant="h6"
                                     component="a">
-                                    {row.price}zł
+                                    {row.price.toFixed(2)}{config.currency}
                                 </Typography>
                             </TableCell>
 
                         </TableRow>
                     ))}
-                    <TableRow
-                        key={-1}
-                        sx={TableRowStyle}>
+                    <TableRow sx={TableRowStyle}>
 
-                        <TableCell align="left">
+                        <TableCell align="left"/>
 
-                        </TableCell>
-
-                        <TableCell align="left">
+                        <TableCell align="center">
                             <Typography
                                 gutterBottom
                                 variant="h5"
@@ -175,7 +172,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                                 gutterBottom
                                 variant="h5"
                                 component="a">
-                                {(totalPrice).toFixed(2)}zł
+                                {(totalPrice).toFixed(2)}{config.currency}
                             </Typography>
                         </TableCell>
 

@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import OrderItemsTableRow from "./OrderItemsTableRow";
+import {config} from "../../config";
 
 
 export default function OrderTableRow(props) {
@@ -30,7 +31,7 @@ export default function OrderTableRow(props) {
                 <TableCell>{row.orderId}</TableCell>
                 <TableCell align="right">{row.orderStatus.description}</TableCell>
                 <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
-                <TableCell align="right">{row.totalPrice.toFixed(2)}</TableCell>
+                <TableCell align="right">{row.totalPrice.toFixed(2)}{config.currency}</TableCell>
             </TableRow>
 
             <OrderItemsTableRow open={open} row={row} order={row.orderId}/>

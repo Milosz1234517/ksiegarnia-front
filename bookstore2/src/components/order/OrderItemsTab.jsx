@@ -97,7 +97,7 @@ export default function OrderItemsTab({value}){
                             <TableCell>Order Number</TableCell>
                             <TableCell align="right">Status</TableCell>
                             <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">Total Price(zł)</TableCell>
+                            <TableCell align="right">Total Price</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

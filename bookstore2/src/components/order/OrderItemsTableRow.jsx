@@ -82,7 +82,7 @@ export default function OrderItemsTableRow({row, open, order}) {
                                 <TableRow>
                                     <TableCell>Book Title</TableCell>
                                     <TableCell>Quantity</TableCell>
-                                    <TableCell align="right">Price(zł)</TableCell>
+                                    <TableCell align="right">Price</TableCell>
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
@@ -93,7 +93,7 @@ export default function OrderItemsTableRow({row, open, order}) {
                                             {item.bookHeader.bookTitle}
                                         </TableCell>
                                         <TableCell>{item.quantity}</TableCell>
-                                        <TableCell align="right">{item.price.toFixed(2)}</TableCell>
+                                        <TableCell align="right">{item.price.toFixed(2)}{config.currency}</TableCell>
                                         <TableCell align="left">
                                             <Button
                                                 onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}>

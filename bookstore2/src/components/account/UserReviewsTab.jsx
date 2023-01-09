@@ -35,7 +35,7 @@ export default function UserReviewsTab({value}) {
                 json = xHttp.response;
 
                 obj = JSON.parse(json);
-                setCountReview(Math.ceil(obj / 2));
+                setCountReview(Math.ceil(obj / 20));
 
             }
             if (this.readyState === 4 && this.status === 400) {
@@ -126,15 +126,11 @@ export default function UserReviewsTab({value}) {
         })
     }
 
-    const TableStyle = {
-        minWidth: 650
-    }
-
     return (
         <TabPanel value={value} index={2}>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
             <TableContainer>
-                <Table sx={TableStyle} aria-label="simple table">
+                <Table aria-label="simple table">
                     <TableBody>
                         {marks.map((row) => (
                             <TableRow
@@ -142,8 +138,12 @@ export default function UserReviewsTab({value}) {
                                 sx={TableRowStyle}
                             >
                                 <TableCell align="left"><ReviewBox review={row} title={true}/></TableCell>
-                                <TableCell align="left"><Button
-                                    onClick={() => handleDeleteReview(row.reviewId)}><DeleteIcon/></Button></TableCell>
+                                <TableCell align="left">
+                                    <Button
+                                        onClick={() => handleDeleteReview(row.reviewId)}>
+                                        <DeleteIcon/>
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

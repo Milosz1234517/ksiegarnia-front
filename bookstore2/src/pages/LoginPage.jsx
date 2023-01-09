@@ -7,9 +7,9 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import {Box, ThemeProvider} from "@mui/system";
+import {Box} from "@mui/system";
 import {useContext} from "react";
-import {ContainerStyle, theme} from "../App";
+import {ContainerStyle} from "../App";
 import Context from "../context/context";
 import * as React from "react";
 import HomePageMenu from "../components/HomePageMenu";
@@ -46,8 +46,9 @@ const Login = () => {
     }
 
     return (
-        <ThemeProvider theme={theme}>
+        <Box sx={{backgroundColor: "white"}}>
             <HomePageMenu/>
+
             <Container
                 component="main"
                 maxWidth="xs"
@@ -102,7 +103,7 @@ const Login = () => {
                     </Button>
                 </Box>
             </Container>
-        </ThemeProvider>
+        </Box>
     );
 };
 

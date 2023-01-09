@@ -9,7 +9,7 @@ export default function CustomPagination({maxPage, page, handleChange}){
     }
 
     const PaginationStyle = {
-        margin: "20px",
+        margin: 3,
         alignSelf: "center"
     }
 

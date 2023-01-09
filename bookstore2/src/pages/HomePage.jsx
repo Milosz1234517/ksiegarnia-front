@@ -26,17 +26,12 @@ export default function HomePage() {
         setPage(parseInt(urlSearchParams.get('page')) || 1)
     }, [setPage, urlSearchParams]);
 
-    const MainBoxStyle = {
-        flexGrow: 5
-    }
-
     const BoxStyle = {
         margin: 1
     }
 
     return (
-        <Box sx={MainBoxStyle}>
-
+        <Box sx={{backgroundColor: "#c8e6c9"}}>
             <HomePageMenu/>
             <Container>
                 <Box sx={BoxStyle}>
@@ -47,5 +42,6 @@ export default function HomePage() {
             </Container>
             <StoreInfoMenu/>
         </Box>
+
     );
 }

@@ -15,7 +15,8 @@ export default function PageTitle({title, center}){
     }
 
     const TypographyStyle = {
-        margin: 4,
+        marginTop: 4,
+        marginBottom: 4,
     }
 
     return(

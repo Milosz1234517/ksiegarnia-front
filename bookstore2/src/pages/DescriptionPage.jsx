@@ -7,6 +7,7 @@ import * as React from "react";
 import HomePageMenu from "../components/HomePageMenu";
 import {useWindowResize} from "../components/WindowResizer";
 import PageTitle from "../components/PageTitle";
+import {GlobalStyles} from "@mui/joy";
 
 export default function DescriptionPage({desc, title}) {
 
@@ -33,6 +34,11 @@ export default function DescriptionPage({desc, title}) {
 
     return (
         <Box>
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#c8e6c9" },
+                }}
+            />
             <HomePageMenu/>
             <Container
                 component="main"

@@ -5,6 +5,7 @@ export const config = {
     street: "Street",
     phone: "123456789",
     email: "bookstore@book.pl",
+    currency: "zł",
 
     aboutUs: `
     About Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis cursus eros, bibendum suscipit ipsum. Sed sit amet malesuada urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et vulputate nisl. Duis eu erat rhoncus, accumsan nibh sit amet, pellentesque massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris tempor aliquam massa, quis dignissim odio interdum et. Nunc est eros, commodo eu nunc interdum, hendrerit iaculis purus. In et justo sed eros hendrerit iaculis. In id vestibulum erat, vel euismod justo. Nulla eros libero, eleifend non urna eu, sagittis blandit augue. Pellentesque vel felis et erat tempus iaculis ut sed lacus. Sed quis justo feugiat felis consequat aliquam.

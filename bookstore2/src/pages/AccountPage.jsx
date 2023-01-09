@@ -6,6 +6,7 @@ import AccountDetailsTab from "../components/account/AccountDetailsTab";
 import OrderItemsTab from "../components/order/OrderItemsTab";
 import UserReviewsTab from "../components/account/UserReviewsTab";
 import PageTitle from "../components/PageTitle";
+import {GlobalStyles} from "@mui/joy";
 
 function a11yProps(index) {
     return {
@@ -30,7 +31,12 @@ export default function AccountPage() {
     }
 
     return (
-        <div>
+        <Box>
+            <GlobalStyles
+                styles={{
+                    body: { backgroundColor: "#c8e6c9" },
+                }}
+            />
             <HomePageMenu/>
             <Container>
                 <PageTitle title="Account" center={false}/>
@@ -52,6 +58,6 @@ export default function AccountPage() {
 
                 </Box>
             </Container>
-        </div>
+        </Box>
     );
 }

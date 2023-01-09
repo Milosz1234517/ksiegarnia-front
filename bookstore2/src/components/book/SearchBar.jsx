@@ -17,6 +17,7 @@ import BookFilters from "./BookFilters";
 import {styled} from "@mui/material/styles";
 import Context from "../../context/context";
 import {config} from "../../config";
+import Grid from "@mui/material/Grid";
 
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
@@ -109,7 +110,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
             );
             xHttp.send();
 
-        }catch (e) {
+        } catch (e) {
             ctx.showErrorAlert("Connection lost");
         }
 
@@ -138,7 +139,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
             category: urlSearchParams.get('category') || ''
         })
 
-        setCategory( urlSearchParams.get('category') || '')
+        setCategory(urlSearchParams.get('category') || '')
         setAvailable(urlSearchParams.get('available') || false)
 
     }, [urlSearchParams]);
@@ -204,22 +205,22 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     const StyledAutocomplete = styled(Autocomplete)(() => ({
         width: "100%",
         display: "flex",
-        backgroundColor:"#e8eaf6",
+        backgroundColor: "#e8f5e9",
         margin: 10,
     }));
 
-    const StyledMainBox = styled(Box)(() => ({
-        display: "grid"
-    }));
+    const StyledGrid = {
+        flexDirection: "row",
+        alignItems: "center",
+        flexWrap: "nowrap"
+    }
 
     const StyledSearchButton = styled(Button)(() => ({
-        display: "inline-block",
-        backgroundColor:"#e8eaf6",
-        color: "#000",
-        margin: 10
+        backgroundColor: "#000",
+        color: "white",
     }));
 
-    const StyledFilterSwitch = styled(FormControlLabel)(() => ({
+    const StyledFormControlSwitch = styled(FormControlLabel)(() => ({
         display: "inline-block",
         margin: 10
     }));
@@ -230,34 +231,33 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         marginTop: 5
     }
 
-    const StyledBox = {
-        display: "flex"
-    }
-
     const StyledFormControl = {
         m: 2,
         minWidth: 150
     }
 
+    const StyledIcon = {
+        margin: 1
+    }
+
     return (
-        <Box sx={{marginTop: 5}}>
-            <StyledMainBox>
+        <Box>
+            <Grid container sx={StyledGrid}>
+                <StyledAutocomplete
+                    freeSolo
+                    onInputChange={(e, v) => {
+                        setBooksAutocomplete([])
+                        setSearchInput(v)
+                    }}
+                    inputValue={searchInput}
+                    options={booksAutocomplete.map((book) => book)}
+                    renderInput={(params) =>
+                        <TextField {...params} label="Search Books"/>}/>
 
-                <Box sx={StyledBox}>
-                    <StyledAutocomplete
-                        freeSolo
-                        onInputChange={(e, v) => {
-                            setBooksAutocomplete([])
-                            setSearchInput(v)
-                        }}
-                        inputValue={searchInput}
-                        options={booksAutocomplete.map((book) => book)}
-                        renderInput={(params) =>
-                            <TextField {...params} label="Search Books"/>}/>
-
-                    <StyledSearchButton onClick={handleSearchBooks}><SearchIcon/></StyledSearchButton>
-                </Box>
-            </StyledMainBox>
+                <StyledSearchButton onClick={handleSearchBooks}>
+                    <SearchIcon sx={StyledIcon}/>
+                </StyledSearchButton>
+            </Grid>
 
             <FormControl variant="filled" sx={StyledFormControl}>
                 <Select
@@ -279,7 +279,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                 </Select>
             </FormControl>
 
-            <StyledFilterSwitch
+            <StyledFormControlSwitch
                 control={
                     <Switch
                         checked={filtersOn}
@@ -290,7 +290,8 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
             <Box>
                 {filtersOn &&
-                    <BookFilters category={category} setCategory={setCategory} filterParams={filterParams} searchParams={searchParams}/>}
+                    <BookFilters category={category} setCategory={setCategory} filterParams={filterParams}
+                                 searchParams={searchParams}/>}
 
                 {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
                     <Typography sx={StyledSearchResultLabel}>
