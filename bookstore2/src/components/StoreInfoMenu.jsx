@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BottomNavigation, BottomNavigationAction, ButtonBase} from "@mui/material";
+import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {Box} from "@mui/system";
 import CopyrightIcon from "@mui/icons-material/Copyright";
