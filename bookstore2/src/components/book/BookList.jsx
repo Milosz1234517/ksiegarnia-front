@@ -89,7 +89,9 @@ export default function BookList({cards}) {
 
     const ButtonBaseStyle = {
         height: size[1] * 0.4,
-        width: size[0] * 0.4
+        width: size[0] * 0.4,
+        maxWidth: 800,
+        maxHeight: 600,
     }
 
     return (
