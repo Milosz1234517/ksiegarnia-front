@@ -18,7 +18,7 @@ export default function StoreInfoMenu() {
     const GridStyle = {
         backgroundColor: "white",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "stretch"
     }
 
     const TypographyStyle = {
