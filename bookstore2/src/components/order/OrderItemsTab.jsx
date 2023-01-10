@@ -94,10 +94,10 @@ export default function OrderItemsTab({value}){
                     <TableHead>
                         <TableRow sx={TableRowStyle}>
                             <TableCell/>
-                            <TableCell>Order Number</TableCell>
-                            <TableCell align="right">Status</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">Total Price</TableCell>
+                            <TableCell align="center">Order Number</TableCell>
+                            <TableCell align="center">Status</TableCell>
+                            <TableCell align="center">Date</TableCell>
+                            <TableCell align="center">Total Price</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

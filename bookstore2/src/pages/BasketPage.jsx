@@ -99,7 +99,7 @@ export default function BasketPage() {
                 <PageTitle title={"Shopping Cart"} center={false}/>
                 <CartItemsTable totalPrice={totalPrice} setTotalPrice={setTotalPrice} cartItems={cartItems}
                                 setCartItems={setCartItems}/>
-                <CartCommentBox emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
+                <CartCommentBox setTotalPrice={setTotalPrice} emptyCart={emptyCart} setCartItems={setCartItems} cartItems={cartItems}/>
 
                 <Box sx={BoxStyle}>
                     {(show && emptyCart) && <Typography

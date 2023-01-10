@@ -4,9 +4,10 @@ import * as React from "react";
 import {useContext, useState} from "react";
 import Context from "../../context/context";
 import {config} from "../../config";
+import Typography from "@mui/material/Typography";
 
 
-export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
+export default function CartCommentBox({emptyCart, cartItems, setCartItems, setTotalPrice}) {
 
     const ctx = useContext(Context)
     const [description, setDescription] = useState('')
@@ -32,6 +33,7 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
                 ctx.showSuccessAlert(respJson.message)
                 setDescription('')
                 setCartItems([])
+                setTotalPrice(0)
             } else {
                 ctx.showErrorAlert(respJson.message);
             }
@@ -85,6 +87,10 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
                 onChange={handleDescriptionChange}
                 placeholder="Order Additional Information's"
             />}
+
+            {!emptyCart && <Typography>
+                {description.length}/30000
+            </Typography>}
 
             {!emptyCart && <Button size="medium" variant="outlined"
                                    onClick={() => handlePlaceOrder()}

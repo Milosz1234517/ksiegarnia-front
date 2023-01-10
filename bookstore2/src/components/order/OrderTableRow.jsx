@@ -28,10 +28,10 @@ export default function OrderTableRow(props) {
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
-                <TableCell>{row.orderId}</TableCell>
-                <TableCell align="right">{row.orderStatus.description}</TableCell>
-                <TableCell align="right">{new Date(row.orderDate).toDateString()}</TableCell>
-                <TableCell align="right">{row.totalPrice.toFixed(2)}{config.currency}</TableCell>
+                <TableCell align="center">{row.orderId}</TableCell>
+                <TableCell align="center">{row.orderStatus.description}</TableCell>
+                <TableCell align="center">{new Date(row.orderDate).toDateString()}</TableCell>
+                <TableCell align="center">{row.totalPrice.toFixed(2)}{config.currency}</TableCell>
             </TableRow>
 
             <OrderItemsTableRow open={open} row={row} order={row.orderId}/>

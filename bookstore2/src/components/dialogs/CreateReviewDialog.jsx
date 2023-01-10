@@ -8,16 +8,16 @@ import {
     TextField
 } from "@mui/material";
 import * as React from "react";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import Context from "../../context/context";
 import {Stack} from "@mui/system";
 import {config} from "../../config";
+import Typography from "@mui/material/Typography";
 
 
-export default function CreateReviewDialog({openReview, bookHeaderId, setBookHeaderId, setOpenReview, order, value, setValue}){
-
+export default function CreateReviewDialog({bookHeaderId, openReview, value, order, description, setValue, setOpenReview, setDescription
+                                           }) {
     const ctx = useContext(Context)
-    const [description, setDescription] = useState('')
 
     const addReview = async (data) => {
         try {
@@ -39,15 +39,9 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
             if (response.ok) {
                 ctx.showSuccessAlert(resp.message)
                 setOpenReview(false);
-                setValue(2)
-                setBookHeaderId('')
-                setDescription('')
-            }else{
+            } else {
                 ctx.showErrorAlert(resp.message);
                 setOpenReview(false);
-                setValue(2)
-                setBookHeaderId('')
-                setDescription('')
             }
 
         } catch (e) {
@@ -57,43 +51,44 @@ export default function CreateReviewDialog({openReview, bookHeaderId, setBookHea
     };
 
     const handleCloseReview = () => {
-
-        setBookHeaderId('')
-        setDescription('')
         setOpenReview(false);
     };
 
     function handleConfirmReview() {
-        addReview({bookHeaderId: bookHeaderId, mark: value, description: description}).then(()=>{})
+        addReview({bookHeaderId: bookHeaderId, mark: value, description: description}).then(() => {
+        })
     }
 
     function handleDescriptionChange(event) {
         setDescription(event.target.value)
     }
 
-    return(
+    return (
         <Dialog open={openReview} onClose={handleCloseReview}>
             <DialogTitle>Review</DialogTitle>
             <DialogContent>
                 <Stack spacing={2} sx={{
                     marginBottom: 2
                 }}>
-                <Rating
-                    name="simple-controlled"
-                    value={value}
-                    max={10}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}/>
+                    <Rating
+                        name="simple-controlled"
+                        value={value}
+                        max={10}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}/>
 
-                <TextField
-                    sx={{}}
-                    multiline
-                    minRows={2}
-                    id="standard-basic"
-                    variant="outlined"
-                    onChange={handleDescriptionChange}
-                    placeholder="Review Text"/>
+                    <TextField
+                        multiline
+                        minRows={2}
+                        id="standard-basic"
+                        variant="outlined"
+                        onChange={handleDescriptionChange}
+                        placeholder="Review Text"/>
+
+                    <Typography>
+                        {description.length}/30000
+                    </Typography>
                 </Stack>
 
             </DialogContent>

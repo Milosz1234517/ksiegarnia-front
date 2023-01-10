@@ -88,9 +88,9 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
 
                 <TableHead>
                     <TableRow>
-                        <TableCell>Book Title:</TableCell>
-                        <TableCell>Quantity:</TableCell>
-                        <TableCell>Price:</TableCell>
+                        <TableCell><Typography>Book Title:</Typography></TableCell>
+                        <TableCell><Typography sx = {{marginLeft: 3}}>Quantity:</Typography></TableCell>
+                        <TableCell><Typography>Price:</Typography></TableCell>
                     </TableRow>
                 </TableHead>
 

@@ -13,6 +13,7 @@ export default function OrderItemsTableRow({row, open, order}) {
 
     const [openReview, setOpenReview] = useState(false);
     const [value, setValue] = React.useState(2);
+    const [description, setDescription] = useState('')
     const [bookHeaderId, setBookHeaderId] = useState('')
     const ctx = useContext(Context)
 
@@ -31,10 +32,11 @@ export default function OrderItemsTableRow({row, open, order}) {
                     setOpenReview(true)
                     setValue(2)
                     setBookHeaderId(data)
-                }else{
+                    setDescription('')
+                } else {
                     ctx.showErrorAlert("Can't create review for this book because it's already has been created or order is not completed yet");
                 }
-            }else{
+            } else {
                 ctx.showErrorAlert("Can't create review for this book");
             }
         } catch (e) {
@@ -43,7 +45,8 @@ export default function OrderItemsTableRow({row, open, order}) {
     };
 
     function handleCreateReview(bookHeaderId) {
-        checkReview(bookHeaderId).then(()=>{})
+        checkReview(bookHeaderId).then(() => {
+        })
     }
 
     const TableCellStyle = {
@@ -57,7 +60,7 @@ export default function OrderItemsTableRow({row, open, order}) {
     }
 
     const TableHeadStyle = {
-        backgroundColor:"#e8f5e9"
+        backgroundColor: "#e8f5e9"
     }
 
     return (
@@ -65,11 +68,12 @@ export default function OrderItemsTableRow({row, open, order}) {
             <CreateReviewDialog
                 bookHeaderId={bookHeaderId}
                 openReview={openReview}
-                setBookHeaderId={setBookHeaderId}
+                value={value}
+                order={order}
+                description={description}
                 setOpenReview={setOpenReview}
                 setValue={setValue}
-                value={value}
-                order={order}/>
+                setDescription={setDescription}/>
 
             <TableCell style={TableCellStyle} colSpan={6}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
@@ -78,23 +82,21 @@ export default function OrderItemsTableRow({row, open, order}) {
                             Order Items
                         </Typography>
                         <Table size="small" aria-label="purchases">
-                            <TableHead sx={{backgroundColor:"#e8f5e9"}}>
+                            <TableHead sx={{backgroundColor: "#e8f5e9"}}>
                                 <TableRow>
-                                    <TableCell>Book Title</TableCell>
-                                    <TableCell>Quantity</TableCell>
-                                    <TableCell align="right">Price</TableCell>
+                                    <TableCell align="left">Book Title:</TableCell>
+                                    <TableCell align="left">Quantity:</TableCell>
+                                    <TableCell align="left">Price:</TableCell>
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
                             <TableBody sx={TableHeadStyle}>
                                 {row.orderItems.map((item) => (
                                     <TableRow key={item.orderId}>
-                                        <TableCell component="th" scope="row">
-                                            {item.bookHeader.bookTitle}
-                                        </TableCell>
-                                        <TableCell>{item.quantity}</TableCell>
-                                        <TableCell align="right">{item.price.toFixed(2)}{config.currency}</TableCell>
-                                        <TableCell align="left">
+                                        <TableCell align="left">{item.bookHeader.bookTitle}</TableCell>
+                                        <TableCell align="left">{item.quantity}</TableCell>
+                                        <TableCell align="left">{item.price.toFixed(2)}{config.currency}</TableCell>
+                                        <TableCell>
                                             <Button
                                                 onClick={() => handleCreateReview(item.bookHeader.bookHeaderId)}>
                                                 <RateReviewIcon/>
