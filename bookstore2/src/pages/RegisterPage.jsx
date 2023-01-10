@@ -16,6 +16,21 @@ import {config} from "../config";
 import Checkbox from '@mui/material/Checkbox';
 import {useNavigate} from "react-router-dom";
 
+const BoxStyle = {
+    display: "flex",
+    alignItems: "right",
+    textAlign: "center",
+}
+
+const AvatarStyle = {
+    m: 1,
+    color: "primary.main"
+}
+
+const ButtonStyle = {
+    mt: 3,
+    mb: 2
+}
 
 const Register = () => {
     const ctx = useContext(Context);
@@ -79,22 +94,6 @@ const Register = () => {
 
     function handleChange() {
         setChange(!change)
-    }
-
-    const BoxStyle = {
-        display: "flex",
-        alignItems: "right",
-        textAlign: "center",
-    }
-
-    const AvatarStyle = {
-        m: 1,
-        color: "primary.main"
-    }
-
-    const ButtonStyle = {
-        mt: 3,
-        mb: 2
     }
 
     return (

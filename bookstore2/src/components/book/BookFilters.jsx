@@ -5,6 +5,21 @@ import {useCallback, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import {config} from "../../config";
 
+const BoxStyle = {
+    display: "inline-block",
+    margin: 1
+}
+
+const TextFieldStyle = {
+    margin: 1,
+    backgroundColor:"#e8eaf6",
+}
+
+const FormControlStyle = {
+    m: 1,
+    minWidth: 150,
+    backgroundColor:"#e8eaf6"
+}
 
 export default function BookFilters({searchParams, filterParams, category, setCategory}){
 
@@ -83,22 +98,6 @@ export default function BookFilters({searchParams, filterParams, category, setCa
     function handleChangeCategory(event) {
         setCategory(event.target.value)
         filterParams.category = event.target.value
-    }
-
-    const BoxStyle = {
-        display: "inline-block",
-        margin: 1
-    }
-
-    const TextFieldStyle = {
-        margin: 1,
-        backgroundColor:"#e8eaf6",
-    }
-
-    const FormControlStyle = {
-        m: 1,
-        minWidth: 150,
-        backgroundColor:"#e8eaf6"
     }
 
     return(

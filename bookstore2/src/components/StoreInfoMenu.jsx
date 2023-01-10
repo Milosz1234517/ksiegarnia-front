@@ -6,25 +6,24 @@ import CopyrightIcon from "@mui/icons-material/Copyright";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
+const MainBoxStyle = {
+    backgroundColor: "gray"
+}
+
+const GridStyle = {
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "stretch"
+}
+
+const TypographyStyle = {
+    marginBottom: 3,
+    marginTop: 5
+}
 
 export default function StoreInfoMenu() {
 
     const navigate = useNavigate()
-
-    const MainBoxStyle = {
-        backgroundColor: "gray"
-    }
-
-    const GridStyle = {
-        backgroundColor: "white",
-        justifyContent: "center",
-        alignItems: "stretch"
-    }
-
-    const TypographyStyle = {
-        marginBottom: 3,
-        marginTop: 5
-    }
 
     return (
         <Box sx={MainBoxStyle} elevation={3}>

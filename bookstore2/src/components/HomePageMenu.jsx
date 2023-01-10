@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {ShoppingBasket} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
@@ -12,16 +11,51 @@ import Context from "../context/context";
 import {Button, ButtonBase} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
-import {useWindowResize} from "./WindowResizer";
 import Grid from "@mui/material/Grid";
 import {config} from "../config";
+import {useWindowResize} from "./WindowResizer";
 
+const Img = styled('img')({
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+});
+
+const StyledButton = {
+    display: "inline-block",
+    color: "white",
+    margin: 1,
+    width: 100,
+    backgroundColor: "#000"
+}
+
+const StyledAppBar = {
+    backgroundColor: "#81c784"
+}
+
+const StyledToolBar = styled(Toolbar)(() => ({
+    flexDirection:"column"
+}));
+
+const StyledIconButton = {
+    margin: 1
+}
+
+const sizes = [window.innerWidth * 0.4, window.innerHeight * 0.15]
 
 export default function HomePageMenu() {
 
     const navigate = useNavigate();
-
+    const size = useWindowResize()
     const ctx = useContext(Context);
+
+    const StyledButtonBase = {
+        width: size[0] * 0.4,
+        height: size[1] * 0.15,
+        maxWidth: sizes[0],
+        maxHeight: sizes[1]
+    }
 
     const handleProfileOpen = () => {
         navigate("/profile")
@@ -43,58 +77,10 @@ export default function HomePageMenu() {
         ctx.logout()
     }
 
-    const size = useWindowResize()
-
-    const Img = styled('img')({
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    });
-
-    const StyledButton = {
-        display: "inline-block",
-        color: "white",
-        margin: 1,
-        width: 100,
-        backgroundColor: "#000"
-    }
-
-    const StyledLogo = styled(Typography)(() => ({
-        color: 'white',
-        textDecoration: 'none',
-        minWidth: 60,
-        flexGrow: 2
-    }));
-
-    const StyledAppBar = {
-        backgroundColor: "#81c784"
-    }
-
-    const StyledToolBar = styled(Toolbar)(() => ({
-        flexDirection:"column"
-    }));
-
-    const StyledButtonBase = {
-        display: "inline-block",
-        scale: "90%",
-        width: size[0] * 0.4,
-        height: size[1] * 0.15,
-        overflow: "auto"
-    }
-
-    const StyledIconButton = {
-        margin: 1
-    }
-
     return (
         <AppBar position="static" sx={StyledAppBar}>
 
             <StyledToolBar>
-                <StyledLogo
-                    variant="h4"
-                    noWrap
-                    component="a">
                     <Grid item>
                         <ButtonBase
                             onClick={()=>{
@@ -105,7 +91,6 @@ export default function HomePageMenu() {
                                  src={config.logo}/>
                         </ButtonBase>
                     </Grid>
-                </StyledLogo>
             </StyledToolBar>
 
             <StyledToolBar sx={{marginTop: 1}}>

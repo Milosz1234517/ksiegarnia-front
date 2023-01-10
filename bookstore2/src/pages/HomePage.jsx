@@ -9,6 +9,10 @@ import {useEffect} from "react";
 import StoreInfoMenu from "../components/StoreInfoMenu";
 import {Container} from "@mui/material";
 
+const BoxStyle = {
+    margin: 1
+}
+
 export default function HomePage() {
 
     const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
@@ -25,10 +29,6 @@ export default function HomePage() {
     useEffect(() => {
         setPage(parseInt(urlSearchParams.get('page')) || 1)
     }, [setPage, urlSearchParams]);
-
-    const BoxStyle = {
-        margin: 1
-    }
 
     return (
         <Box sx={{backgroundColor: "#c8e6c9"}}>

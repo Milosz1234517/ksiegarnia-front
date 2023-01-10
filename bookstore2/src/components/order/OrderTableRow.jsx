@@ -7,14 +7,13 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import OrderItemsTableRow from "./OrderItemsTableRow";
 import {config} from "../../config";
 
+const TableRowStyle = {
+    backgroundColor: "white"
+}
 
 export default function OrderTableRow(props) {
     const {row} = props;
     const [open, setOpen] = useState(false);
-
-    const TableRowStyle = {
-        backgroundColor: "white"
-    }
 
     return (
         <React.Fragment>

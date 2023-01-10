@@ -19,6 +19,44 @@ import Grid from "@mui/material/Grid";
 import Context from "../../store/context";
 import BookFilters from "../book/BookFilters";
 
+const StyledAutocomplete = styled(Autocomplete)(() => ({
+    width: "100%",
+    display: "flex",
+    backgroundColor: "#e8f5e9",
+    margin: 10,
+}));
+
+const StyledGrid = {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "nowrap"
+}
+
+const StyledSearchButton = styled(Button)(() => ({
+    backgroundColor: "#000",
+    color: "white",
+}));
+
+const StyledFormControlSwitch = styled(FormControlLabel)(() => ({
+    display: "inline-block",
+    margin: 10
+}));
+
+const StyledSearchResultLabel = {
+    display: "inline-block",
+    marginLeft: 2,
+    marginTop: 5
+}
+
+const StyledFormControl = {
+    m: 2,
+    minWidth: 150
+}
+
+const StyledIcon = {
+    margin: 1
+}
+
 export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     const navigate = useNavigate();
@@ -200,44 +238,6 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     function handleChangeAvailable(event) {
         setAvailable(event.target.value)
-    }
-
-    const StyledAutocomplete = styled(Autocomplete)(() => ({
-        width: "100%",
-        display: "flex",
-        backgroundColor: "#e8f5e9",
-        margin: 10,
-    }));
-
-    const StyledGrid = {
-        flexDirection: "row",
-        alignItems: "center",
-        flexWrap: "nowrap"
-    }
-
-    const StyledSearchButton = styled(Button)(() => ({
-        backgroundColor: "#000",
-        color: "white",
-    }));
-
-    const StyledFormControlSwitch = styled(FormControlLabel)(() => ({
-        display: "inline-block",
-        margin: 10
-    }));
-
-    const StyledSearchResultLabel = {
-        display: "inline-block",
-        marginLeft: 2,
-        marginTop: 5
-    }
-
-    const StyledFormControl = {
-        m: 2,
-        minWidth: 150
-    }
-
-    const StyledIcon = {
-        margin: 1
     }
 
     return (

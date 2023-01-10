@@ -2,12 +2,13 @@ import {Box} from "@mui/system";
 import {Typography} from "@mui/material";
 import * as React from "react";
 
+const BoxStyle = {
+    p: 3
+}
+
+
 export default function TabPanel(props) {
     const {children, value, index, ...other} = props;
-
-    const BoxStyle = {
-        p: 3
-    }
 
     return (
         <div

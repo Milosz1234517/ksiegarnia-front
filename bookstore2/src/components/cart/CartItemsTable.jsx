@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import {Box} from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import * as React from "react";
-import {useWindowResize} from "../WindowResizer";
 import {useContext} from "react";
 import Context from "../../context/context";
 import {TableRowStyle} from "../../App";
@@ -11,11 +10,18 @@ import {config} from "../../config";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
+const TableCellStyle = {
+    overflow: "hidden",
+    textOverflow: "ellipsis"
+}
+
+const BoxStyle= {
+    display: "flex"
+}
 
 export default function CartItemsTable({cartItems, setCartItems, totalPrice, setTotalPrice}) {
 
     const ctx = useContext(Context)
-    const [size] = useWindowResize()
 
     const updateItemCart = async (data) => {
         try {
@@ -69,16 +75,6 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
             }
             return item
         }))
-    }
-
-    const TableCellStyle = {
-        maxWidth: size[0],
-        overflow: "hidden",
-        textOverflow: "ellipsis"
-    }
-
-    const BoxStyle= {
-        display: "flex"
     }
 
     return (

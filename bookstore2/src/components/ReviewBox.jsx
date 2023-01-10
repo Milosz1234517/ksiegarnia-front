@@ -2,21 +2,19 @@ import Grid from "@mui/material/Grid";
 import {Paper, Rating, Typography} from "@mui/material";
 import * as React from "react";
 
+const StyledPaper = {
+    p: 3,
+    flexGrow: 1,
+    transition: "0.3s",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+    },
+    overflow: "auto",
+    marginBottom: 5
+}
 
 export default function ReviewBox({review, title}) {
-
-
-    const StyledPaper = {
-        p: 3,
-        flexGrow: 1,
-        transition: "0.3s",
-        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        "&:hover": {
-            boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
-        },
-        overflow: "auto",
-        marginBottom: 5
-    }
 
     return (
         <Grid container>

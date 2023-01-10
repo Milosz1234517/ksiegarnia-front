@@ -3,11 +3,13 @@ import * as React from "react";
 import {Box} from "@mui/system";
 import {config} from "../../config";
 
+const TypographyStyle = {
+    margin: 2
+}
+
 export default function BookParameters({book}) {
 
-    const TypographyStyle = {
-        margin: 2
-    }
+
 
     return (
         <Box>

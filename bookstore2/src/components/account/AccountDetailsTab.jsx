@@ -9,6 +9,12 @@ import {PaperWithShadow} from "../../App";
 import AccountDetailsTableRow from "./AccountDetailsTableRow";
 import {config} from "../../config";
 
+const ButtonStyle = {
+    marginTop: 3,
+    marginRight: 3,
+    color: "white",
+    backgroundColor: "#000"
+}
 
 export default function AccountDetailsTab({value}) {
 
@@ -62,13 +68,6 @@ export default function AccountDetailsTab({value}) {
 
     function handleClickOpenPass() {
         setOpenPass(true);
-    }
-
-    const ButtonStyle = {
-        marginTop: 3,
-        marginRight: 3,
-        color: "white",
-        backgroundColor: "#000"
     }
 
     return (

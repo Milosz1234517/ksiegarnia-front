@@ -3,27 +3,23 @@ import {Typography} from "@mui/material";
 import * as React from "react";
 import TabPanel from "../TabPanel";
 import BookParameters from "./BookParameters";
-import {useWindowResize} from "../WindowResizer";
 import Grid from "@mui/material/Grid";
 
+const BoxStyle = {
+    overflow: "auto",
+    backgroundColor: "white"
+}
+
+const TypographyStyle = {
+    margin: 2
+}
+
+const GridStyle = {
+    flexDirection:"column",
+    alignContent:"center"
+}
 
 export default function BookMoreDetailsTab({value, book}) {
-    const size = useWindowResize()
-
-    const BoxStyle = {
-        overflow: "auto",
-        maxWidth: size[0],
-        backgroundColor: "white"
-    }
-
-    const TypographyStyle = {
-        margin: 2
-    }
-
-    const GridStyle = {
-        flexDirection:"column",
-        alignContent:"center"
-    }
 
     return (
         <Box sx={BoxStyle}>

@@ -15,20 +15,20 @@ function a11yProps(index) {
     };
 }
 
+const MainBoxStyle = {
+    width: '100%'
+}
+
+const BoxStyle = {
+    borderBottom: 1, borderColor: 'divider'
+}
+
 export default function AccountPage() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const MainBoxStyle = {
-        width: '100%'
-    }
-
-    const BoxStyle = {
-        borderBottom: 1, borderColor: 'divider'
-    }
 
     return (
         <Box>

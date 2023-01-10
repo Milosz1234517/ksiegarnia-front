@@ -6,6 +6,17 @@ import Context from "../../context/context";
 import {config} from "../../config";
 import Typography from "@mui/material/Typography";
 
+const TextFieldStyle = {
+    width: "100%",
+    backgroundColor: "white",
+    marginTop: 5,
+}
+
+const ButtonStyle = {
+    marginTop: 2,
+    backgroundColor:"#000",
+    color: "white"
+}
 
 export default function CartCommentBox({emptyCart, cartItems, setCartItems, setTotalPrice}) {
 
@@ -61,18 +72,6 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems, setT
 
     function handleDescriptionChange(event) {
         setDescription(event.target.value)
-    }
-
-    const TextFieldStyle = {
-        width: "100%",
-        backgroundColor: "white",
-        marginTop: 5,
-    }
-
-    const ButtonStyle = {
-        marginTop: 2,
-        backgroundColor:"#000",
-        color: "white"
     }
 
     return (

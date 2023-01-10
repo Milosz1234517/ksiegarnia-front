@@ -12,6 +12,17 @@ import {config} from "../config";
 import {Container} from "@mui/material";
 import {GlobalStyles} from "@mui/joy";
 
+const BoxStyle = {
+    display: "grid",
+    marginTop: 5,
+    justifyContent: "center"
+}
+
+const TypographyStyle = {
+    color: 'inherit',
+    textDecoration: 'none',
+    marginLeft: 4,
+}
 
 export default function BasketPage() {
 
@@ -74,18 +85,6 @@ export default function BasketPage() {
             setEmptyCart(false)
         }
     }, [cartItems]);
-
-    const BoxStyle = {
-        display: "grid",
-        marginTop: 5,
-        justifyContent: "center"
-    }
-
-    const TypographyStyle = {
-        color: 'inherit',
-        textDecoration: 'none',
-        marginLeft: 4,
-    }
 
     return (
         <Box>

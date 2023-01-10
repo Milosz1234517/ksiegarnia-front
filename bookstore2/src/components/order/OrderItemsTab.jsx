@@ -8,6 +8,9 @@ import Context from "../../context/context";
 import {PaperWithShadow} from "../../App";
 import {config} from "../../config";
 
+const TableRowStyle = {
+    backgroundColor: "white"
+}
 
 export default function OrderItemsTab({value}){
 
@@ -78,10 +81,6 @@ export default function OrderItemsTab({value}){
 
     function handleChangePage(event, value) {
         setPage(value);
-    }
-
-    const TableRowStyle = {
-        backgroundColor: "white"
     }
 
     return(

@@ -21,6 +21,31 @@ function a11yProps(index) {
     };
 }
 
+const MainBoxStyle = {
+    flexGrow: 1,
+}
+
+const BoxStyle = {
+    display: "grid",
+    marginTop: 15
+}
+
+const TypographyStyle = {
+    margin: 2,
+    marginTop: 4
+}
+
+const ButtonStyle = {
+    margin: 2,
+    backgroundColor: "#000",
+    color: "white"
+}
+
+const TabBoxStyle = {
+    borderBottom: 1,
+    borderColor: 'divider'
+}
+
 export default function BookDetails() {
 
     let {bookHeaderId} = useParams();
@@ -74,31 +99,6 @@ export default function BookDetails() {
             })
         else
             ctx.showErrorAlert("Login or Register to proceed this action")
-    }
-
-    const MainBoxStyle = {
-        flexGrow: 1,
-    }
-
-    const BoxStyle = {
-        display: "grid",
-        marginTop: 15
-    }
-
-    const TypographyStyle = {
-        margin: 2,
-        marginTop: 4
-    }
-
-    const ButtonStyle = {
-        margin: 2,
-        backgroundColor: "#000",
-        color: "white"
-    }
-
-    const TabBoxStyle = {
-        borderBottom: 1,
-        borderColor: 'divider'
     }
 
     return (

@@ -8,6 +8,19 @@ import {useContext, useState} from "react";
 import Context from "../../context/context";
 import {config} from "../../config";
 
+const TableCellStyle = {
+    paddingBottom: 0,
+    paddingTop: 0,
+    backgroundColor: "#e8f5e9"
+}
+
+const BoxStyle = {
+    margin: 1
+}
+
+const TableHeadStyle = {
+    backgroundColor: "#e8f5e9"
+}
 
 export default function OrderItemsTableRow({row, open, order}) {
 
@@ -47,20 +60,6 @@ export default function OrderItemsTableRow({row, open, order}) {
     function handleCreateReview(bookHeaderId) {
         checkReview(bookHeaderId).then(() => {
         })
-    }
-
-    const TableCellStyle = {
-        paddingBottom: 0,
-        paddingTop: 0,
-        backgroundColor: "#e8f5e9"
-    }
-
-    const BoxStyle = {
-        margin: 1
-    }
-
-    const TableHeadStyle = {
-        backgroundColor: "#e8f5e9"
     }
 
     return (

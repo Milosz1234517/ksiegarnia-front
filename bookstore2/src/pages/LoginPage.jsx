@@ -14,6 +14,21 @@ import Context from "../context/context";
 import * as React from "react";
 import HomePageMenu from "../components/HomePageMenu";
 
+const BoxStyle = {
+    display: "flex",
+    alignItems: "right",
+    textAlign: "center",
+}
+
+const AvatarStyle = {
+    m: 1,
+    color: "primary.main"
+}
+
+const ButtonStyle = {
+    mt: 3,
+    mb: 2
+}
 
 const Login = () => {
     const ctx = useContext(Context);
@@ -28,22 +43,6 @@ const Login = () => {
             },
         ).then(() => {});
     };
-
-    const BoxStyle = {
-        display: "flex",
-        alignItems: "right",
-        textAlign: "center",
-    }
-
-    const AvatarStyle = {
-        m: 1,
-        color: "primary.main"
-    }
-
-    const ButtonStyle = {
-        mt: 3,
-        mb: 2
-    }
 
     return (
         <Box sx={{backgroundColor: "white"}}>
