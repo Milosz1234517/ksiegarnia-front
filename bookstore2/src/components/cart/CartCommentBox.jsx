@@ -53,7 +53,6 @@ export default function CartCommentBox({emptyCart, cartItems, setCartItems}) {
                 }
             }
         )
-        console.log(cartOrder)
         placeOrder({description: description, orderItems: cartOrder}).then(() => {
         })
     }
