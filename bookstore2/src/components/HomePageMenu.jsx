@@ -49,10 +49,10 @@ export default function HomePageMenu() {
     const ctx = useContext(Context);
 
     const StyledButtonBase = {
-        height: size[1] * 0.15,
-        width: size[0] * 0.2,
-        maxHeight: window.innerHeight * 0.15,
-        maxWidth: window.innerWidth * 0.2,
+        height: size[1] * config.logoY,
+        width: size[0] * config.logoX,
+        maxHeight: window.innerHeight * config.logoY,
+        maxWidth: window.innerWidth * config.logoX,
     }
 
     const handleProfileOpen = () => {

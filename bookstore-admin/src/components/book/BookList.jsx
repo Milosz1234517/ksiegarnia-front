@@ -91,18 +91,16 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-const sizes = [window.innerWidth * 0.4, window.innerHeight * 0.4]
-
 export default function BookList({cards}) {
 
     const navigate = useNavigate()
     const size = useWindowResize()
 
     const ButtonBaseStyle = {
-        width: size[0] * 0.4,
-        height: size[1] * 0.4,
-        maxWidth: sizes[0],
-        maxHeight: sizes[1]
+        height: size[1] * 0.3,
+        width: size[0] * 0.3,
+        maxWidth: window.innerWidth * 0.3,
+        maxHeight: window.innerHeight * 0.3
     }
 
     return (
