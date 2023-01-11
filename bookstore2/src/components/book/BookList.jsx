@@ -94,9 +94,6 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-const scale = 0.3
-const sizes = [document.innerWidth * scale, document.innerHeight * scale]
-
 export default function BookList({cards}) {
 
     const ctx = useContext(Context)
@@ -104,10 +101,8 @@ export default function BookList({cards}) {
     const size = useWindowResize()
 
     const ButtonBaseStyle = {
-        height: size[0] > size[1] ? size[0] * scale : size[1] * scale,
-        width: size[0] > size[1] ? size[1] * scale : size[0] * scale,
-        maxWidth: sizes[0] > sizes[1] ? sizes[1] : sizes[0],
-        maxHeight: sizes[0] > sizes[1] ? sizes[0] : sizes[1],
+        height: size[1] * 0.3,
+        width: size[0] * 0.3
     }
 
     return (
