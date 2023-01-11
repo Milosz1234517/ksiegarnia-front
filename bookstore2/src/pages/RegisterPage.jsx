@@ -35,6 +35,9 @@ const ButtonStyle = {
 const Register = () => {
     const ctx = useContext(Context);
     const [phoneDigits, setPhoneDigits] = useState(9)
+    const [name, setName] = useState(0)
+    const [surname, setSurname] = useState(0)
+    const [email, setEmail] = useState(0)
     const [change, setChange] = useState(false)
     const navigate = useNavigate()
 
@@ -70,6 +73,18 @@ const Register = () => {
 
     function onChangePhone(event) {
         setPhoneDigits(9 - event.target.value.length)
+    }
+
+    function onChangeName(event) {
+        setName(event.target.value.length)
+    }
+
+    function onChangeSurname(event) {
+        setSurname(event.target.value.length)
+    }
+
+    function onChangeEmail(event) {
+        setEmail(event.target.value.length)
     }
 
     const onSubmit = (event) => {
@@ -132,6 +147,8 @@ const Register = () => {
                         id="email"
                         label="Email"
                         name="email"
+                        helperText={`${email}/255`}
+                        onChange={onChangeEmail}
                         autoComplete="email"
                         autoFocus/>
 
@@ -153,7 +170,8 @@ const Register = () => {
                         id="name"
                         label="Name"
                         name="name"
-                        helperText={"Max length: 15"}
+                        onChange={onChangeName}
+                        helperText={`${name}/15`}
                         autoComplete="name"
                     />
 
@@ -164,7 +182,8 @@ const Register = () => {
                         name="surname"
                         label="Surname"
                         id="surname"
-                        helperText={"Max length: 15"}
+                        onChange={onChangeSurname}
+                        helperText={`${surname}/15`}
                         autoComplete="surname"/>
 
                     <TextField
