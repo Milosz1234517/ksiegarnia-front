@@ -42,7 +42,7 @@ const StyledIconButton = {
     margin: 1
 }
 
-const sizes = [window.innerWidth * 0.4, window.innerHeight * 0.15]
+const sizes = [document.innerWidth * 0.2, document.innerHeight * 0.2]
 
 export default function HomePageMenu() {
 
@@ -51,10 +51,10 @@ export default function HomePageMenu() {
     const ctx = useContext(Context);
 
     const StyledButtonBase = {
-        width: size[0] * 0.4,
-        height: size[1] * 0.15,
-        maxWidth: sizes[0],
-        maxHeight: sizes[1]
+        height: size[0] > size[1] ? size[1] * 0.2 : size[0] * 0.2,
+        width: size[0] > size[1] ? size[0] * 0.2: size[1] * 0.2,
+        maxWidth: sizes[0] > sizes[1] ? sizes[0] : sizes[1],
+        maxHeight: sizes[0] > sizes[1] ? sizes[1] : sizes[0],
     }
 
     const handleProfileOpen = () => {

@@ -42,6 +42,7 @@ const ButtonStyle = {
 }
 
 const TabBoxStyle = {
+    marginTop: 8,
     borderBottom: 1,
     borderColor: 'divider'
 }
