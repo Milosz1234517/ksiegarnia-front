@@ -6,7 +6,7 @@ import Context from "../../context/context";
 import {config} from "../../config";
 import CustomPagination from "../CustomPagination";
 import ReviewBox from "../ReviewBox";
-import {TabPanel} from "@mui/joy";
+import {Box} from "@mui/system";
 
 const ButtonStyle = {
     margin: 2
@@ -20,7 +20,7 @@ const CardStyle = {
 }
 
 
-export default function UserReviewsTab({value}) {
+export default function UserReviewsTab() {
 
     const [pageReview, setPageReview] = React.useState(1);
     const [countReview, setCountReview] = React.useState(1);
@@ -137,12 +137,12 @@ export default function UserReviewsTab({value}) {
     }
 
     return (
-        <TabPanel value={value} index={1}>
+        <Box>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
 
             {marks.map((row) => (
 
-                <Card sx={CardStyle}>
+                <Card key={row.reviewId} sx={CardStyle}>
                     <ReviewBox review={row} user={true} title={true}/>
 
                     <Button sx={ButtonStyle} onClick={() => handleDeleteReview(row.reviewId)}>
@@ -151,6 +151,6 @@ export default function UserReviewsTab({value}) {
 
                 </Card>
             ))}
-        </TabPanel>
+        </Box>
     );
 }
