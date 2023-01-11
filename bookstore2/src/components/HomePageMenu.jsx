@@ -42,6 +42,10 @@ const StyledIconButton = {
     margin: 1
 }
 
+const StyledToolBarMain = {
+    marginTop: 1
+}
+
 export default function HomePageMenu() {
 
     const navigate = useNavigate();
@@ -91,7 +95,7 @@ export default function HomePageMenu() {
                     </Grid>
             </StyledToolBar>
 
-            <StyledToolBar sx={{marginTop: 1}}>
+            <StyledToolBar sx={StyledToolBarMain}>
                 {!ctx.isLoggedIn && (
                     <Box>
 

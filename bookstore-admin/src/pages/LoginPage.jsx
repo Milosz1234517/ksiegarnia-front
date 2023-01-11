@@ -30,6 +30,14 @@ const ButtonStyle = {
     mb: 2
 }
 
+const MainBoxStyle = {
+    backgroundColor: "white"
+}
+
+const SubmitBoxStyle = {
+    mt: 1
+}
+
 const Login = () => {
     const ctx = useContext(Context);
 
@@ -45,7 +53,7 @@ const Login = () => {
     };
 
     return (
-        <Box sx={{backgroundColor: "white"}}>
+        <Box sx={MainBoxStyle}>
             <HomePageMenu/>
 
             <Container
@@ -70,7 +78,7 @@ const Login = () => {
 
                 <Box
                     component="form"
-                    sx={{mt: 1}}
+                    sx={SubmitBoxStyle}
                     onSubmit={onSubmit}>
 
                     <TextField

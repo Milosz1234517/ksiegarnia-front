@@ -23,6 +23,29 @@ function a11yProps(index) {
     };
 }
 
+const MainBoxStyle = {
+    flexGrow: 1,
+}
+
+const GlobalStyle = {
+    body: {backgroundColor: "#e8f5e9"},
+}
+
+const ButtonBoxStyle = {
+    display: "grid"
+}
+
+const ButtonStyle = {
+    margin: 2,
+    backgroundColor: "#000",
+    color: "white"
+}
+
+const TabBoxStyle = {
+    borderBottom: 1,
+    borderColor: 'divider'
+}
+
 export default function NewBook() {
 
     const ctx = useContext(Context)
@@ -96,10 +119,6 @@ export default function NewBook() {
         })
     }
 
-    const MainBoxStyle = {
-        flexGrow: 1,
-    }
-
     return (
         <Box sx={MainBoxStyle}>
             <HomePageMenu/>
@@ -126,9 +145,7 @@ export default function NewBook() {
                 setCategories={setCategories}/>
 
             <GlobalStyles
-                styles={{
-                    body: {backgroundColor: "#e8f5e9"},
-                }}
+                styles={GlobalStyle}
             />
 
             <Container>
@@ -140,23 +157,23 @@ export default function NewBook() {
                     handleDeleteAuthor={handleDelete}
                     handleDeleteCategory={handleDeleteCat}/>
 
-                <Box sx={{display: "grid"}}>
-                    <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                <Box sx={ButtonBoxStyle}>
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
                             onClick={handleEdit}>Edit</Button>
 
-                    <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
                             onClick={handleAddAuthor}>Add Author</Button>
 
-                    <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
                             onClick={handleAddCat}>Add Category</Button>
 
-                    <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
                             onClick={handleSave}>Save Book</Button>
 
                 </Box>
 
 
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                <Box sx={TabBoxStyle}>
                     <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
                           aria-label="basic tabs example">
                         <Tab label="Description" {...a11yProps(0)} />

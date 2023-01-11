@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import * as React from "react";
 
+const FormControlStyle = {
+    m: 2,
+    minWidth: 150
+}
 
 export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOpen, statuses}) {
 
@@ -134,7 +138,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Set Status</DialogTitle>
             <DialogContent>
-                <FormControl variant="standard" sx={{m: 2, minWidth: 150}}>
+                <FormControl variant="standard" sx={FormControlStyle}>
                     <InputLabel id="status-label">Chose Status</InputLabel>
                     <Select
                         labelId="status-label"

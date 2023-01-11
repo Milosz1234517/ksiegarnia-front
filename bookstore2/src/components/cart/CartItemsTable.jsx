@@ -19,6 +19,10 @@ const BoxStyle= {
     display: "flex"
 }
 
+const StyledTypography = {
+    marginLeft: 3
+}
+
 export default function CartItemsTable({cartItems, setCartItems, totalPrice, setTotalPrice}) {
 
     const ctx = useContext(Context)
@@ -56,7 +60,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
         setCartItems(cartItems.map(item => {
             if (item.itemId === obj.itemId) {
                 if (obj.quantity < obj.bookHeader.quantity) {
-                    updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp) => {})
+                    updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then(() => {})
                 }
             }
             return item
@@ -68,7 +72,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
             if (item.itemId === obj.itemId) {
                 if (item.quantity > 0) {
                     const quantity = item.quantity - 1
-                    updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then((resp) => {})
+                    updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then(() => {})
                 }
             }
             return item
@@ -83,7 +87,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
                 <TableHead>
                     <TableRow>
                         <TableCell><Typography>Book Title:</Typography></TableCell>
-                        <TableCell><Typography sx = {{marginLeft: 3}}>Quantity:</Typography></TableCell>
+                        <TableCell><Typography sx = {StyledTypography}>Quantity:</Typography></TableCell>
                         <TableCell><Typography>Price:</Typography></TableCell>
                     </TableRow>
                 </TableHead>

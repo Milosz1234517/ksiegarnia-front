@@ -31,7 +31,7 @@ export default function OrderItemsTableRow({row, open}) {
                             Order Items
                         </Typography>
                         <Table size="small" aria-label="purchases">
-                            <TableHead sx={{backgroundColor:"#e8f5e9"}}>
+                            <TableHead sx={TableHeadStyle}>
                                 <TableRow>
                                     <TableCell>Book Title:</TableCell>
                                     <TableCell>Quantity:</TableCell>

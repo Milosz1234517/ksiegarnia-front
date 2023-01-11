@@ -24,6 +24,10 @@ const TypographyStyle = {
     marginLeft: 4,
 }
 
+const GlobalStyle = {
+    body: { backgroundColor: "#c8e6c9" },
+}
+
 export default function BasketPage() {
 
     const ctx = useContext(Context);
@@ -89,9 +93,7 @@ export default function BasketPage() {
     return (
         <Box>
             <GlobalStyles
-                styles={{
-                    body: { backgroundColor: "#c8e6c9" },
-                }}
+                styles={GlobalStyle}
             />
             <HomePageMenu/>
             <Container>

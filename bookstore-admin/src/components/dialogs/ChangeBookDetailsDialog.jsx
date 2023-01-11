@@ -8,6 +8,10 @@ import {
 } from "@mui/material";
 import * as React from "react";
 
+const TextFieldStyle = {
+    width: "100%",
+    maxWidth: "100%",
+}
 
 export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publishingHouseCopy, bookCopy, setOpen, open}) {
 
@@ -154,10 +158,7 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                     placeholder="Description"
                     defaultValue={book.description}
                     onChange={handleDescriptionChange}
-                    style={{
-                        width: "100%",
-                        maxWidth: "100%",
-                    }}
+                    style={TextFieldStyle}
                 />
 
             </DialogContent>

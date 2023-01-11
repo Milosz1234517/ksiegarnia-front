@@ -13,6 +13,10 @@ const BoxStyle = {
     margin: 1
 }
 
+const MainBoxStyle = {
+    backgroundColor: "#c8e6c9"
+}
+
 export default function HomePage() {
 
     const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
@@ -31,7 +35,7 @@ export default function HomePage() {
     }, [setPage, urlSearchParams]);
 
     return (
-        <Box sx={{backgroundColor: "#c8e6c9"}}>
+        <Box sx={MainBoxStyle}>
             <HomePageMenu/>
             <Container>
                 <Box sx={BoxStyle}>

@@ -24,6 +24,29 @@ function a11yProps(index) {
     };
 }
 
+const MainBoxStyle = {
+    flexGrow: 1,
+}
+
+const GlobalStyle = {
+    body: {backgroundColor: "#e8f5e9"},
+}
+
+const ButtonBoxStyle = {
+    display: "grid"
+}
+
+const ButtonStyle = {
+    margin: 2,
+    backgroundColor: "#000",
+    color: "white"
+}
+
+const TabBoxStyle = {
+    borderBottom: 1,
+    borderColor: 'divider'
+}
+
 export default function BookDetails() {
 
     let {bookHeaderId} = useParams();
@@ -154,10 +177,6 @@ export default function BookDetails() {
         ctx.checkTokenExpiration()
     });
 
-    const MainBoxStyle = {
-        flexGrow: 1,
-    }
-
     return (
         <Box sx={MainBoxStyle}>
             <HomePageMenu/>
@@ -186,46 +205,44 @@ export default function BookDetails() {
                 handeChange={ctx.changeBookDetails}/>
 
             <GlobalStyles
-                styles={{
-                    body: {backgroundColor: "#e8f5e9"},
-                }}
+                styles={GlobalStyle}
             />
 
             <Container>
 
-            <BookDetailsFrontGrid
-                book={book}
-                categories={categories}
-                authors={authors}
-                handleDeleteAuthor={handleDelete}
-                handleDeleteCategory={handleDeleteCat}/>
+                <BookDetailsFrontGrid
+                    book={book}
+                    categories={categories}
+                    authors={authors}
+                    handleDeleteAuthor={handleDelete}
+                    handleDeleteCategory={handleDeleteCat}/>
 
-            <Box sx={{display: "grid"}}>
-                <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
-                        onClick={handleEdit}>Edit</Button>
+                <Box sx={ButtonBoxStyle}>
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
+                            onClick={handleEdit}>Edit</Button>
 
-                <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
-                        onClick={handleAddAuthor}>Add Author</Button>
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
+                            onClick={handleAddAuthor}>Add Author</Button>
 
-                <Button sx={{margin: 2, backgroundColor:"#000", color:"white"}} size="medium" variant="outlined"
-                        onClick={handleAddCat}>Add Category</Button>
-            </Box>
+                    <Button sx={ButtonStyle} size="medium" variant="outlined"
+                            onClick={handleAddCat}>Add Category</Button>
+                </Box>
 
 
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
-                      aria-label="basic tabs example">
-                    <Tab label="Description" {...a11yProps(0)} />
-                    <Tab label="Details" {...a11yProps(1)} />
-                    <Tab label="Marks" {...a11yProps(2)} />
-                </Tabs>
-            </Box>
+                <Box sx={TabBoxStyle}>
+                    <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
+                          aria-label="basic tabs example">
+                        <Tab label="Description" {...a11yProps(0)} />
+                        <Tab label="Details" {...a11yProps(1)} />
+                        <Tab label="Marks" {...a11yProps(2)} />
+                    </Tabs>
+                </Box>
 
-            <BookDescriptionTab value={value} book={book}/>
+                <BookDescriptionTab value={value} book={book}/>
 
-            <BookMoreDetailsTab value={value} book={book}/>
+                <BookMoreDetailsTab value={value} book={book}/>
 
-            <BookReviewsTab value={value} book={book}/>
+                <BookReviewsTab value={value} book={book}/>
 
             </Container>
 

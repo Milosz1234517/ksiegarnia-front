@@ -23,6 +23,10 @@ const BoxStyle = {
     borderBottom: 1, borderColor: 'divider'
 }
 
+const GlobalStyle = {
+    body: { backgroundColor: "#c8e6c9" },
+}
+
 export default function AccountPage() {
     const [value, setValue] = React.useState(0);
 
@@ -33,9 +37,7 @@ export default function AccountPage() {
     return (
         <Box>
             <GlobalStyles
-                styles={{
-                    body: { backgroundColor: "#c8e6c9" },
-                }}
+                styles={GlobalStyle}
             />
             <HomePageMenu/>
             <Container>

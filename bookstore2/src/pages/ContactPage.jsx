@@ -7,15 +7,16 @@ import HomePageMenu from "../components/HomePageMenu";
 import PageTitle from "../components/PageTitle";
 import {GlobalStyles} from "@mui/joy";
 
+const GlobalStyle = {
+    body: { backgroundColor: "#c8e6c9" },
+}
 
 export default function ContactPage() {
 
     return (
         <Box>
             <GlobalStyles
-                styles={{
-                    body: { backgroundColor: "#c8e6c9" },
-                }}
+                styles={GlobalStyle}
             />
             <HomePageMenu/>
             <Container>

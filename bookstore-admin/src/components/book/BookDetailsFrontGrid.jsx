@@ -11,9 +11,18 @@ const BoxStyle = {
     marginTop: 15
 }
 
-const TypographyStyle = {
+const TypographyMainStyle = {
     margin: 2,
     marginTop: 4
+}
+
+const GridStyle = {
+    alignItems: "center",
+    justifyContent: "space-around"
+}
+
+const TypographyStyle = {
+    margin: 2
 }
 
 export default function BookDetailsFrontGrid({book, authors, categories, handleDeleteAuthor, handleDeleteCategory}){
@@ -21,17 +30,17 @@ export default function BookDetailsFrontGrid({book, authors, categories, handleD
     return(
         <Box sx={BoxStyle}>
 
-            <Grid container sx={{alignItems: "center", justifyContent: "space-around"}} spacing={2}>
+            <Grid container sx={GridStyle} spacing={2}>
 
                 <BookDetailsPhoto icon={book.icon}/>
 
                 <Grid item>
 
-                    <Typography sx={TypographyStyle} variant="h2">
+                    <Typography sx={TypographyMainStyle} variant="h2">
                         {book.bookTitle}
                     </Typography>
 
-                    <Typography sx={{margin: 2}} variant="h5">
+                    <Typography sx={TypographyStyle} variant="h5">
                         Authors:
                         <TableContainer>
                             <Table aria-label="simple table">
@@ -61,7 +70,7 @@ export default function BookDetailsFrontGrid({book, authors, categories, handleD
                         </TableContainer>
                     </Typography>
 
-                    <Typography sx={{margin: 2}} variant="h5">
+                    <Typography sx={TypographyStyle} variant="h5">
                         Categories:
                         <TableContainer>
                             <Table aria-label="simple table">

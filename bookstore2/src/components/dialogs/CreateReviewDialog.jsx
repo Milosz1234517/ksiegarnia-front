@@ -14,6 +14,9 @@ import {Stack} from "@mui/system";
 import {config} from "../../config";
 import Typography from "@mui/material/Typography";
 
+const StackStyle = {
+    marginBottom: 2
+}
 
 export default function CreateReviewDialog({bookHeaderId, openReview, value, order, description, setValue, setOpenReview, setDescription
                                            }) {
@@ -67,9 +70,7 @@ export default function CreateReviewDialog({bookHeaderId, openReview, value, ord
         <Dialog open={openReview} onClose={handleCloseReview}>
             <DialogTitle>Review</DialogTitle>
             <DialogContent>
-                <Stack spacing={2} sx={{
-                    marginBottom: 2
-                }}>
+                <Stack spacing={2} sx={StackStyle}>
                     <Rating
                         name="simple-controlled"
                         value={value}

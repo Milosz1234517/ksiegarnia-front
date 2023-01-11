@@ -6,6 +6,13 @@ import CustomPagination from "../other/CustomPagination";
 import {useSearchParams} from "react-router-dom";
 import ClientFilter from "../other/ClientFilter";
 
+const TableStyle = {
+    minWidth: 650
+}
+
+const TableRowStyle = {
+    '&:last-child td, &:last-child th': { border: 0 }
+}
 
 export default function ClientsTab({value}){
 
@@ -28,7 +35,7 @@ export default function ClientsTab({value}){
         <TabPanel value={value} index={2}>
             <ClientFilter pageUsers={pageUsers} setUsers={setUsers} setUsersCount={setUsersCount}/>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={TableStyle} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell align="left">Username</TableCell>
@@ -41,8 +48,7 @@ export default function ClientsTab({value}){
                         {users.map((row) => (
                             <TableRow
                                 key={row.login}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
+                                sx={TableRowStyle}>
                                 <TableCell align="left">{row.login}</TableCell>
                                 <TableCell align="left">{row.name}</TableCell>
                                 <TableCell align="left">{row.surname}</TableCell>

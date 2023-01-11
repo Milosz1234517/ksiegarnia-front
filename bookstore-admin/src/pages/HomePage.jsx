@@ -21,6 +21,27 @@ function a11yProps(index) {
     };
 }
 
+const MainBoxStyle = {
+    flexGrow: 1
+}
+
+const TabBoxStyle = {
+    borderBottom: 1, borderColor: 'divider'
+}
+
+const StackStyle = {
+    marginBottom: 2
+}
+
+const ButtonStyle = {
+    backgroundColor:"#000",
+    color: "white",
+    alignSelf: "center",
+    margin: 2,
+    display: "grid",
+    width: "50%"
+}
+
 export default function HomePage({tab}) {
 
     const [urlSearchParams, setUrlSearchParams] = useSearchParams(window.location.search);
@@ -54,10 +75,10 @@ export default function HomePage({tab}) {
     });
 
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={MainBoxStyle}>
             <HomePageMenu/>
             <Container>
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                <Box sx={TabBoxStyle}>
                     <Tabs scrollButtons="auto" variant="scrollable" value={value} onChange={handleChange}
                           aria-label="basic tabs example">
                         <Tab label="Orders" {...a11yProps(0)} onClick={() => navigation("/orders")}/>
@@ -72,11 +93,9 @@ export default function HomePage({tab}) {
                 <TabPanel value={value} index={1}>
                     <SearchBar page={page} setBooksPagesCount={setBooksPagesCount} setBooks={setBooks}/>
 
-                    <Stack spacing={2} sx={{
-                        marginBottom: 2
-                    }}>
+                    <Stack spacing={2} sx={StackStyle}>
                         <Button onClick={handleAddBook}
-                                sx={{backgroundColor:"#000", color: "white", alignSelf: "center", margin: 2, display: "grid", width: "50%"}}>
+                                sx={ButtonStyle}>
                             Create Book
                         </Button>
                     </Stack>

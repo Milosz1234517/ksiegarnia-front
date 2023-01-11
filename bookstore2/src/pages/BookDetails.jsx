@@ -20,6 +20,10 @@ function a11yProps(index) {
         'aria-controls': `simple-tab panel-${index}`,
     };
 }
+const GridStyle = {
+    alignItems: "center",
+    justifyContent: "space-around"
+}
 
 const MainBoxStyle = {
     flexGrow: 1,
@@ -45,6 +49,10 @@ const TabBoxStyle = {
     marginTop: 8,
     borderBottom: 1,
     borderColor: 'divider'
+}
+
+const GlobalStyle = {
+    body: { backgroundColor: "#c8e6c9" },
 }
 
 export default function BookDetails() {
@@ -106,9 +114,7 @@ export default function BookDetails() {
         <Box sx={MainBoxStyle}>
 
             <GlobalStyles
-                styles={{
-                    body: { backgroundColor: "#e8f5e9" },
-                }}
+                styles={GlobalStyle}
             />
 
             <HomePageMenu/>
@@ -117,7 +123,7 @@ export default function BookDetails() {
 
                 <Box sx={BoxStyle}>
 
-                    <Grid container sx={{alignItems: "center", justifyContent: "space-around"}} spacing={2}>
+                    <Grid container sx={GridStyle} spacing={2}>
 
                         <BookDetailsPhoto icon={book.icon}/>
 

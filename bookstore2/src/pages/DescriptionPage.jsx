@@ -27,14 +27,16 @@ const ContainerStyle = {
     marginTop: 10
 }
 
+const GlobalStyle = {
+    body: { backgroundColor: "#c8e6c9" },
+}
+
 export default function DescriptionPage({desc, title}) {
 
     return (
         <Box>
             <GlobalStyles
-                styles={{
-                    body: { backgroundColor: "#c8e6c9" },
-                }}
+                styles={GlobalStyle}
             />
             <HomePageMenu/>
             <Container

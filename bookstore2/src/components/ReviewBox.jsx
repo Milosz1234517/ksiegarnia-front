@@ -18,6 +18,10 @@ const GridItem = {
     marginBottom: 3
 }
 
+const GridStyle = {
+    flexDirection: "row-reverse"
+}
+
 export default function ReviewBox({review, title}) {
 
     return (
@@ -41,7 +45,7 @@ export default function ReviewBox({review, title}) {
                     </Typography>
                 </Grid>
 
-                <Grid item container sx={{flexDirection: "row-reverse"}}>
+                <Grid item container sx={GridStyle}>
                     <Rating name="read-only" value={1} max={1} readOnly/> {review.mark}/10
                 </Grid>
 

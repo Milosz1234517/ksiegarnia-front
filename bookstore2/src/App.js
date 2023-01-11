@@ -50,10 +50,15 @@ export const ContainerStyle = {
     marginTop: 10
 }
 
+const BackDropStyle = {
+    color: "#fff",
+    zIndex: (theme) => theme.zIndex.drawer + 1
+}
+
 const Loading = (props) => {
     return (
         <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            sx={BackDropStyle}
             open={props.isOpen}
         >
             <CircularProgress />
