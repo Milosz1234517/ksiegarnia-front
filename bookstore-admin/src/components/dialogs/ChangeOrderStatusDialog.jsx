@@ -144,7 +144,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
                     <Select
                         labelId="status-label"
                         id="status"
-                        value={statusChange}
+                        value={statusChange || ''}
                         onChange={handleChangeStatus}>
                         {statuses.map((option) => (
                             <MenuItem key={option.statusId} value={option.statusId}>

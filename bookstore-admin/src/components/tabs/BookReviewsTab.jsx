@@ -80,7 +80,7 @@ export default function BookReviewsTab({value, book}) {
 
         xHttp.open(
             "GET",
-            `${config.serverAddress}api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
+            `${config.serverAddress}/api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
             true,
             null,
             null

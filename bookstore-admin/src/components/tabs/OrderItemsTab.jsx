@@ -45,7 +45,7 @@ export default function OrderItemsTab({value}){
 
         xHttp.open(
             "GET",
-            `${config.serverAddress}api/bookstore/getStatuses`,
+            `${config.serverAddress}/api/bookstore/getStatuses`,
             true,
             null,
             null
