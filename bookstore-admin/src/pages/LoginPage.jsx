@@ -7,13 +7,28 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import {Box, ThemeProvider} from "@mui/system";
+import {Box} from "@mui/system";
 import {useContext} from "react";
-import {theme} from "../App";
 import Context from "../store/context";
 import * as React from "react";
 import HomePageMenu from "../components/other/HomePageMenu";
+import {ContainerStyle} from "../App";
 
+const BoxStyle = {
+    display: "flex",
+    alignItems: "right",
+    textAlign: "center",
+}
+
+const AvatarStyle = {
+    m: 1,
+    color: "primary.main"
+}
+
+const ButtonStyle = {
+    mt: 3,
+    mb: 2
+}
 
 const Login = () => {
     const ctx = useContext(Context);
@@ -30,28 +45,20 @@ const Login = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        <Box sx={{backgroundColor: "white"}}>
             <HomePageMenu/>
+
             <Container
                 component="main"
                 maxWidth="xs"
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    height: "80vh",
-                }}>
+                sx={ContainerStyle}>
 
                 <CssBaseline/>
 
                 <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "right",
-                        textAlign: "center",
-                    }}>
+                    sx={BoxStyle}>
 
-                    <Avatar sx={{m: 1, color: "primary.main"}}>
+                    <Avatar sx={AvatarStyle}>
                         <LockOutlined/>
                     </Avatar>
 
@@ -90,12 +97,12 @@ const Login = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}>
+                        sx={ButtonStyle}>
                         Sign in
                     </Button>
                 </Box>
             </Container>
-        </ThemeProvider>
+        </Box>
     );
 };
 

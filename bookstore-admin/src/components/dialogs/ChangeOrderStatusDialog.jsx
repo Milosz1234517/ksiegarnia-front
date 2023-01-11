@@ -1,4 +1,4 @@
-import {useCallback, useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import Context from "../../store/context";
 import {
     Button,
@@ -12,10 +12,9 @@ import {
 import * as React from "react";
 
 
-export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOpen}) {
+export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOpen, statuses}) {
 
     const ctx = useContext(Context)
-    const [statuses, setStatuses] = useState([])
     const [statusChange, setStatusChange] = useState('')
 
     const bookOrder = async () => {
@@ -87,47 +86,12 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
         }
     };
 
-    const getStatuses = useCallback(() => {
-        const xHttp = new XMLHttpRequest();
-        let json;
-        let obj;
-        xHttp.onreadystatechange = function () {
-
-            if (this.readyState === 4 && this.status === 200) {
-                json = xHttp.responseText;
-
-                obj = JSON.parse(json);
-                setStatuses(obj.filter((s) => s.statusId !== 1))
-            }
-            if (this.readyState === 4 && this.status === 400) {
-                console.log("No access.");
-            }
-        };
-
-        xHttp.open(
-            "GET",
-            `http://localhost:8080/api/bookstore/getStatuses`,
-            true,
-            null,
-            null
-        );
-        xHttp.setRequestHeader('Authorization', 'Bearer ' + ctx.authToken)
-        xHttp.send();
-
-    }, [ctx.authToken]);
-
-    useEffect(() => {
-        getStatuses();
-    }, [getStatuses]);
-
-
     function handleClose() {
         setOpen(false)
     }
 
     function handleConfirm() {
         setOpen(false)
-        console.log(statusChange)
         switch (statusChange) {
             case 2:
                 cancelOrder().then(

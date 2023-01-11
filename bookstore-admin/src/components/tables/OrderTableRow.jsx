@@ -11,24 +11,21 @@ import Context from "../../store/context";
 import {config} from "../../config";
 
 
-export default function OrderTableRow(props) {
-    const {row} = props;
+export default function OrderTableRow({props, statuses}) {
+    const row = props;
     const [open, setOpen] = useState(false);
     const [openStatus, setOpenStatus] = useState(false);
     const [status, setStatus] = useState()
     const ctx = useContext(Context)
 
     function handleStatusChange() {
+        ctx.checkTokenExpiration()
         setOpenStatus(true)
     }
 
     useEffect(()=>{
         setStatus(row.orderStatus)
     }, [row.orderStatus])
-
-    useEffect(() => {
-        ctx.checkTokenExpiration()
-    });
 
     const TableRowStyle = {
         backgroundColor: "white"
@@ -38,6 +35,7 @@ export default function OrderTableRow(props) {
         <React.Fragment>
 
             <ChangeOrderStatusDialog
+                statuses={statuses}
                 orderId={row.orderId}
                 open={openStatus}
                 setOpen={setOpenStatus}
@@ -48,7 +46,10 @@ export default function OrderTableRow(props) {
                     <IconButton
                         aria-label="expand row"
                         size="small"
-                        onClick={() => setOpen(!open)}>
+                        onClick={() => {
+                            ctx.checkTokenExpiration()
+                            setOpen(!open)
+                        }}>
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>

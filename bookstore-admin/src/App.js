@@ -3,7 +3,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import BookDetails from "./pages/BookDetails";
 import Context from "./store/context";
 import AccountPage from "./pages/AccountPage";
@@ -57,10 +57,6 @@ const Loading = (props) => {
 function App() {
 
     const ctx = useContext(Context);
-
-    useEffect(() => {
-        ctx.checkTokenExpiration()
-    });
 
     return (
         <ThemeProvider theme={theme}>

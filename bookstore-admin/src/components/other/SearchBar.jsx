@@ -243,6 +243,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     }
 
     function handleChangeAvailable(event) {
+        ctx.checkTokenExpiration()
         setAvailable(event.target.value)
     }
 
@@ -274,6 +275,7 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                         variant="standard"
                         value={available}
                         displayEmpty
+                        onOpen={()=>ctx.checkTokenExpiration()}
                         onChange={handleChangeAvailable}>
 
                         <MenuItem value="false">
@@ -291,7 +293,10 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                     control={
                         <Switch
                             checked={filtersOn}
-                            onChange={() => setFilters(!filtersOn)}
+                            onChange={() => {
+                                ctx.checkTokenExpiration()
+                                setFilters(!filtersOn)
+                            }}
                             name="loading"
                             color="primary"/>}
                     label="Filters"/>
