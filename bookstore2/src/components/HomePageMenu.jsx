@@ -51,6 +51,8 @@ export default function HomePageMenu() {
     const StyledButtonBase = {
         height: size[1] * 0.15,
         width: size[0] * 0.2,
+        maxHeight: window.innerHeight * 0.15,
+        maxWidth: window.innerWidth * 0.2,
     }
 
     const handleProfileOpen = () => {
