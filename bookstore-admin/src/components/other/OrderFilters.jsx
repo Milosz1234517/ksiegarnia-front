@@ -5,6 +5,21 @@ import {useCallback, useContext, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import Context from "../../store/context";
 
+const BoxStyle = {
+    display: "inline-block",
+    margin: 1
+}
+
+const TextFieldStyle = {
+    margin: 1,
+    backgroundColor:"#e8eaf6",
+}
+
+const FormControlStyle = {
+    m: 1,
+    minWidth: 150,
+    backgroundColor:"#e8eaf6"
+}
 
 export default function OrderFilters({searchParams, filterParams, status, setStatus}){
 
@@ -93,8 +108,8 @@ export default function OrderFilters({searchParams, filterParams, status, setSta
 
     return(
         <Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
-                <FormControl variant="standard" sx={{m: 1, minWidth: 150}}>
+            <Box sx={BoxStyle}>
+                <FormControl variant="standard" sx={FormControlStyle}>
                     <Select
                         labelId="status-label"
                         id="status"
@@ -115,76 +130,73 @@ export default function OrderFilters({searchParams, filterParams, status, setSta
                 </FormControl>
             </Box>
 
-            <Box sx={{display: "inline-block", margin: 1}}>
+            <Box sx={BoxStyle}>
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={TextFieldStyle}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="date"
-                    variant="filled"
+                    variant="outlined"
                     id="finalizedFrom"
                     label="Finalized From"
                     name="finalizedFrom"
                     inputRef={textInput.finalizedFrom}
                     defaultValue={searchParams.finalizedFrom}
-                    onChange={handleChangeFinalizedFrom}
-                    autoFocus/>
+                    onChange={handleChangeFinalizedFrom}/>
 
             </Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
+            <Box sx={BoxStyle}>
 
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={TextFieldStyle}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
-                    variant="filled"
+                    variant="outlined"
                     id="finalizedTo"
                     label="Finalized To"
                     type="date"
                     name="finalizedTo"
                     inputRef={textInput.finalizedTo}
                     defaultValue={searchParams.finalizedTo}
-                    onChange={handleChangeFinalizedTo}
-                    autoFocus/>
+                    onChange={handleChangeFinalizedTo}/>
 
             </Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
+
+            <Box sx={BoxStyle}>
 
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={TextFieldStyle}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
-                    variant="filled"
+                    variant="outlined"
                     id="placedFrom"
                     type="date"
                     label="Placed From"
                     name="placedFrom"
                     inputRef={textInput.placedFrom}
                     defaultValue={searchParams.placedFrom}
-                    onChange={handleChangePlacedFrom}
-                    autoFocus/>
+                    onChange={handleChangePlacedFrom}/>
 
             </Box>
 
-            <Box sx={{display: "inline-block", margin: 1}}>
+            <Box sx={BoxStyle}>
 
                 <TextField
                     margin="normal"
-                    sx={{margin: 1}}
+                    sx={TextFieldStyle}
                     InputLabelProps={{ shrink: true }}
                     fullWidth
-                    variant="filled"
+                    variant="outlined"
                     id="placedTo"
                     type="date"
                     label="Placed To"
                     name="placedTo"
                     inputRef={textInput.placedTo}
                     defaultValue={searchParams.placedTo}
-                    onChange={handleChangePlacedTo}
-                    autoFocus/>
+                    onChange={handleChangePlacedTo}/>
 
             </Box>
         </Box>

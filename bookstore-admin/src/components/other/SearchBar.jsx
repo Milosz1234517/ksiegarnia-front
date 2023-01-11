@@ -212,10 +212,16 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     }, [searchInput]);
 
     useEffect(() => {
-        getBooksSearch();
-    }, [getBooksSearch]);
+        if(searchInput !== '') {
+            getBooksSearch();
+        }
+    }, [getBooksSearch, searchInput]);
 
-    function handleSearchBooks() {
+
+    function handleSearchBooks(event) {
+
+        event.preventDefault(true);
+
         const params = [
             ['bookTitle', searchInput],
             ['available', available],

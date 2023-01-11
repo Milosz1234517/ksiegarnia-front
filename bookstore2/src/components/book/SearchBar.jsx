@@ -212,8 +212,10 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
     }, [searchInput]);
 
     useEffect(() => {
-        getBooksSearch();
-    }, [getBooksSearch]);
+        if(searchInput !== '') {
+            getBooksSearch();
+        }
+    }, [getBooksSearch, searchInput]);
 
     function handleSearchBooks(event) {
 

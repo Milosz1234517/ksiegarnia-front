@@ -144,7 +144,10 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
     }, [urlSearchParams]);
 
-    function handleSearchBooks() {
+    function handleSearchOrders(event) {
+
+        event.preventDefault(true);
+
         const params = [
             ['orderNumber', searchInput],
             ['page', 1],
@@ -163,36 +166,40 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
     return (
         <Box>
-            <Grid container sx={StyledGrid}>
-                <StyledAutocomplete
-                    freeSolo
-                    onInputChange={(e, v) => {
-                        setSearchInput(v)
-                    }}
-                    inputValue={searchInput}
-                    options={[]}
-                    renderInput={(params) =>
-                        <TextField {...params} label="Search Order"/>}/>
+            <form onSubmit={handleSearchOrders}>
+                <Grid container sx={StyledGrid}>
+                    <StyledAutocomplete
+                        freeSolo
+                        onInputChange={(e, v) => {
+                            setSearchInput(v)
+                        }}
+                        inputValue={searchInput}
+                        options={[]}
+                        renderInput={(params) =>
+                            <TextField {...params} label="Search Order"/>}/>
 
-                <StyledSearchButton onClick={handleSearchBooks}>
-                    <SearchIcon sx={StyledIcon}/>
-                </StyledSearchButton>
-            </Grid>
+                    <StyledSearchButton type="submit">
+                        <SearchIcon sx={StyledIcon}/>
+                    </StyledSearchButton>
+                </Grid>
 
-            <StyledFilterSwitch
-                control={
-                    <Switch
-                        checked={filtersOn}
-                        onChange={() => setFilters(!filtersOn)}
-                        name="loading"
-                        color="primary"/>}
-                label="Filters"/>
+                <StyledFilterSwitch
+                    control={
+                        <Switch
+                            checked={filtersOn}
+                            onChange={() => setFilters(!filtersOn)}
+                            name="loading"
+                            color="primary"/>}
+                    label="Filters"/>
 
 
-            <Box>
-                {filtersOn &&
-                    <OrderFilters status={status} setStatus={setStatus} filterParams={filterParams} searchParams={searchParams}/>}
-            </Box>
+                <Box>
+                    {filtersOn &&
+                        <OrderFilters status={status} setStatus={setStatus} filterParams={filterParams}
+                                      searchParams={searchParams}/>}
+                </Box>
+
+            </form>
 
         </Box>
     )

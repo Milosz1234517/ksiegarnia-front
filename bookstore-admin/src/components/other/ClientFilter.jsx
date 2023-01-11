@@ -5,6 +5,35 @@ import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../../store/context";
 import SearchIcon from "@mui/icons-material/Search";
+import {styled} from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+
+const StyledSearchButton = styled(Button)(() => ({
+    backgroundColor: "#000",
+    color: "white",
+}));
+
+const StyledIcon = {
+    margin: 1
+}
+
+const StyledGrid = {
+    alignItems: "center",
+}
+
+const BoxStyle = {
+    display: "inline-block",
+    margin: 1
+}
+
+const TextFieldStyle = {
+    margin: 1,
+    backgroundColor:"#e8eaf6",
+}
+
+const FormControlStyle = {
+    m: 2,
+}
 
 export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
 
@@ -122,7 +151,10 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
 
     }, [urlSearchParams]);
 
-    function handleSearchClients() {
+    function handleSearchClients(event) {
+
+        event.preventDefault(true);
+
         const params = [
             ['page', 1],
             ['name', filterParams.name],
@@ -149,62 +181,62 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
     }
 
     return (
-        <Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
-                <TextField
-                    margin="normal"
-                    sx={{margin: 1}}
-                    fullWidth
-                    variant="filled"
-                    id="email"
-                    label="Email"
-                    name="email"
-                    type="email"
-                    inputRef={textInput.login}
-                    autoComplete="Email"
-                    defaultValue={searchParams.login}
-                    onChange={handleChangeLogin}
-                    autoFocus/>
-            </Box>
+        <Grid container sx={StyledGrid}>
+            <form onSubmit={handleSearchClients}>
+                    <Box sx={BoxStyle}>
+                        <TextField
+                            margin="normal"
+                            sx={TextFieldStyle}
+                            fullWidth
+                            variant="outlined"
+                            id="email"
+                            label="Email"
+                            name="email"
+                            type="email"
+                            inputRef={textInput.login}
+                            autoComplete="Email"
+                            defaultValue={searchParams.login}
+                            onChange={handleChangeLogin}/>
+                    </Box>
 
-            <Box sx={{display: "inline-block", margin: 1}}>
-                <TextField
-                    margin="normal"
-                    sx={{margin: 1}}
-                    fullWidth
-                    variant="filled"
-                    id="name"
-                    label="Name"
-                    name="name"
-                    inputRef={textInput.name}
-                    autoComplete="Name"
-                    defaultValue={searchParams.name}
-                    onChange={handleChangeName}
-                    autoFocus/>
+                <Box sx={BoxStyle}>
+                        <TextField
+                            margin="normal"
+                            sx={TextFieldStyle}
+                            fullWidth
+                            variant="outlined"
+                            id="name"
+                            label="Name"
+                            name="name"
+                            inputRef={textInput.name}
+                            autoComplete="Name"
+                            defaultValue={searchParams.name}
+                            onChange={handleChangeName}/>
 
-            </Box>
-            <Box sx={{display: "inline-block", margin: 1}}>
+                    </Box>
 
-                <TextField
-                    margin="normal"
-                    sx={{margin: 1}}
-                    fullWidth
-                    variant="filled"
-                    id="surname"
-                    label="Surname"
-                    name="surname"
-                    inputRef={textInput.surname}
-                    autoComplete="Surname"
-                    defaultValue={searchParams.surname}
-                    onChange={handleChangeSurname}
-                    autoFocus/>
+                <Box sx={BoxStyle}>
+                        <TextField
+                            margin="normal"
+                            sx={TextFieldStyle}
+                            fullWidth
+                            variant="outlined"
+                            id="surname"
+                            label="Surname"
+                            name="surname"
+                            inputRef={textInput.surname}
+                            autoComplete="Surname"
+                            defaultValue={searchParams.surname}
+                            onChange={handleChangeSurname}/>
+                    </Box>
 
-            </Box>
+                    <FormControl variant="standard" sx={FormControlStyle}>
+                        <StyledSearchButton type="submit">
+                            <SearchIcon sx={StyledIcon}/>
+                        </StyledSearchButton>
+                    </FormControl>
 
-            <FormControl variant="standard" sx={{m: 3}}>
-                <Button onClick={handleSearchClients}><SearchIcon/></Button>
-            </FormControl>
-
-        </Box>
+            </form>
+        </Grid>
     )
 }

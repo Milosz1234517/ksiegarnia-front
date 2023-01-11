@@ -1,7 +1,11 @@
 import {Box} from "@mui/system";
 import {Typography} from "@mui/material";
-import PropTypes from "prop-types";
 import * as React from "react";
+
+const BoxStyle = {
+    p: 3
+}
+
 
 export default function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -12,19 +16,12 @@ export default function TabPanel(props) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
+            {...other}>
             {value === index && (
-                <Box sx={{p: 3}}>
-                    <Typography>{children}</Typography>
+                <Box sx={BoxStyle}>
+                    <Typography component={"span"}>{children}</Typography>
                 </Box>
             )}
         </div>
     );
 }
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
