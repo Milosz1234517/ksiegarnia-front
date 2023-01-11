@@ -9,15 +9,16 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-const sizes = [document.innerWidth * 0.6, document.innerHeight * 0.6]
+const scale = 0.6
+const sizes = [document.innerWidth * scale, document.innerHeight * scale]
 
 export default function BookDetailsPhoto({icon}) {
 
     const size = useWindowResize()
 
     const BoxStyle = {
-        height: size[0] > size[1] ? size[0] * 0.6 : size[1] * 0.6,
-        width: size[0] > size[1] ? size[1] * 0.6 : size[0] * 0.6,
+        height: size[0] > size[1] ? size[0] * scale : size[1] * scale,
+        width: size[0] > size[1] ? size[1] * scale : size[0] * scale,
         maxWidth: sizes[0] > sizes[1] ? sizes[1] : sizes[0],
         maxHeight: sizes[0] > sizes[1] ? sizes[0] : sizes[1],
         alignItems: "center"

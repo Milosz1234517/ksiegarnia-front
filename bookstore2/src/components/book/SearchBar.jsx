@@ -263,47 +263,47 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
                     </StyledSearchButton>
 
                 </Grid>
+
+                <FormControl variant="filled" sx={StyledFormControl}>
+                    <Select
+                        labelId="status-label"
+                        id="status"
+                        variant="standard"
+                        value={available}
+                        displayEmpty
+                        onChange={handleChangeAvailable}>
+
+                        <MenuItem value="false">
+                            <em>Show All</em>
+                        </MenuItem>
+
+                        <MenuItem value="true">
+                            Show Available
+                        </MenuItem>
+
+                    </Select>
+                </FormControl>
+
+                <StyledFormControlSwitch
+                    control={
+                        <Switch
+                            checked={filtersOn}
+                            onChange={() => setFilters(!filtersOn)}
+                            name="loading"
+                            color="primary"/>}
+                    label="Filters"/>
+
+                <Box>
+                    {filtersOn &&
+                        <BookFilters category={category} setCategory={setCategory} filterParams={filterParams}
+                                     searchParams={searchParams}/>}
+
+                    {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
+                        <Typography sx={StyledSearchResultLabel}>
+                            Search Results for "{searchParams.title}"
+                        </Typography>}
+                </Box>
             </form>
-
-            <FormControl variant="filled" sx={StyledFormControl}>
-                <Select
-                    labelId="status-label"
-                    id="status"
-                    variant="standard"
-                    value={available}
-                    displayEmpty
-                    onChange={handleChangeAvailable}>
-
-                    <MenuItem value="false">
-                        <em>Show All</em>
-                    </MenuItem>
-
-                    <MenuItem value="true">
-                        Show Available
-                    </MenuItem>
-
-                </Select>
-            </FormControl>
-
-            <StyledFormControlSwitch
-                control={
-                    <Switch
-                        checked={filtersOn}
-                        onChange={() => setFilters(!filtersOn)}
-                        name="loading"
-                        color="primary"/>}
-                label="Filters"/>
-
-            <Box>
-                {filtersOn &&
-                    <BookFilters category={category} setCategory={setCategory} filterParams={filterParams}
-                                 searchParams={searchParams}/>}
-
-                {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
-                    <Typography sx={StyledSearchResultLabel}>
-                        Search Results for "{searchParams.title}"
-                    </Typography>}
-            </Box>
 
         </Box>
     )
