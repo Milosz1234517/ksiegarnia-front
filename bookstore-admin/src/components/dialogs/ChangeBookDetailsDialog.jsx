@@ -3,7 +3,7 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, TextareaAutosize,
+    DialogTitle,
     TextField,
 } from "@mui/material";
 import * as React from "react";
@@ -78,6 +78,7 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                 />
                 <TextField
                     autoFocus
+                    required={true}
                     margin="dense"
                     id="edition"
                     label="Edition"
@@ -88,6 +89,7 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                 />
                 <TextField
                     autoFocus
+                    required={true}
                     margin="dense"
                     id="price"
                     type="number"
@@ -99,6 +101,7 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                 />
                 <TextField
                     autoFocus
+                    required={true}
                     margin="dense"
                     id="name"
                     label="Publishing-house"
@@ -109,6 +112,7 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                 />
                 <TextField
                     autoFocus
+                    required={true}
                     margin="dense"
                     id="quantity"
                     label="Quantity"
@@ -118,9 +122,9 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                     onChange={changeQuantity}
                 />
 
-
                 <TextField
                     autoFocus
+                    required={true}
                     margin="dense"
                     id="releaseDate"
                     label="Release Date"
@@ -142,16 +146,17 @@ export default function ChangeBookDetailsDialog({onConfirm, book, setBook, publi
                     onChange={changeIcon}
                 />
 
-                <TextareaAutosize
+                <TextField
+                    multiline
+                    required={true}
                     aria-label="desc"
                     minRows={5}
                     placeholder="Description"
                     defaultValue={book.description}
                     onChange={handleDescriptionChange}
                     style={{
-                        width: "90%",
-                        maxWidth: "90%",
-                        margin: 1
+                        width: "100%",
+                        maxWidth: "100%",
                     }}
                 />
 

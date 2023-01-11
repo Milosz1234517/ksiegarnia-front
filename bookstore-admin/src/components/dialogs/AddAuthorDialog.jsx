@@ -48,13 +48,13 @@ export default function AddAuthorDialog({bookChange, setOpen, open, setAuthors, 
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Edit Book</DialogTitle>
+            <DialogTitle>Author</DialogTitle>
             <DialogContent>
 
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="releaseDate"
+                    id="name"
                     label="Author Name"
                     fullWidth
                     variant="standard"
@@ -64,8 +64,8 @@ export default function AddAuthorDialog({bookChange, setOpen, open, setAuthors, 
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="releaseDate"
-                    label="Author Name"
+                    id="surname"
+                    label="Author Surname"
                     fullWidth
                     variant="standard"
                     onChange={handleAddAuthorSurname}

@@ -5,6 +5,21 @@ import {useCallback, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import {config} from "../../config";
 
+const BoxStyle = {
+    display: "inline-block",
+    margin: 1
+}
+
+const TextFieldStyle = {
+    margin: 1,
+    backgroundColor:"#e8eaf6",
+}
+
+const FormControlStyle = {
+    m: 1,
+    minWidth: 150,
+    backgroundColor:"#e8eaf6"
+}
 
 export default function BookFilters({searchParams, filterParams, category, setCategory}){
 
@@ -85,22 +100,6 @@ export default function BookFilters({searchParams, filterParams, category, setCa
         filterParams.category = event.target.value
     }
 
-    const BoxStyle = {
-        display: "inline-block",
-        margin: 1
-    }
-
-    const TextFieldStyle = {
-        margin: 1,
-        backgroundColor:"#e8eaf6",
-    }
-
-    const FormControlStyle = {
-        m: 1,
-        minWidth: 150,
-        backgroundColor:"#e8eaf6"
-    }
-
     return(
         <Box>
             <Box sx={BoxStyle}>
@@ -116,8 +115,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     autoComplete="price"
                     defaultValue={searchParams.priceDown}
                     inputRef={textInput.priceDown}
-                    onChange={handleChangePriceDown}
-                    autoFocus/>
+                    onChange={handleChangePriceDown}/>
             </Box>
             <Box sx={BoxStyle}>
                 <TextField
@@ -132,8 +130,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     type="number"
                     autoComplete="price"
                     defaultValue={searchParams.priceUp}
-                    onChange={handleChangePriceUp}
-                    autoFocus/>
+                    onChange={handleChangePriceUp}/>
             </Box>
 
             <Box sx={BoxStyle}>
@@ -148,8 +145,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     inputRef={textInput.name}
                     autoComplete="Name"
                     defaultValue={searchParams.name}
-                    onChange={handleChangeName}
-                    autoFocus/>
+                    onChange={handleChangeName}/>
 
             </Box>
 
@@ -165,8 +161,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     inputRef={textInput.surname}
                     autoComplete="Surname"
                     defaultValue={searchParams.surname}
-                    onChange={handleChangeSurname}
-                    autoFocus/>
+                    onChange={handleChangeSurname}/>
             </Box>
 
             <Box sx={BoxStyle}>

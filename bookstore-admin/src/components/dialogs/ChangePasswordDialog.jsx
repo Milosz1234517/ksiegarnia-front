@@ -57,7 +57,7 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
 
     return(
         <Dialog open={openPass} onClose={handleClose}>
-            <DialogTitle>Subscribe</DialogTitle>
+            <DialogTitle>Password</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus

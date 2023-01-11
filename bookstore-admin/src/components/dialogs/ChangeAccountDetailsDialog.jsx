@@ -4,7 +4,7 @@ import {useContext} from "react";
 import Context from "../../store/context";
 
 
-export default function ChangeDetailsDialog({user, userChange, setUserChange, setOpen, open}){
+export default function ChangeAccountDetailsDialog({user, userChange, setUserChange, setOpen, open}){
 
     const ctx = useContext(Context)
 
@@ -72,7 +72,7 @@ export default function ChangeDetailsDialog({user, userChange, setUserChange, se
 
     return(
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Subscribe</DialogTitle>
+            <DialogTitle>Profile</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Button, Container, Table, TableBody, TableContainer} from "@mui/material";
-import ChangeDetailsDialog from "../components/dialogs/ChangeDetailsDialog";
+import ChangeAccountDetailsDialog from "../components/dialogs/ChangeAccountDetailsDialog";
 import ChangePasswordDialog from "../components/dialogs/ChangePasswordDialog";
 import {useCallback, useContext, useEffect, useState} from "react";
 import Context from "../store/context";
@@ -96,7 +96,7 @@ export default function AccountPage() {
                     Change Password
                 </Button>
 
-                <ChangeDetailsDialog
+                <ChangeAccountDetailsDialog
                     open={open} user={user}
                     userChange={userChange}
                     setOpen={setOpen}

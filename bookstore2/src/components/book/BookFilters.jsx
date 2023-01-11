@@ -115,8 +115,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     autoComplete="price"
                     defaultValue={searchParams.priceDown}
                     inputRef={textInput.priceDown}
-                    onChange={handleChangePriceDown}
-                    autoFocus/>
+                    onChange={handleChangePriceDown}/>
             </Box>
             <Box sx={BoxStyle}>
                 <TextField
@@ -131,8 +130,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     type="number"
                     autoComplete="price"
                     defaultValue={searchParams.priceUp}
-                    onChange={handleChangePriceUp}
-                    autoFocus/>
+                    onChange={handleChangePriceUp}/>
             </Box>
 
             <Box sx={BoxStyle}>
@@ -147,8 +145,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     inputRef={textInput.name}
                     autoComplete="Name"
                     defaultValue={searchParams.name}
-                    onChange={handleChangeName}
-                    autoFocus/>
+                    onChange={handleChangeName}/>
 
             </Box>
 
@@ -164,8 +161,7 @@ export default function BookFilters({searchParams, filterParams, category, setCa
                     inputRef={textInput.surname}
                     autoComplete="Surname"
                     defaultValue={searchParams.surname}
-                    onChange={handleChangeSurname}
-                    autoFocus/>
+                    onChange={handleChangeSurname}/>
             </Box>
 
             <Box sx={BoxStyle}>

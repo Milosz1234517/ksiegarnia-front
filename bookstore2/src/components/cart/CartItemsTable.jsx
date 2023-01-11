@@ -39,7 +39,12 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
             });
 
             ctx.setIsLoading(false);
-            return response.json()
+            const resp = await response.json();
+
+            if(response.ok) {
+                setCartItems(resp.basket)
+                setTotalPrice(resp.totalPrice)
+            }
 
         } catch (e) {
             ctx.showErrorAlert("Connection lost");
@@ -51,10 +56,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
         setCartItems(cartItems.map(item => {
             if (item.itemId === obj.itemId) {
                 if (obj.quantity < obj.bookHeader.quantity) {
-                    updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp) => {
-                        setCartItems(resp.basket)
-                        setTotalPrice(resp.totalPrice)
-                    })
+                    updateItemCart({bookHeader: obj.bookHeader, quantity: obj.quantity + 1}).then((resp) => {})
                 }
             }
             return item
@@ -66,11 +68,7 @@ export default function CartItemsTable({cartItems, setCartItems, totalPrice, set
             if (item.itemId === obj.itemId) {
                 if (item.quantity > 0) {
                     const quantity = item.quantity - 1
-                    updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then((resp) => {
-                        setCartItems(resp.basket)
-                        setTotalPrice(resp.totalPrice)
-                    })
-
+                    updateItemCart({bookHeader: obj.bookHeader, quantity: quantity}).then((resp) => {})
                 }
             }
             return item

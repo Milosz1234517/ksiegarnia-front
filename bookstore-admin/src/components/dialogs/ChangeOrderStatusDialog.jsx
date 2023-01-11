@@ -27,7 +27,13 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
                     'Authorization': 'Bearer ' + ctx.authToken
                 }
             });
-            await response.json();
+
+            const resp = await response.json();
+
+            if(!response.ok){
+                ctx.showErrorAlert(resp.message);
+            }
+
             return response;
 
         } catch (e) {
@@ -44,7 +50,13 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
                     'Authorization': 'Bearer ' + ctx.authToken
                 }
             });
-            await response.json();
+
+            const resp = await response.json();
+
+            if(!response.ok){
+                ctx.showErrorAlert(resp.message);
+            }
+
             return response;
 
         } catch (e) {
@@ -61,7 +73,13 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
                     'Authorization': 'Bearer ' + ctx.authToken
                 }
             });
-            await response.json();
+
+            const resp = await response.json();
+
+            if(!response.ok){
+                ctx.showErrorAlert(resp.message);
+            }
+
             return response;
 
         } catch (e) {
@@ -114,7 +132,6 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
             case 2:
                 cancelOrder().then(
                     function (response) {
-                        console.log(response)
                         if (response.ok) {
                             setStatus(statuses.find((s) => s.statusId === 2))
                         }

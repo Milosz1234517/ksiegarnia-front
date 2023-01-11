@@ -45,7 +45,7 @@ export default function AddCategoryDialog({bookChange, setOpen, open, setCategor
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Edit Book</DialogTitle>
+            <DialogTitle>Category</DialogTitle>
             <DialogContent>
 
                 <TextField
