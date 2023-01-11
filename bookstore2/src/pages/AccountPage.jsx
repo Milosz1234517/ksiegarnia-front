@@ -56,7 +56,7 @@ export default function AccountPage() {
 
                     <AccountDetailsTab value={value}/>
                     <OrderItemsTab value={value}/>
-                    <UserReviewsTab/>
+                    <UserReviewsTab value={value}/>
 
                 </Box>
             </Container>
