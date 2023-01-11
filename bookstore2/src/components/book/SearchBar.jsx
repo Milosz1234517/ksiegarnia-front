@@ -215,7 +215,10 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
         getBooksSearch();
     }, [getBooksSearch]);
 
-    function handleSearchBooks() {
+    function handleSearchBooks(event) {
+
+        event.preventDefault(true);
+
         const params = [
             ['bookTitle', searchInput],
             ['available', available],
@@ -242,22 +245,25 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     return (
         <Box>
-            <Grid container sx={StyledGrid}>
-                <StyledAutocomplete
-                    freeSolo
-                    onInputChange={(e, v) => {
-                        setBooksAutocomplete([])
-                        setSearchInput(v)
-                    }}
-                    inputValue={searchInput}
-                    options={booksAutocomplete.map((book) => book)}
-                    renderInput={(params) =>
-                        <TextField {...params} label="Search Books"/>}/>
+            <form onSubmit={handleSearchBooks}>
+                <Grid container sx={StyledGrid}>
+                    <StyledAutocomplete
+                        freeSolo
+                        onInputChange={(e, v) => {
+                            setBooksAutocomplete([])
+                            setSearchInput(v)
+                        }}
+                        inputValue={searchInput}
+                        options={booksAutocomplete.map((book) => book)}
+                        renderInput={(params) =>
+                            <TextField {...params} label="Search Books"/>}/>
 
-                <StyledSearchButton onClick={handleSearchBooks}>
-                    <SearchIcon sx={StyledIcon}/>
-                </StyledSearchButton>
-            </Grid>
+                    <StyledSearchButton type="submit">
+                        <SearchIcon sx={StyledIcon}/>
+                    </StyledSearchButton>
+
+                </Grid>
+            </form>
 
             <FormControl variant="filled" sx={StyledFormControl}>
                 <Select
