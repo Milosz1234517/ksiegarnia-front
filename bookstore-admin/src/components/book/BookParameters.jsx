@@ -1,36 +1,53 @@
 import {Typography} from "@mui/material";
 import * as React from "react";
+import {Box} from "@mui/system";
+import {config} from "../../config";
+
+const TypographyStyle = {
+    margin: 2
+}
 
 export default function BookParameters({book}) {
 
     return (
-        <div>
-            <Typography sx={{margin: 2}} variant="h5">
+        <Box>
+            <Typography sx={TypographyStyle} variant="h5">
+                Authors: {book.bookAuthors?.map((author) => {
+                return (
+                    <Typography key={author.authorId} variant="body2"
+                                color="text.secondary"
+                                align={"left"}>
+                        {author.name} {author.surname}
+                    </Typography>)
+            })}
+            </Typography>
+
+            <Typography sx={TypographyStyle} variant="h5">
                 Publishing-house:
-                <Typography Typography variant="body2"
+                <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
                     {book.publishingHouse?.name}
                 </Typography>
             </Typography>
 
-            <Typography sx={{margin: 2}} variant="h5">
+            <Typography sx={TypographyStyle} variant="h5">
                 Quantity:
-                <Typography Typography variant="body2"
+                <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
                     {book.quantity}
                 </Typography>
             </Typography>
 
-            <Typography sx={{margin: 2}} variant="h5">
+            <Typography sx={TypographyStyle} variant="h5">
                 Price:
-                <Typography Typography variant="body2"
+                <Typography variant="body2"
                             color="text.secondary"
                             align={"left"}>
-                    {book.price} zł
+                    {book.price}{config.currency}
                 </Typography>
             </Typography>
-        </div>
+        </Box>
     );
 }

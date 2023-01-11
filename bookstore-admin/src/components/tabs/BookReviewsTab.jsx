@@ -3,10 +3,19 @@ import TabPanel from "./TabPanel";
 import CustomPagination from "../other/CustomPagination";
 import {useCallback, useContext, useEffect} from "react";
 import ReviewBox from "../other/ReviewBox";
-import {Button, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
+import {Button, Card} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Context from "../../store/context";
 
+const ButtonStyle = {
+    margin: 2
+}
+
+const CardStyle = {
+    flexGrow: 1, p: 4, display: "grid",
+    marginBottom: 3,
+    overflow: "auto"
+}
 
 export default function BookReviewsTab({value, book}) {
 
@@ -45,8 +54,10 @@ export default function BookReviewsTab({value, book}) {
     }, [book.bookHeaderId]);
 
     useEffect(() => {
-        getBookCount();
-    }, [getBookCount]);
+        if (book.bookHeaderId !== undefined) {
+            getBookCount();
+        }
+    }, [book.bookHeaderId, getBookCount]);
 
     const getReviewsForBook = useCallback(() => {
         const xHttp = new XMLHttpRequest();
@@ -78,8 +89,10 @@ export default function BookReviewsTab({value, book}) {
     }, [book.bookHeaderId, page]);
 
     useEffect(() => {
-        getReviewsForBook();
-    }, [getReviewsForBook]);
+        if (book.bookHeaderId !== undefined) {
+            getReviewsForBook();
+        }
+    }, [book.bookHeaderId, getReviewsForBook]);
 
     const handleChangePage = (event, value) => {
         setPage(value);
@@ -100,24 +113,20 @@ export default function BookReviewsTab({value, book}) {
 
     return (
         <TabPanel value={value} index={2}>
-
             <CustomPagination page={page} maxPage={count} handleChange={handleChangePage}/>
 
-            <TableContainer>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
-                    <TableBody>
-                        {marks.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                            >
-                                <TableCell align="left"><ReviewBox review={row} user={false} title={false}/></TableCell>
-                                <TableCell align="left"><Button onClick={() => handleDeleteReview(row.reviewId)}><DeleteIcon/></Button></TableCell>
-                                </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            {marks.map((row) => (
+
+                <Card key={row.reviewId} sx={CardStyle}>
+                    <ReviewBox review={row} user={true} title={true}/>
+
+                    <Button sx={ButtonStyle} onClick={() => handleDeleteReview(row.reviewId)}>
+                        <DeleteIcon/>
+                    </Button>
+
+                </Card>
+            ))}
+
         </TabPanel>
     );
 }

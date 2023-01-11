@@ -63,7 +63,7 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="name"
+                    id="pass"
                     label="Old Password"
                     type="password"
                     fullWidth
@@ -73,7 +73,7 @@ export default function ChangePasswordDialog({openPass, setOpenPass}){
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="name"
+                    id="oldpass"
                     label="New Password"
                     type="password"
                     fullWidth

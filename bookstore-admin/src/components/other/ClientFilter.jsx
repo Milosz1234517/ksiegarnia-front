@@ -100,7 +100,7 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
                 json = xHttp.responseText;
 
                 obj = JSON.parse(json);
-                setUsersCount(Math.ceil(obj / 2));
+                setUsersCount(Math.ceil(obj / 20));
 
             }
             if (this.readyState === 4 && this.status === 400) {

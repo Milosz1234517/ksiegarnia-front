@@ -16,7 +16,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
 
     const ctx = useContext(Context)
     const [statuses, setStatuses] = useState([])
-    const [statusChange, setStatusChange] = useState()
+    const [statusChange, setStatusChange] = useState('')
 
     const bookOrder = async () => {
         try {
@@ -176,8 +176,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
                         labelId="status-label"
                         id="status"
                         value={statusChange}
-                        onChange={handleChangeStatus}
-                    >
+                        onChange={handleChangeStatus}>
                         {statuses.map((option) => (
                             <MenuItem key={option.statusId} value={option.statusId}>
                                 {option.description}

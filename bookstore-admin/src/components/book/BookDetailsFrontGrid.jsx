@@ -37,11 +37,11 @@ export default function BookDetailsFrontGrid({book, authors, categories, handleD
                             <Table aria-label="simple table">
                                 <TableBody>
                                     {authors?.map((author) => (
-                                        <TableRow
+                                        <TableRow key={author.authorId}
                                             sx={{'&:last-child td, &:last-child th': {border: 0}}}>
 
                                             <TableCell align="left">
-                                                <Typography Typography variant="body2"
+                                                <Typography variant="body2"
                                                             color="text.secondary"
                                                             align={"left"}>
                                                     {author.name} {author.surname}
@@ -67,11 +67,11 @@ export default function BookDetailsFrontGrid({book, authors, categories, handleD
                             <Table aria-label="simple table">
                                 <TableBody>
                                     {categories?.map((cat) => (
-                                        <TableRow
+                                        <TableRow key={cat.categoryId}
                                             sx={{'&:last-child td, &:last-child th': {border: 0}}}>
 
                                             <TableCell align="left">
-                                                <Typography Typography variant="body2"
+                                                <Typography variant="body2"
                                                             color="text.secondary"
                                                             align={"left"}>
                                                     {cat.description}

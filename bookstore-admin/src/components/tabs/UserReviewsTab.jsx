@@ -4,10 +4,20 @@ import {useCallback, useContext, useEffect} from "react";
 import Context from "../../store/context";
 import ReviewBox from "../other/ReviewBox";
 import CustomPagination from "../other/CustomPagination";
-import {Button, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
+import {Button, Card} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 
+const ButtonStyle = {
+    margin: 2
+}
+
+const CardStyle = {
+    flexGrow: 1, p: 4, display: "grid",
+    backgroundColor: "#e8f5e9",
+    marginBottom: 3,
+    overflow: "auto"
+}
 
 export default function UserReviewsTab({value}) {
 
@@ -30,7 +40,7 @@ export default function UserReviewsTab({value}) {
                 json = xHttp.response;
 
                 obj = JSON.parse(json);
-                setCountReview(Math.ceil(obj / 2));
+                setCountReview(Math.ceil(obj / 20));
 
             }
             if (this.readyState === 4 && this.status === 400) {
@@ -109,22 +119,22 @@ export default function UserReviewsTab({value}) {
     };
 
     function handleDeleteReview(reviewId) {
-        ctx.deleteReview(reviewId).then(function (response){
-            if(response.ok){
+        ctx.deleteReview(reviewId).then(function (response) {
+            if (response.ok) {
                 const reviews = marks.filter((m) => m.reviewId !== reviewId)
                 setMarks(reviews)
-                if(reviews.length === 0 && pageReview - 1 > 0)
+                if (reviews.length === 0 && pageReview - 1 > 0)
                     setPageReview(pageReview - 1)
             }
         })
     }
 
     function handleApproveReview(reviewId) {
-        approveReview(reviewId).then(function (response){
-            if(response.ok){
+        approveReview(reviewId).then(function (response) {
+            if (response.ok) {
                 const reviews = marks.filter((m) => m.reviewId !== reviewId)
                 setMarks(reviews)
-                if(reviews.length === 0 && pageReview - 1 > 0)
+                if (reviews.length === 0 && pageReview - 1 > 0)
                     setPageReview(pageReview - 1)
             }
         })
@@ -133,22 +143,22 @@ export default function UserReviewsTab({value}) {
     return (
         <TabPanel value={value} index={3}>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
-            <TableContainer>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
-                    <TableBody>
-                        {marks.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                            >
-                                <TableCell align="left"><ReviewBox review={row} user={true} title={true}/></TableCell>
-                                <TableCell align="left"><Button onClick={() => handleDeleteReview(row.reviewId)}><DeleteIcon/></Button></TableCell>
-                                <TableCell align="left"><Button onClick={() => handleApproveReview(row.reviewId)}><CheckIcon/></Button></TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+
+            {marks.map((row) => (
+
+                <Card key={row.reviewId} sx={CardStyle}>
+                    <ReviewBox review={row} user={true} title={true}/>
+
+                    <Button onClick={() => handleApproveReview(row.reviewId)}>
+                        <CheckIcon/>
+                    </Button>
+
+                    <Button sx={ButtonStyle} onClick={() => handleDeleteReview(row.reviewId)}>
+                        <DeleteIcon/>
+                    </Button>
+
+                </Card>
+            ))}
 
         </TabPanel>
     );

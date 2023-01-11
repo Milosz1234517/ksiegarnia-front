@@ -14,6 +14,10 @@ const StyledPaper = {
     marginBottom: 5
 }
 
+const GridItem = {
+    marginBottom: 3
+}
+
 export default function ReviewBox({review, title}) {
 
     return (
@@ -22,18 +26,22 @@ export default function ReviewBox({review, title}) {
                 key={review.reviewId}
                 sx={StyledPaper}>
 
-                <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="a">
-                    {title ? review.bookHeader.bookTitle : review.user.name}
-                </Typography>
+                <Grid item sx={GridItem}>
+                    <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="a">
+                        {title ? review.bookHeader.bookTitle : review.user.name}
+                    </Typography>
+                </Grid>
 
-                <Typography variant="body2" gutterBottom>
-                    {review.description}
-                </Typography>
+                <Grid item sx={GridItem}>
+                    <Typography variant="body2" gutterBottom>
+                        {review.description}
+                    </Typography>
+                </Grid>
 
-                <Grid container sx={{flexDirection: "row-reverse"}}>
+                <Grid item container sx={{flexDirection: "row-reverse"}}>
                     <Rating name="read-only" value={1} max={1} readOnly/> {review.mark}/10
                 </Grid>
 

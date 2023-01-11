@@ -1,13 +1,23 @@
-import TabPanel from "../TabPanel";
 import * as React from "react";
 import {useCallback, useContext, useEffect} from "react";
-import Context from "../../context/context";
-import ReviewBox from "../ReviewBox";
-import CustomPagination from "../CustomPagination";
-import {Button, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
+import {Button, Card} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {TableRowStyle} from "../../App";
+import Context from "../../context/context";
 import {config} from "../../config";
+import CustomPagination from "../CustomPagination";
+import ReviewBox from "../ReviewBox";
+import {Box} from "@mui/system";
+
+const ButtonStyle = {
+    margin: 2
+}
+
+const CardStyle = {
+    flexGrow: 1, p: 4, display: "grid",
+    marginBottom: 3,
+    overflow: "auto",
+    backgroundColor: "#e8f5e9",
+}
 
 
 export default function UserReviewsTab({value}) {
@@ -127,29 +137,20 @@ export default function UserReviewsTab({value}) {
     }
 
     return (
-        <TabPanel value={value} index={2}>
+        <Box>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
-            <TableContainer>
-                <Table aria-label="simple table">
-                    <TableBody>
-                        {marks.map((row) => (
-                            <TableRow
-                                key={row.reviewId}
-                                sx={TableRowStyle}
-                            >
-                                <TableCell align="left"><ReviewBox review={row} title={true}/></TableCell>
-                                <TableCell align="left">
-                                    <Button
-                                        onClick={() => handleDeleteReview(row.reviewId)}>
-                                        <DeleteIcon/>
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
 
-        </TabPanel>
+            {marks.map((row) => (
+
+                <Card sx={CardStyle}>
+                    <ReviewBox review={row} user={true} title={true}/>
+
+                    <Button sx={ButtonStyle} onClick={() => handleDeleteReview(row.reviewId)}>
+                        <DeleteIcon/>
+                    </Button>
+
+                </Card>
+            ))}
+        </Box>
     );
 }

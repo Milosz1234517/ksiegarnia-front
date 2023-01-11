@@ -56,8 +56,9 @@ export default function OrderTableRow(props) {
                 <TableCell align="center">
                     {status?.description}
                     <IconButton
+                        onClick={handleStatusChange}
                         size="small">
-                        <EditIcon onClick={handleStatusChange}/>
+                        <EditIcon/>
                     </IconButton>
                 </TableCell>
                 <TableCell align="center">{new Date(row.orderDate).toDateString()}</TableCell>

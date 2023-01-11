@@ -40,7 +40,7 @@ export default function ClientsTab({value}){
                     <TableBody>
                         {users.map((row) => (
                             <TableRow
-                                key={row.name}
+                                key={row.login}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left">{row.login}</TableCell>
