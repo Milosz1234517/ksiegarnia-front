@@ -57,7 +57,7 @@ export const ContextProvider = (props) => {
             if (response.ok) {
                 showSuccessAlert(resp.message)
             } else {
-                showErrorAlert(resp.message)
+                showErrorAlert("Error: " + resp.message)
             }
 
             setIsLoading(false)
@@ -116,7 +116,7 @@ export const ContextProvider = (props) => {
             if (response.ok){
                 showSuccessAlert(resp.message)
             }else{
-                showErrorAlert(resp.message)
+                showErrorAlert("Error: " + resp.message)
             }
 
             setIsLoading(false)
