@@ -33,8 +33,6 @@ const StyledIconButton = {
     margin: 1
 }
 
-const sizes = [window.innerWidth * 0.4, window.innerHeight * 0.15]
-
 export default function HomePageMenu() {
 
     const navigate = useNavigate();
@@ -42,10 +40,10 @@ export default function HomePageMenu() {
     const ctx = useContext(Context);
 
     const StyledButtonBase = {
-        width: size[0] * 0.4,
-        height: size[1] * 0.15,
-        maxWidth: sizes[0],
-        maxHeight: sizes[1]
+        height: size[0] < size[1] ? size[0] * config.logoY : size[1] * config.logoY,
+        width: size[0] < size[1] ? size[1] * config.logoX : size[0] * config.logoX,
+        maxHeight: window.innerHeight,
+        maxWidth: window.innerWidth
     }
 
     const handleProfileOpen = () => {

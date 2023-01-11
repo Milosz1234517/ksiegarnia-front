@@ -1,26 +1,33 @@
 import * as React from "react";
 import {styled} from "@mui/material/styles";
-import {Box} from "@mui/system";
+import Grid from "@mui/material/Grid";
+import {useWindowResize} from "../other/WindowResizer";
+
+const Img = styled('img')({
+    maxWidth: '100%',
+    maxHeight: '100%',
+});
+
+const scale = 0.6
 
 export default function BookDetailsPhoto({icon}) {
 
-    const Img = styled('img')({
-        maxWidth: '100%',
-        maxHeight: '100%',
-    });
+    const size = useWindowResize()
 
     const BoxStyle = {
-        scale: "90%",
-        maxWidth: 700,
-        maxHeight: 1200,
-        overflow: "auto"
+        height: size[0] > size[1] ? size[0] * scale : size[1] * scale,
+        width: size[0] > size[1] ? size[1] * scale : size[0] * scale,
+        maxHeight: window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight,
+        maxWidth: window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth,
+        alignItems: "center",
+        justifyContent: "center"
     }
 
     return (
-        <Box
-            sx={BoxStyle}>
+        <Grid container
+              sx={BoxStyle}>
             <Img alt="complex"
                  src={icon}/>
-        </Box>
+        </Grid>
     );
 }

@@ -17,8 +17,8 @@ export default function BookDetailsPhoto({icon}) {
     const BoxStyle = {
         height: size[0] > size[1] ? size[0] * scale : size[1] * scale,
         width: size[0] > size[1] ? size[1] * scale : size[0] * scale,
-        maxHeight: window.innerWidth > window.innerHeight ? window.innerWidth * scale : window.innerHeight * scale,
-        maxWidth: window.innerWidth > window.innerHeight ? window.innerHeight * scale : window.innerWidth * scale,
+        maxHeight: window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight,
+        maxWidth: window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth,
         alignItems: "center",
         justifyContent: "center"
     }

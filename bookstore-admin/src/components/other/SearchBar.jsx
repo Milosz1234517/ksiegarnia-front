@@ -242,62 +242,65 @@ export default function SearchBar({page, setBooksPagesCount, setBooks}) {
 
     return (
         <Box>
-            <Grid container sx={StyledGrid}>
-                <StyledAutocomplete
-                    freeSolo
-                    onInputChange={(e, v) => {
-                        setBooksAutocomplete([])
-                        setSearchInput(v)
-                    }}
-                    inputValue={searchInput}
-                    options={booksAutocomplete.map((book) => book)}
-                    renderInput={(params) =>
-                        <TextField {...params} label="Search Books"/>}/>
+            <form onSubmit={handleSearchBooks}>
+                <Grid container sx={StyledGrid}>
+                    <StyledAutocomplete
+                        freeSolo
+                        onInputChange={(e, v) => {
+                            setBooksAutocomplete([])
+                            setSearchInput(v)
+                        }}
+                        inputValue={searchInput}
+                        options={booksAutocomplete.map((book) => book)}
+                        renderInput={(params) =>
+                            <TextField {...params} label="Search Books"/>}/>
 
-                <StyledSearchButton onClick={handleSearchBooks}>
-                    <SearchIcon sx={StyledIcon}/>
-                </StyledSearchButton>
-            </Grid>
+                    <StyledSearchButton type="submit">
+                        <SearchIcon sx={StyledIcon}/>
+                    </StyledSearchButton>
 
-            <FormControl variant="filled" sx={StyledFormControl}>
-                <Select
-                    labelId="status-label"
-                    id="status"
-                    variant="standard"
-                    value={available}
-                    displayEmpty
-                    onChange={handleChangeAvailable}>
+                </Grid>
 
-                    <MenuItem value="false">
-                        <em>Show All</em>
-                    </MenuItem>
+                <FormControl variant="filled" sx={StyledFormControl}>
+                    <Select
+                        labelId="status-label"
+                        id="status"
+                        variant="standard"
+                        value={available}
+                        displayEmpty
+                        onChange={handleChangeAvailable}>
 
-                    <MenuItem value="true">
-                        Show Available
-                    </MenuItem>
+                        <MenuItem value="false">
+                            <em>Show All</em>
+                        </MenuItem>
 
-                </Select>
-            </FormControl>
+                        <MenuItem value="true">
+                            Show Available
+                        </MenuItem>
 
-            <StyledFormControlSwitch
-                control={
-                    <Switch
-                        checked={filtersOn}
-                        onChange={() => setFilters(!filtersOn)}
-                        name="loading"
-                        color="primary"/>}
-                label="Filters"/>
+                    </Select>
+                </FormControl>
 
-            <Box>
-                {filtersOn &&
-                    <BookFilters category={category} setCategory={setCategory} filterParams={filterParams}
-                                 searchParams={searchParams}/>}
+                <StyledFormControlSwitch
+                    control={
+                        <Switch
+                            checked={filtersOn}
+                            onChange={() => setFilters(!filtersOn)}
+                            name="loading"
+                            color="primary"/>}
+                    label="Filters"/>
 
-                {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
-                    <Typography sx={StyledSearchResultLabel}>
-                        Search Results for "{searchParams.title}"
-                    </Typography>}
-            </Box>
+                <Box>
+                    {filtersOn &&
+                        <BookFilters category={category} setCategory={setCategory} filterParams={filterParams}
+                                     searchParams={searchParams}/>}
+
+                    {(urlSearchParams.get('bookTitle') || urlSearchParams.get('available')) &&
+                        <Typography sx={StyledSearchResultLabel}>
+                            Search Results for "{searchParams.title}"
+                        </Typography>}
+                </Box>
+            </form>
 
         </Box>
     )
