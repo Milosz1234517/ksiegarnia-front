@@ -9,6 +9,7 @@ import {PaperWithShadow} from "../App";
 import {Box} from "@mui/system";
 import HomePageMenu from "../components/other/HomePageMenu";
 import PageTitle from "../components/other/PageTitle";
+import {config} from "../config";
 
 
 export default function AccountPage() {
@@ -38,7 +39,7 @@ export default function AccountPage() {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getUserDetails`,
+            `${config.serverAddress}/api/bookstore/getUserDetails`,
             true,
             null,
             null

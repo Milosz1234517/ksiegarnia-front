@@ -8,6 +8,7 @@ import OrderSearchBar from "../other/OrderSearchBar";
 import {useSearchParams} from "react-router-dom";
 import {PaperWithShadow, TableRowStyle} from "../../App";
 import Context from "../../store/context";
+import {config} from "../../config";
 
 
 export default function OrderItemsTab({value}){
@@ -44,7 +45,7 @@ export default function OrderItemsTab({value}){
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getStatuses`,
+            `${config.serverAddress}api/bookstore/getStatuses`,
             true,
             null,
             null

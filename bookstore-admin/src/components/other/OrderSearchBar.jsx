@@ -8,6 +8,7 @@ import {styled} from "@mui/material/styles";
 import Context from "../../store/context";
 import OrderFilters from "./OrderFilters";
 import Grid from "@mui/material/Grid";
+import {config} from "../../config";
 
 const StyledAutocomplete = styled(Autocomplete)(() => ({
     width: "100%",
@@ -79,7 +80,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterAdmin?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
+            `${config.serverAddress}/api/bookstore/getOrdersFilterAdmin?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
             true,
             null,
             null
@@ -103,7 +104,7 @@ export default function OrderSearchBar({page, setCount, setOrders}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getOrdersFilterAdminCount?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
+            `${config.serverAddress}/api/bookstore/getOrdersFilterAdminCount?finalizedFrom=${searchParams.finalizedFrom}&finalizedTo=${searchParams.finalizedTo}&orderId=${searchParams.orderNumber}&page=${page}&placedFrom=${searchParams.placedFrom}&placedTo=${searchParams.placedTo}&status=${searchParams.status}`,
             true,
             null,
             null

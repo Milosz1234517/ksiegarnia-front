@@ -10,6 +10,7 @@ import {
     MenuItem, Select,
 } from "@mui/material";
 import * as React from "react";
+import {config} from "../../config";
 
 const FormControlStyle = {
     m: 2,
@@ -23,7 +24,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
 
     const bookOrder = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/bookOrder?orderId=${orderId}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/bookOrder?orderId=${orderId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -46,7 +47,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
 
     const cancelOrder = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/cancelOrder?orderId=${orderId}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/cancelOrder?orderId=${orderId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,7 +70,7 @@ export default function ChangeOrderStatusDialog({orderId, setStatus, open, setOp
 
     const finalizeOrder = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/bookstore/finalizeOrder?orderId=${orderId}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/finalizeOrder?orderId=${orderId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

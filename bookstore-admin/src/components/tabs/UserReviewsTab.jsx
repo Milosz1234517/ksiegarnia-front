@@ -7,6 +7,7 @@ import CustomPagination from "../other/CustomPagination";
 import {Button, Card} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
+import {config} from "../../config";
 
 const ButtonStyle = {
     margin: 2
@@ -50,7 +51,7 @@ export default function UserReviewsTab({value}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForApproveCount`,
+            `${config.serverAddress}/api/bookstore/getReviewsForApproveCount`,
             true,
             null,
             null
@@ -84,7 +85,7 @@ export default function UserReviewsTab({value}) {
 
         xmlHttpRequest.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForApprove?page=${pageReview}`,
+            `${config.serverAddress}/api/bookstore/getReviewsForApprove?page=${pageReview}`,
             true,
             null,
             null
@@ -102,7 +103,7 @@ export default function UserReviewsTab({value}) {
     const approveReview = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch(`http://localhost:8080/api/bookstore/approveReview?reviewId=${data}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/approveReview?reviewId=${data}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

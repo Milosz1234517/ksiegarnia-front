@@ -2,6 +2,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} fr
 import * as React from "react";
 import {useContext} from "react";
 import Context from "../../store/context";
+import {config} from "../../config";
 
 
 export default function ChangeAccountDetailsDialog({user, userChange, setUserChange, setOpen, open}){
@@ -11,7 +12,7 @@ export default function ChangeAccountDetailsDialog({user, userChange, setUserCha
     const changeUserDetails = async (data) => {
         try {
             ctx.setIsLoading(true)
-            const response = await fetch('http://localhost:8080/api/bookstore/changeUserDetails', {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/changeUserDetails`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

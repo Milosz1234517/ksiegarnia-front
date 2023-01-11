@@ -6,7 +6,7 @@ import Context from "../../context/context";
 import {config} from "../../config";
 import CustomPagination from "../CustomPagination";
 import ReviewBox from "../ReviewBox";
-import {Box} from "@mui/system";
+import {TabPanel} from "@mui/joy";
 
 const ButtonStyle = {
     margin: 2
@@ -137,7 +137,7 @@ export default function UserReviewsTab({value}) {
     }
 
     return (
-        <Box>
+        <TabPanel value={value} index={1}>
             <CustomPagination page={pageReview} maxPage={countReview} handleChange={handleChangePageReview}/>
 
             {marks.map((row) => (
@@ -151,6 +151,6 @@ export default function UserReviewsTab({value}) {
 
                 </Card>
             ))}
-        </Box>
+        </TabPanel>
     );
 }

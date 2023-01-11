@@ -38,7 +38,7 @@ const SubmitBoxStyle = {
     mt: 1
 }
 
-const Login = () => {
+export default function Login () {
     const ctx = useContext(Context);
 
     const onSubmit = (event) => {
@@ -113,5 +113,3 @@ const Login = () => {
         </Box>
     );
 };
-
-export default Login;

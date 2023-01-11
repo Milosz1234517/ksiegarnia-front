@@ -7,6 +7,7 @@ import Context from "../../store/context";
 import SearchIcon from "@mui/icons-material/Search";
 import {styled} from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import {config} from "../../config";
 
 const StyledSearchButton = styled(Button)(() => ({
     backgroundColor: "#000",
@@ -76,7 +77,7 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getUsersFilter?name=${searchParams.name}&page=${pageUsers}&surname=${searchParams.surname}&login=${searchParams.login}`,
+            `${config.serverAddress}/api/bookstore/getUsersFilter?name=${searchParams.name}&page=${pageUsers}&surname=${searchParams.surname}&login=${searchParams.login}`,
             true,
             null,
             null
@@ -110,7 +111,7 @@ export default function ClientFilter({pageUsers, setUsers, setUsersCount}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getUsersFilterCount?name=${searchParams.name}&surname=${searchParams.surname}&login=${searchParams.login}`,
+            `${config.serverAddress}/api/bookstore/getUsersFilterCount?name=${searchParams.name}&surname=${searchParams.surname}&login=${searchParams.login}`,
             true,
             null,
             null

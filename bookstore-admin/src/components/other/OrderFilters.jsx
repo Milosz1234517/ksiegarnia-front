@@ -4,6 +4,7 @@ import * as React from "react";
 import {useCallback, useContext, useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import Context from "../../store/context";
+import {config} from "../../config";
 
 const BoxStyle = {
     display: "inline-block",
@@ -92,7 +93,7 @@ export default function OrderFilters({searchParams, filterParams, status, setSta
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getStatuses`,
+            `${config.serverAddress}/api/bookstore/getStatuses`,
             true,
             null,
             null

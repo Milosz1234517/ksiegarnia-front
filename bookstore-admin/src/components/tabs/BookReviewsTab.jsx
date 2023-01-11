@@ -6,6 +6,7 @@ import ReviewBox from "../other/ReviewBox";
 import {Button, Card} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Context from "../../store/context";
+import {config} from "../../config";
 
 const ButtonStyle = {
     margin: 2
@@ -44,7 +45,7 @@ export default function BookReviewsTab({value, book}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForBookCount?bookHeaderId=${book.bookHeaderId}`,
+            `${config.serverAddress}/api/bookstore/getReviewsForBookCount?bookHeaderId=${book.bookHeaderId}`,
             true,
             null,
             null
@@ -79,7 +80,7 @@ export default function BookReviewsTab({value, book}) {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
+            `${config.serverAddress}api/bookstore/getReviewsForBook?bookHeaderId=${book.bookHeaderId}&page=${page}`,
             true,
             null,
             null

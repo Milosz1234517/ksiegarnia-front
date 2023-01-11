@@ -16,6 +16,7 @@ import ChangeBookDetailsDialog from "../components/dialogs/ChangeBookDetailsDial
 import AddAuthorDialog from "../components/dialogs/AddAuthorDialog";
 import AddCategoryDialog from "../components/dialogs/AddCategoryDialog";
 import BookDetailsFrontGrid from "../components/book/BookDetailsFrontGrid";
+import {config} from "../config";
 
 function a11yProps(index) {
     return {
@@ -83,7 +84,7 @@ export default function BookDetails() {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
+            `${config.serverAddress}/api/bookstore/getBookWithDetails?bookHeaderId=${bookHeaderId}`,
             true,
             null,
             null

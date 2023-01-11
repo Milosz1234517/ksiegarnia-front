@@ -1,5 +1,6 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import React, {useCallback, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {config} from "../config";
 
 const Context = React.createContext({
     authToken: null,
@@ -32,7 +33,7 @@ export const ContextProvider = (props) => {
     const changeBookDetails = async (data) => {
         try {
             setIsLoading(true)
-            const response = await fetch('http://localhost:8080/api/bookstore/updateBook', {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/updateBook`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,7 +72,7 @@ export const ContextProvider = (props) => {
     const deleteReview = async (data) => {
         try {
             setIsLoading(true)
-            const response = await fetch(`http://localhost:8080/api/bookstore/deleteReview?reviewId=${data}`, {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/deleteReview?reviewId=${data}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -91,7 +92,7 @@ export const ContextProvider = (props) => {
     const createBook = async (data) => {
         try {
             setIsLoading(true)
-            const response = await fetch('http://localhost:8080/api/bookstore/addBook', {
+            const response = await fetch(`${config.serverAddress}/api/bookstore/addBook`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -137,7 +138,7 @@ export const ContextProvider = (props) => {
 
         xHttp.open(
             "GET",
-            `http://localhost:8080/api/connection/admin`,
+            `${config.serverAddress}/api/connection/admin`,
             true,
             null,
             null
@@ -148,7 +149,7 @@ export const ContextProvider = (props) => {
     }, [authToken]);
 
     const login = async (data) => {
-        const url = 'http://localhost:8080/api/auth/loginAdmin';
+        const url = `${config.serverAddress}/api/auth/loginAdmin`;
         try {
             setIsLoading(true);
             const response = await fetch(`${url}`, {
